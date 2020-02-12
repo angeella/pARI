@@ -1,0 +1,68 @@
+---
+title: "toy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{toy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ARIpermutation)
+library(Biobase) #for the dataset
+library(cancerdata) #for the dataset
+```
+
+The data set VIJVER includes expression values of 24481 genes in 295 tumor samples. 
+
+```{r}
+
+data(VIJVER1)
+X <- exprs(VIJVER1)
+m <- dim(X)[2] #24481 variables
+#Clean datasets from NA
+X <- X[rowSums(is.na(X[ , 1:m])) == 0, ]
+n <- dim(X)[2] #295 observations
+m <- dim(X)[1] #24481 variables
+
+out <- testByRandomization(X, B = 200)
+
+P <- t(cbind(out$p, out$p0))
+P_ord <- rowSortC(P)
+
+#Compute lambda
+lambdaSimes <- lambdaOpt(pvalues = P_ord,family="Simes",ct=c(0,1),alpha=0.05, shift = NULL)
+lambdaCluster <- lambdaOpt(pvalues = P_ord,family="SimesCluster",ct=c(0,1),alpha=0.05, shift = NULL, delta = 7)
+lambdaFinner <- lambdaOpt(pvalues = P_ord,family="Finner",ct=c(0,1),alpha=0.05, shift = NULL)
+#lambdaBeta <- lambdaOpt(pvalues = pvalues_ord,family="Beta",ct=ct,alpha=alpha, shift = shift)
+
+praw <- P_ord[1,]
+
+#Compute critical values
+cvSimes <- cv(pvalues = P_ord, family = "Simes", alpha = 0.05, shift = NULL, lambda = lambdaSimes)
+cvCluster <- cv(pvalues = P_ord, family = "SimesCluster", alpha = 0.05, shift = NULL, lambda = lambdaCluster, delta = 7)
+cvFinner <- cv(pvalues = P_ord, family = "Finner", alpha = 0.05, shift = NULL, lambda = lambdaFinner)
+
+#Plot 
+plot(P_ord[1,], type = 'l', col = ' red')
+for(i in 2:nrow(P_ord)){
+  
+  lines(P_ord[i,],col='black',type="l")
+  
+}
+
+lines(cvSimes, col= 'blue', lwd =1)
+lines(cvCluster,col='green', lwd =1)
+lines(cvFinner, col= ' rosybrown4', lwd =1)
+
+out <-SingleStepCT(pvalues = P_ord,ct = c(0,1),ix = c(1:10),alpha = 0.1,shift = 7,family = "SimesCluster",lambda = lambdaCluster)
+
+```
+
