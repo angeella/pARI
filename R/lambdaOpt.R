@@ -8,54 +8,33 @@
 
 #pvalues = ordered pvalues 
 #ct= vector of cutoffs
-#family = Beta or Simes
+#family = Beta or Simes or Finner
 
-lambdaOpt <- function(pvalues, family, ct, alpha, shift = NULL, delta = NULL){
+lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
   l <- c()
   w <- dim(pvalues)[1]
   m <- dim(pvalues)[2]
-  #cl <- mean(sapply(c(1:w), function(x) sum(pvalues[x,] <= min(ct)))) + 8
+  if(is.null(delta) ){delta = 0}
   for(j in 1:w){
     minc <- sum(pvalues[j,] <=min(ct)) + 1
     maxc <- sum(pvalues[j,] <=max(ct))
     if(family =="Simes"){
-      if(is.null(shift) ){shift = 0}
-      lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc)*alpha)
-      #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
       
+      minc = minc + delta
+      lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
+      #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
     }
     if(family == "Beta"){
       lambda <- pbeta(pvalues[j,c(minc:maxc)],c(minc:maxc),m+1-c(minc:maxc))
       
     }
     
-    if(family =="SimesCluster"){
-      #if(is.null(shift) ){shift = 0}
-      minc = minc + delta
-      #lambda <- ((m-7)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-7)*alpha)
-      lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
-      #lambda <- (m*(pvalues[j,minc:maxc] + 8/m))/(c(minc:maxc)*alpha)
-    }
-    
-    #if(family == "SimesCluster"){
-    #  #lambda <- (m*(pvalues[j,c(minc:maxc)])/(c(minc:maxc) - 8)*alpha)
-    #  lambda <- (m*(pvalues[j,c(minc:maxc)])/(c(minc:maxc) - 8)*alpha)
-    #lambda <- ((m-358)*pvalues[j,minc:maxc])/(c(minc:maxc)*alpha)
-    #lambda <- (m*(pvalues[j,c(minc:maxc)])/(c(minc:maxc) - cl)*alpha)
-    #minc = minc + 8 -1 
-    #lambda <- ((m - minc + 1) *(pvalues[j,c(minc:maxc)])/(c(minc:maxc) - minc + 1)*alpha)
-    #}
-    
     if(family == "Finner"){
-      lambda <- (pvalues[j,c(minc:maxc)] *(m - c(minc:maxc)) ) / (c(minc:maxc) * alpha * (1- pvalues[j,c(minc:maxc)]))
-      
-    }
-    
-    if(family == "FinnerCluster"){
       minc = minc + delta
       lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* c(minc:maxc) + (delta*pvalues[j,c(minc:maxc)]))))
       
     }
+
     l[j] <- min(lambda)
   }
   

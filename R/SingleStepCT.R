@@ -4,22 +4,21 @@
 #' @param ct = set of thresholds of interest
 #' @param alpha = alpha level
 #' @param family = rfamily of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta
-#' @param shift = shift values for the critical values curves
 #' @param delta = do you want to consider at least delta size set?
 #' @ix = set of hypothesis of interest
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{discoveries} number of discoveries in the set selected, \code{pvalues} raw pvalues
 #' @export
 
-SingleStepCT <- function(X,ct, ix, alpha, family, shift=NULL, delta= NULL, B){
+SingleStepCT <- function(X,ct, ix, alpha, family, delta= NULL, B){
   out <- testByRandomization(X, B = B)
   
   P <- t(cbind(out$p, out$p0))
   P_ord <- rowSortC(P)
   p <- P[1,]
 
-  lambda <- lambdaOpt(P_ord, family = family, ct = ct, alpha = alpha, shift = shift, delta = delta)
-  cv <- cv(pvalues=P_ord, family= family, alpha = alpha, delta = 7, lambda = lambda, ct = ct)
+  lambda <- lambdaOpt(P_ord, family = family, ct = ct, alpha = alpha, delta = delta)
+  cv <- cv(pvalues=P_ord, family= family, alpha = alpha, delta = delta, lambda = lambda, ct = ct)
   
   #Compute the largest size of a set of hyp not rejected by our local test
   #h <- hI(p, cv)

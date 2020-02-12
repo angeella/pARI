@@ -32,4 +32,48 @@ discoveries(hom,ix = c(1:10),alpha = 0.1)
 SingleStepCT(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
 
 ```
+## Example
 
+This is a basic example using fMRI data :
+
+``` r
+
+Statmap <- system.file("extdata", "Statmap.nii", package = "ARIpermutation")
+mask <- system.file("extdata", "mask.nii.gz", package = "ARIpermutation")
+Pmap <- system.file("extdata", "pv_par.nii", package = "ARIpermutation")
+pvalues = system.file("extdata", "PvaluesPerm.Rda", package = "ARIpermutation")
+
+alpha = 0.05
+ct = c(0,1)
+thr = 3.2
+delta = 7
+
+out1 <- ARIpermutation::ARIpermCT(Pmap, thr, mask=mask, Statmap= Statmap, alpha = alpha, pvalues = pvalues, ct = ct, family = "Simes",type="perm", delta = 7)
+
+#Create Clusters using a threshold equal to 3.2
+Statmap = ARIbrain::get_array(Statmap)
+mask = ARIbrain::get_array(mask)
+Statmap[!mask]=0
+clstr=cluster_threshold(Tmap>3.2)
+
+res_ARI=ARIbrain::ARI(Pmap = pvalue_name, clusters= clstr, mask=mask, Statmap = Statmap)
+
+```
+using the parametric method:
+
+``` r
+
+Statmap <- system.file("extdata", "Statmap.nii", package = "ARIpermutation")
+mask <- system.file("extdata", "mask.nii.gz", package = "ARIpermutation")
+Pmap <- system.file("extdata", "pv_par.nii", package = "ARIpermutation")
+pvalues = system.file("extdata", "PvaluesPerm.Rda", package = "ARIpermutation")
+
+#Create Clusters using a threshold equal to 3.2
+Statmap = ARIbrain::get_array(Statmap)
+mask = ARIbrain::get_array(mask)
+Statmap[!mask]=0
+clstr=cluster_threshold(Tmap>3.2)
+
+res_ARI=ARIbrain::ARI(Pmap = pvalue_name, clusters= clstr, mask=mask, Statmap = Statmap)
+
+```
