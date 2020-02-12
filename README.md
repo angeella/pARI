@@ -51,10 +51,10 @@ delta = 7
 out1 <- ARIpermutation::ARIpermCT(Pmap, thr, mask=mask, Statmap= Statmap, alpha = alpha, pvalues = pvalues, ct = ct, family = "Simes",type="perm", delta = 7)
 
 #Create Clusters using a threshold equal to 3.2
-Statmap = ARIbrain::get_array(Statmap)
-mask = ARIbrain::get_array(mask)
+Statmap = get_array(Statmap)
+mask = get_array(mask)
 Statmap[!mask]=0
-clstr=cluster_threshold(Tmap>3.2)
+clstr=cluster_threshold(Statmap>3.2)
 
 res_ARI=ARIbrain::ARI(Pmap = pvalue_name, clusters= clstr, mask=mask, Statmap = Statmap)
 
