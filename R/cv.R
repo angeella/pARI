@@ -1,6 +1,6 @@
 #######################Critical values #########################
 
-cv <- function(pvalues, family, alpha, shift = NULL, lambda, ct = NULL, delta = 7){
+cv <- function(pvalues, family, alpha, shift = NULL, lambda, ct = NULL, delta = NULL){
   
   w <- dim(pvalues)[1]
   m <- dim(pvalues)[2]

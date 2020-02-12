@@ -10,7 +10,7 @@
 #ct= vector of cutoffs
 #family = Beta or Simes
 
-lambdaOpt <- function(pvalues, family, ct, alpha, shift = NULL, delta = 7){
+lambdaOpt <- function(pvalues, family, ct, alpha, shift = NULL, delta = NULL){
   l <- c()
   w <- dim(pvalues)[1]
   m <- dim(pvalues)[2]

@@ -62,7 +62,7 @@ lines(cvSimes, col= 'blue', lwd =1)
 lines(cvCluster,col='green', lwd =1)
 lines(cvFinner, col= ' rosybrown4', lwd =1)
 
-out <-SingleStepCT(pvalues = P_ord,ct = c(0,1),ix = c(1:10),alpha = 0.1,shift = 7,family = "SimesCluster",lambda = lambdaCluster)
+out <-SingleStepCT(pvalues = P_ord,ct = c(0,1),ix = c(1:10),alpha = 0.1,delta = 7,family = "SimesCluster",lambda = lambdaCluster)
 
 ```
 
