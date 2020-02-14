@@ -26,8 +26,9 @@ SingleStepCT <- function(X,ct, ix, alpha, family, delta= NULL, B){
   #cvh <- sapply(c(1:length(p)), function(x) ((x * alpha * lambda)/h)- shift)
   
   discoveries <- dI(ix,cv,p)
+  TDP <- discoveries/length(ix)
   
-  return(list(discoveries = discoveries, pvalues = p))
+  return(list(discoveries = discoveries, TDP = TDP, pvalues = p, cv = cv))
   
 }
 
@@ -45,11 +46,13 @@ cvhPerm <- function(praw, alpha, shift, family, lambda){
   
 }
 
-discoveriesPerm <- function(praw, ix, cvh){
+discoveriesPerm <- function(out, ix){
+  praw <- out[[3]]
+  cv <- out[[4]]
+  discoveries <- dI(ix,cv,praw)
+  TDP <- discoveries/length(ix)
   
-  discoveries <- dI(ix,cvh,praw)
-  
-  return(list(discoveries, praw))
+  return(list(discoveries = discoveries, TDP = TDP, praw = praw))
   
 }
 

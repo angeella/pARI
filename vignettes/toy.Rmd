@@ -1,5 +1,5 @@
 ---
-title: "toy"
+title: "Genetic Data example"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{toy}
@@ -23,7 +23,6 @@ library(cancerdata) #for the dataset
 The data set VIJVER includes expression values of 24481 genes in 295 tumor samples. 
 
 ```{r}
-
 data(VIJVER1)
 X <- exprs(VIJVER1)
 m <- dim(X)[2] #24481 variables
@@ -31,38 +30,51 @@ m <- dim(X)[2] #24481 variables
 X <- X[rowSums(is.na(X[ , 1:m])) == 0, ]
 n <- dim(X)[2] #295 observations
 m <- dim(X)[1] #24481 variables
+ct = c(0,1)
+alpha = 0.5
+family = "Simes"
+delta = 7
+B = 200
+```
 
-out <- testByRandomization(X, B = 200)
+So, we apply the method considering the full set of variables, i.e. genes:
 
-P <- t(cbind(out$p, out$p0))
-P_ord <- rowSortC(P)
+```{r}
+ix <- c(1:m)
+out <- SingleStepCT(X,ct, ix, alpha, family, delta, B)
 
-#Compute lambda
-lambdaSimes <- lambdaOpt(pvalues = P_ord,family="Simes",ct=c(0,1),alpha=0.05, shift = NULL)
-lambdaCluster <- lambdaOpt(pvalues = P_ord,family="SimesCluster",ct=c(0,1),alpha=0.05, shift = NULL, delta = 7)
-lambdaFinner <- lambdaOpt(pvalues = P_ord,family="Finner",ct=c(0,1),alpha=0.05, shift = NULL)
-#lambdaBeta <- lambdaOpt(pvalues = pvalues_ord,family="Beta",ct=ct,alpha=alpha, shift = shift)
+out[[1]]
+```
 
-praw <- P_ord[1,]
+We have $3334$ false null hypothesis. Using the hommel method by Goeman et al.:
 
-#Compute critical values
-cvSimes <- cv(pvalues = P_ord, family = "Simes", alpha = 0.05, shift = NULL, lambda = lambdaSimes)
-cvCluster <- cv(pvalues = P_ord, family = "SimesCluster", alpha = 0.05, shift = NULL, lambda = lambdaCluster, delta = 7)
-cvFinner <- cv(pvalues = P_ord, family = "Finner", alpha = 0.05, shift = NULL, lambda = lambdaFinner)
+```{r}
+ix <- c(1:m)
 
-#Plot 
-plot(P_ord[1,], type = 'l', col = ' red')
-for(i in 2:nrow(P_ord)){
-  
-  lines(P_ord[i,],col='black',type="l")
-  
-}
+res <- testByRandomization(X, B = 200)
 
-lines(cvSimes, col= 'blue', lwd =1)
-lines(cvCluster,col='green', lwd =1)
-lines(cvFinner, col= ' rosybrown4', lwd =1)
+praw <- res$p
+out1 <- hommel(praw)
 
-out <-SingleStepCT(pvalues = P_ord,ct = c(0,1),ix = c(1:10),alpha = 0.1,delta = 7,family = "SimesCluster",lambda = lambdaCluster)
+discoveries(out1,ix,alpha = 0.05)
+```
+
+we have $2634$ discoveries. So, we can note that we gain some power respect to the parametric method.
+
+Then, we can see how this works considering different subset of hypothesis.
+
+```{r}
+p_sort = sort(praw)
+R = sapply(p_sort, function(t) sum(p_sort <=t)) 
+
+out3 <- sapply(R, function(x) discoveriesPerm(out,ix = c(1:x))[[1]])
+
+out4 <- sapply(R, function(x) discoveries(out1, ix = c(1:x), alpha = 0.05))
+
+plot(R, out4/pmax(1,R), type = "l", col = 1, lwd = 1)
+lines(R, out3/pmax(1,R), type="l", col=6, lwd=2)
 
 ```
+
+
 
