@@ -6,6 +6,18 @@
 
 using namespace Rcpp;
 
+// empiricalCoverageO
+NumericVector empiricalCoverageO(NumericVector thr, arma::mat Z);
+RcppExport SEXP _ARIpermutation_empiricalCoverageO(SEXP thrSEXP, SEXP ZSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type thr(thrSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Z(ZSEXP);
+    rcpp_result_gen = Rcpp::wrap(empiricalCoverageO(thr, Z));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rowSortC
 arma::mat rowSortC(arma::mat X);
 RcppExport SEXP _ARIpermutation_rowSortC(SEXP XSEXP) {
@@ -31,6 +43,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_ARIpermutation_empiricalCoverageO", (DL_FUNC) &_ARIpermutation_empiricalCoverageO, 2},
     {"_ARIpermutation_rowSortC", (DL_FUNC) &_ARIpermutation_rowSortC, 1},
     {"_ARIpermutation_signFlip", (DL_FUNC) &_ARIpermutation_signFlip, 2},
     {NULL, NULL, 0}

@@ -31,9 +31,9 @@ X <- X[rowSums(is.na(X[ , 1:m])) == 0, ]
 n <- dim(X)[2] #295 observations
 m <- dim(X)[1] #24481 variables
 ct = c(0,1)
-alpha = 0.5
+alpha = 0.05
 family = "Simes"
-delta = 7
+delta = 0
 B = 200
 ```
 
@@ -71,10 +71,22 @@ out3 <- sapply(R, function(x) discoveriesPerm(out,ix = c(1:x))[[1]])
 
 out4 <- sapply(R, function(x) discoveries(out1, ix = c(1:x), alpha = 0.05))
 
-plot(R, out4/pmax(1,R), type = "l", col = 1, lwd = 1)
-lines(R, out3/pmax(1,R), type="l", col=6, lwd=2)
+plot(R, out4/pmax(1,R), type = "l", col = "black", lwd = 1)
+lines(R, out3/pmax(1,R), type="l", col="red", lwd=2)
 
 ```
 
+```{r}
+plot(R, out3/out4, type='l')
+```
+
+check coverage
+
+```{r}
+Psort = rowSortC(t(res$p0))
+
+sum( sapply(c(1:B), function(x) all(Psort[x,] >= out[[4]] )) )/B
+
+```
 
 
