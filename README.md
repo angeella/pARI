@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of ARIpermutation is to ...
+The aim of ARIpermutation is to ...
 
 ## Installation
 
