@@ -33,7 +33,7 @@ m <- dim(X)[1] #24481 variables
 ct = c(0,1)
 alpha = 0.05
 family = "Simes"
-delta = 0
+delta = 7
 B = 200
 ```
 
@@ -88,5 +88,21 @@ Psort = rowSortC(t(res$p0))
 sum( sapply(c(1:B), function(x) all(Psort[x,] >= out[[4]] )) )/B
 
 ```
+
+Higher criticism
+
+
+```{r}
+sim <- sansSouci::gaussianSamples(m, rho = 0, n, pi0 = 0.5, SNR = 1, prob = 1)
+X <- sim$X #rows represent variables
+out <- sansSouci::testByRandomization(X,B,alternative = "greater")
+p_sort <- sort(out$p)
+plot(c(1:length(p_sort))/length(p_sort),HC(p = p_sort), type = "l")
+plot(p_sort, type = 'l')
+plot(sort(out$T,decreasing = TRUE))
+which.max(HC(p_sort))
+
+```
+
 
 

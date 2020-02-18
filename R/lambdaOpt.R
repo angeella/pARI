@@ -31,7 +31,8 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
     
     if(family == "Finner"){
       minc = minc + delta
-      lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* c(minc:maxc) + (delta*pvalues[j,c(minc:maxc)]))))
+      #lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* c(minc:maxc) + (delta*pvalues[j,c(minc:maxc)]))))
+      lambda <- (pvalues[j,c(minc:maxc)]*(m - (c(minc:maxc) - delta)) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
       
     }
 
