@@ -1,10 +1,10 @@
 Package: ARIpermutation
 Type: Package
-Title: What the Package Does Using Title Case
+Title: Permutation-based ARI (All-Resolutions Inference) method
 Version: 1.0
 Date: 2020-02-10
-Author: Your Name
-Maintainer: Your Name <your@email.com>
+Author: Angela Andreella
+Maintainer: Angela Andreella <angela.andreella@phd.unipd.it>
 Description: More details about what the package does. See
          <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
          for details on how to write this part.
