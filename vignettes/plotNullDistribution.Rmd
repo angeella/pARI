@@ -1,0 +1,57 @@
+---
+title: "Plot simulate data"
+author: "Angela Andreella"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{toy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ARIpermutation)
+```
+
+```{r}
+m = 10000
+n = 20
+B = 1000
+SNR = 6
+pi0 = 0.7
+rho = 0.8
+```
+
+
+Create simulate data 
+
+```{r}
+sim <- sansSouci::gaussianSamples(m, rho, n, pi0, SNR = SNR, prob = 1)
+X <- sim$X #rows represent variables
+out <- ARIpermutation::testByRandomization(X,B)
+P <- t(cbind(out$p, out$p0))
+```
+
+So, we plot the null distribution
+
+```{r}
+#ARIpermutation::plotNullDistribution(P = P)
+```
+
+We add the Simes critical values:
+
+```{r}
+#ARIpermutation::plotNullDistribution(P = P ,family="Finner",alpha = 0.1, ct = c(0,1), delta = 0)
+```
+
+```{r}
+#ARIpermutation::plotNullDistribution(P = P ,family="Finner",alpha = 0.1, ct = c(0,1), delta = 7)
+```
+
+

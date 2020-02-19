@@ -14,7 +14,7 @@ cv <- function(pvalues, family, alpha, lambda, ct = NULL, delta = NULL){
   }
   if(family=="Finner"){
     
-    cv <- sapply(c(1:m), function(x) (((x-delta) * lambda * alpha)/(m - (x-delta) *(1 - lambda* alpha))))
+    cv <- sapply(c(1:m), function(x) (((x-delta) * lambda * alpha)/((m-delta) - (x-delta) *(1 - lambda* alpha))))
     
   }
 
