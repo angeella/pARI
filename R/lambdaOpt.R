@@ -11,6 +11,7 @@
 #family = Beta or Simes or Finner
 
 lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
+  if(is.unsorted(pvalues)){pvalues = rowSortC(pvalues)}
   l <- c()
   w <- dim(pvalues)[1]
   m <- dim(pvalues)[2]

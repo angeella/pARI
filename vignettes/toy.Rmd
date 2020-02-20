@@ -34,7 +34,7 @@ ct = c(0,1)
 alpha = 0.05
 family = "Simes"
 delta = 7
-B = 200
+B = 1000
 ```
 
 So, we apply the method considering the full set of variables, i.e. genes:
@@ -51,7 +51,7 @@ We have $3334$ false null hypothesis. Using the hommel method by Goeman et al.:
 ```{r}
 ix <- c(1:m)
 
-res <- testByRandomization(X, B = 200)
+res <- testByRandomization(X, B = 1000)
 
 praw <- res$p
 out1 <- hommel(praw)
@@ -71,9 +71,10 @@ out3 <- sapply(R, function(x) discoveriesPerm(out,ix = c(1:x))[[1]])
 
 out4 <- sapply(R, function(x) discoveries(out1, ix = c(1:x), alpha = 0.05))
 
-plot(R, out4/pmax(1,R), type = "l", col = "black", lwd = 1)
+plot(R, out4/pmax(1,R), type = "l", col = "black", lwd = 2, xlab = expression(S[(i)]), ylab = "TDP")
 lines(R, out3/pmax(1,R), type="l", col="red", lwd=2)
-
+legend(1000,1, legend=c("Permutation", "Parametric"),
+       col=c("red", "black"))
 ```
 
 ```{r}
@@ -90,7 +91,6 @@ sum( sapply(c(1:B), function(x) all(Psort[x,] >= out[[4]] )) )/B
 ```
 
 Higher criticism
-
 
 ```{r}
 sim <- sansSouci::gaussianSamples(m, rho = 0, n, pi0 = 0.5, SNR = 1, prob = 1)

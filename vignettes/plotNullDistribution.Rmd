@@ -20,12 +20,12 @@ library(ARIpermutation)
 ```
 
 ```{r}
-m = 10000
-n = 20
+m <- 1e4 #number of variables
+n <- 1e2 #number of observations
 B = 1000
-SNR = 6
-pi0 = 0.7
-rho = 0.8
+SNR = 5
+pi0 = 0.9
+rho = 0.4
 ```
 
 
