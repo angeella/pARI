@@ -11,7 +11,7 @@
 #family = Beta or Simes or Finner
 
 lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
-  if(is.unsorted(pvalues)){pvalues = rowSortC(pvalues)}
+  if(is.unsorted(pvalues[1,])){pvalues = rowSortC(pvalues)}
   l <- c()
   w <- dim(pvalues)[1]
   m <- dim(pvalues)[2]
@@ -26,7 +26,7 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
       #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
     }
     if(family == "Beta"){
-      lambda <- pbeta(pvalues[j,c(minc:maxc)],c(minc:maxc),m+1-c(minc:maxc))/alpha
+      lambda <- pbeta(q =pvalues[j,c(minc:maxc)],shape1 = c(minc:maxc),shape2 =m+1-c(minc:maxc))/alpha
       
     }
     
