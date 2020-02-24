@@ -13,3 +13,11 @@ signFlip <- function(X, B) {
     .Call(`_ARIpermutation_signFlip`, X, B)
 }
 
+varBySignFlipping <- function(X, B) {
+    .Call(`_ARIpermutation_varBySignFlipping`, X, B)
+}
+
+meanBySignFlipping <- function(X, B) {
+    .Call(`_ARIpermutation_meanBySignFlipping`, X, B)
+}
+

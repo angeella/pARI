@@ -26,7 +26,10 @@ testByRandomization <- function(X, B,
               #"less" = pnorm(T))
               "less" = 1-pnorm(T, lower.tail=FALSE))
     ## test statistics under H0
-    T0 <- signFlip(X,B)
+    #T0 <- signFlip(X,B)
+    T0_m <- meanBySignFlipping(X,B)
+    T0_v <- varBySignFlipping(X,B)
+    T0 <- T0_m/ sqrt((T0_v)/n)
     p0 <- switch(alternative, 
                  #"two.sided" = 2*(1 - pnorm(abs(T0))),
                  "two.sided" = 2*(pnorm(abs(T0), lower.tail=FALSE)),

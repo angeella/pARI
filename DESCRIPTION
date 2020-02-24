@@ -12,7 +12,9 @@ License: GPL (>= 2)
 Imports: 
     Rcpp (>= 1.0.3), 
     matrixStats, 
-    Matrix
+    Matrix,
+    RNifti,
+    fastcluster
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: 
     knitr,

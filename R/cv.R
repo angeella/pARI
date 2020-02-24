@@ -10,7 +10,7 @@ cv <- function(pvalues, family, alpha, lambda, ct = NULL, delta = NULL){
     cv <- sapply(c(1:m), function(x) (((x-delta) * alpha * lambda)/(m-delta)))
   }
   if(family=="Beta"){
-    cv <- qbeta(lambda, c(1:m),m+1-c(1:m))
+    cv <- qbeta(lambda*alpha, c(1:m),m+1-c(1:m))
   }
   if(family=="Finner"){
     

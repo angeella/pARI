@@ -8,12 +8,11 @@ cluster_threshold <- function(map, max_dist=sqrt(3)){
     # system.time(
     # {Suprathreshold_TF = cluster.threshold(spmT>=3.2, nmat=nmat,size.thr = .5)})
     # table(Suprathreshold_TF)
-    
+    map = ifelse(is.na(map), FALSE, map)
     #an alternative and faster way:
     Suprathreshold_TF=which(map,arr.ind = TRUE)
     #########
-    dd = dist(Suprathreshold_TF)
-    hc = hclust(dd, "single")
+    hc =  fastcluster::hclust.vector(Suprathreshold_TF, "single")
     # plot(hc)
     # ct = cutree(hc,k=5)
     # pander(table(ct))
@@ -33,6 +32,7 @@ cluster_threshold <- function(map, max_dist=sqrt(3)){
     rm(ct_new)
     #########
     cluster_map=array(0,dim(map))
+    #cluster_map=rep(0,length(map))
     cluster_map[map] =ct
     # pander::pander(table(cluster_map))
     # print(table(cluster_map))

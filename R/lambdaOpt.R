@@ -26,7 +26,7 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
       #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
     }
     if(family == "Beta"){
-      lambda <- pbeta(pvalues[j,c(minc:maxc)],c(minc:maxc),m+1-c(minc:maxc))
+      lambda <- pbeta(pvalues[j,c(minc:maxc)],c(minc:maxc),m+1-c(minc:maxc))/alpha
       
     }
     
