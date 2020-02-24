@@ -25,6 +25,8 @@ devtools::install_github("angeella/ARIpermutation")
 This is a basic example :
 
 ``` r
+library(ARIpermutation)
+
 m <- 20
 n <- 10
 X <- matrix(runif(0.5*m*n, 0, 0.05),ncol=n,nrow=0.5*m)
@@ -43,26 +45,18 @@ SingleStepCT(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000
 This is a basic example using fMRI data :
 
 ``` r
-
-Statmap <- system.file("extdata", "Statmap.nii", package = "ARIpermutation")
-mask <- system.file("extdata", "mask.nii.gz", package = "ARIpermutation")
-Pmap <- system.file("extdata", "pv_par.nii", package = "ARIpermutation")
-pvalues = system.file("extdata", "PvaluesPerm.Rda", package = "ARIpermutation")
-
 alpha = 0.05
-ct = c(0,1)
 thr = 3.2
-delta = 7
 
-out1 <- ARIpermutation::ARIpermCT(Pmap, thr, mask=mask, Statmap= Statmap, alpha = alpha, pvalues = pvalues, ct = ct, family = "Simes",type="perm", delta = 7)
+copes <- list()
+sub_ids <- sapply(c(21:40),function(x) paste0(0,x))
+for (sid in 1:length(sub_ids)) {  
+  copes[[sid]] <- RNifti::readNifti(system.file("extdata", paste0("/sub-", sub_ids[sid] , ".nii.gz"), package = "ARIpermutation"))
+  
+}
+mask <- system.file("extdata", "mask.nii.gz", package = "ARIpermutation")
 
-#Create Clusters using a threshold equal to 3.2
-Statmap = get_array(Statmap)
-mask = get_array(mask)
-Statmap[!mask]=0
-clstr=cluster_threshold(Statmap>3.2)
-
-res_ARI=ARIbrain::ARI(Pmap = pvalue_name, clusters= clstr, mask=mask, Statmap = Statmap)
+out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
 
 ```
 using the parametric method:
