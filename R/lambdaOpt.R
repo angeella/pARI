@@ -26,7 +26,7 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
       #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
     }
     if(family == "Beta"){
-      lambda <- pbeta(q =pvalues[j,c(minc:maxc)],shape1 = c(minc:maxc),shape2 =m+1-c(minc:maxc))/alpha
+      lambda <- pbeta(q =pvalues[j,c(minc:maxc)],shape1 = c(minc:maxc),shape2 =m+1-c(minc:maxc))
       
     }
     
@@ -36,12 +36,25 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
       lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
       
     }
+    
+    if(family =="HigherCriticism"){
+      
+      HigherCriticism <- function(lambda,pvalue){
+        
+        m <- length(pvalue)
+        i <- c(1:m)
+        (2*i + lambda^2 - sqrt((2*i + lambda^2)^2 - 4*i^2 * (m + lambda^2)/m))/(2*(m+ lambda^2)) - pvalue
+        
+      }
+      lambda <- sapply(c(1:m), function(x) rootSolve::uniroot.all(HigherCriticism,pvalue = pvalues[j,x],lower=0, upper=100)[1])
+      
+}
 
     l[j] <- min(lambda)
   }
   
   lambdaE <- sort(l)[floor(alpha*w)+1]
-  
+
   #nRej_Perm <- rejPerm(pvalues,min(ct))
   #quantRej_min <- sort(nRej_Perm)[ceiling((1-alpha)*w)]
   #if(quantRej_min>0){
