@@ -39,15 +39,17 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
     
     if(family =="HigherCriticism"){
       
-      HigherCriticism <- function(lambda,pvalue){
-        
-        m <- length(pvalue)
-        i <- c(1:m)
-        (2*i + lambda^2 - sqrt((2*i + lambda^2)^2 - 4*i^2 * (m + lambda^2)/m))/(2*(m+ lambda^2)) - pvalue
-        
-      }
-      lambda <- sapply(c(1:m), function(x) rootSolve::uniroot.all(HigherCriticism,pvalue = pvalues[j,x],lower=0, upper=100)[1])
+      lambda <- sqrt(m)*(c(minc:maxc)/m - pvalues[j,c(minc:maxc)])/(sqrt(pvalues[j,c(minc:maxc)]*(1-pvalues[j,c(minc:maxc)])))
       
+      #HigherCriticism <- function(lambda,pvalue){
+        
+      # m <- length(pvalue)
+      #  i <- c(1:m)
+      #  (2*i + lambda^2 - sqrt((2*i + lambda^2)^2 - 4*i^2 * (m + lambda^2)/m))/(2*(m+ lambda^2)) - pvalue
+        
+      #}
+      #lambda <- sapply(c(minc:maxc), function(x) rootSolve::uniroot.all(HigherCriticism,pvalue = pvalues[j,x],lower=0, upper=1000))
+      #lambda <- unlist(lambda)
 }
 
     l[j] <- min(lambda)
