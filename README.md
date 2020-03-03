@@ -59,6 +59,15 @@ mask <- system.file("extdata", "mask.nii.gz", package = "ARIpermutation")
 out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
 
 ```
+you can produce the True Discovey Proportion brain map:
+
+``` r
+
+map_TDP(out,path= getwd(), name = "tdp", mask)
+```
+
+
+
 using the parametric method:
 
 ``` r
