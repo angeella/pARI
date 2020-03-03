@@ -1,15 +1,18 @@
 #' @title Plot Permutation Pvalues
-#'  @param P permutation matrix pvalues where rows correspond to the permutation, default NULL
-#'  @param family Do you want to plot some cv family? It can be one or more, default NULL
-#'  @param alpha type I error allowed to construct the critical family, default 0.1
-#'  @param ct set of threshold to construct the critical family, default \code{c(0,1)}
-#'  @param path selected the path where the plot will be saved, if NULL the current working directory is used
-#'  @param name name plot pdf, if NULL plot is used
-#'  @param delta for the family critical values, default NULL
-#'  @param copes image copes instead of pvalues, default NULL
+#' @param P permutation matrix pvalues where rows correspond to the permutation, default NULL
+#' @family = which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL
+#' @param alpha type I error allowed to construct the critical family, default 0.1
+#' @param ct set of threshold to construct the critical family, default \code{c(0,1)}
+#' @param path selected the path where the plot will be saved, if NULL the current working directory is used
+#' @param name name plot pdf, if NULL plot is used
+#' @param delta for the family critical values, default NULL
+#' @param copes image copes instead of pvalues, default NULL
 
-plotNullDistribution <- function(P=NULL,family=NULL,alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL){
+family_set <- c("simes", "finner", "beta", "higher.criticism")
+
+plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL){
   
+  if(!is.null(family)){family <- match.arg(tolower(family), family_set)}
   if(is.null(copes) & is.null(P)){stop('Please insert pvalues matrix or copes images')}
   
   if(!is.null(P) & is.unsorted(P[1,])){pvalues_ord <- rowSortC(P)}

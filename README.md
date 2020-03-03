@@ -71,7 +71,6 @@ map_TDP(out,path= getwd(), name = "tdp", mask)
 using the parametric method:
 
 ``` r
-
 Statmap <- system.file("extdata/AuditoryData", "Statmap.nii", package = "ARIpermutation")
 mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
 Pmap <- system.file("extdata/AuditoryData", "Pvaluemap.nii", package = "ARIpermutation")
@@ -85,3 +84,17 @@ clstr=cluster_threshold(Statmap>3.2)
 res_ARI=ARIbrain::ARI(Pmap = Pmap, clusters= clstr, mask=mask, Statmap = Statmap)
 
 ```
+# References
+
+Rosenblatt, J. D., Finos, L., W., W. D., Solari, A., and Goeman, J. J. (2018). All-resolutions inference for brain imaging. NeuroImage, 181:786-796.
+
+Hemerik, J., Solari, A., and Goeman, J. J. (2019). Permutation-based simultaneous confidence bounds for the false discovery proportion. Biometrika, 106(3):635-649.
+
+Eklund, A., Nichols, E. T., and Knutsson, H. (2016). Cluster failure: Why fmri inferences for spatial extent have inflated false-positive rates. Pnas, 113(28):7900-7905.
+
+Blanchard, G., Neuvial, P., and Roquain, E. (2019). Post hoc confidence bounds on false positives using reference families. Submitted to the Annals of Statistics.
+
+# Do you find some bugs?
+
+Please write to angela.andreella AT stat DOT unipd DOT it or insert a reproducible example using [reprex](https://github.com/tidyverse/reprex) on my [issue github page](https://github.com/angeella/ARIpermutation/issues).
+

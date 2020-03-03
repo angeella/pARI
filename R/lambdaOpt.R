@@ -10,7 +10,10 @@
 #ct= vector of cutoffs
 #family = Beta or Simes or Finner
 
+family_set <- c("simes", "finner", "beta", "higher.criticism")
+
 lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
+  family <- match.arg(tolower(family), family_set)
   if(is.unsorted(pvalues[1,])){pvalues = rowSortC(pvalues)}
   l <- c()
   w <- dim(pvalues)[1]
@@ -19,18 +22,18 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
   for(j in 1:w){
     minc <- sum(pvalues[j,] <=min(ct)) + 1
     maxc <- sum(pvalues[j,] <=max(ct))
-    if(family =="Simes"){
+    if(family =="simes"){
       
       minc = minc + delta
       lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
       #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
     }
-    if(family == "Beta"){
+    if(family == "beta"){
       lambda <- pbeta(q =pvalues[j,c(minc:maxc)],shape1 = c(minc:maxc),shape2 =m+1-c(minc:maxc))
       
     }
     
-    if(family == "Finner"){
+    if(family == "finner"){
       minc = minc + delta
       #lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* c(minc:maxc) + (delta*pvalues[j,c(minc:maxc)]))))
       lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
@@ -38,7 +41,7 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
     }
     
     
-    if(family =="HigherCriticism"){
+    if(family =="higher.criticism"){
       
       lambda <- (sqrt(m)*((c(minc:maxc)/m) - pvalues[j,c(minc:maxc)]))/(sqrt(pvalues[j,c(minc:maxc)]*(1-pvalues[j,c(minc:maxc)])))
       
