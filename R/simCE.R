@@ -1,15 +1,15 @@
-# Simulation Confidence Envelope using the gaussianSamples function from the package sansSouci
-##
-# @param m Number of variables, i.e. hypotheses
-# @param n Number of observations
-# @param pi0 Proportion of true null hypotheses
-# @param B number of permutations
-# @param rho Level of equi-correlation between pairs of variables
-# @param SNR Signal to noise ratio
-# @param alpha significance level
-# @param delta which size set do you want to consider at least?
-# @param ct set of threshold
-# @param family family of confidence bound
+#' @title Simulation Confidence Envelope
+#' @description Simulation Confidence Envelope using the gaussianSamples function from the package sansSouci
+#' @param m Number of variables, i.e. hypotheses
+#' @param n Number of observations
+#' @param pi0 Proportion of true null hypotheses
+#' @param B number of permutations
+#' @param rho Level of equi-correlation between pairs of variables
+#' @param SNR Signal to noise ratio
+#' @param alpha significance level
+#' @param delta which size set do you want to consider at least?
+#' @param ct set of threshold
+#' @param family family of confidence bound
 
 simCE <- function(m,n,pi0,B,rho,SNR,alpha,delta,ct,family){
   

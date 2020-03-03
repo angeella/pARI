@@ -37,9 +37,10 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
       
     }
     
+    
     if(family =="HigherCriticism"){
       
-      lambda <- sqrt(m)*(c(minc:maxc)/m - pvalues[j,c(minc:maxc)])/(sqrt(pvalues[j,c(minc:maxc)]*(1-pvalues[j,c(minc:maxc)])))
+      lambda <- (sqrt(m)*((c(minc:maxc)/m) - pvalues[j,c(minc:maxc)]))/(sqrt(pvalues[j,c(minc:maxc)]*(1-pvalues[j,c(minc:maxc)])))
       
       #HigherCriticism <- function(lambda,pvalue){
         

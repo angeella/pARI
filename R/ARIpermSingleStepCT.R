@@ -5,7 +5,7 @@
 #' @param mask = mask map, niftiImage class object or path
 #' @param alpha = alpha level
 #' @param delta = sdo you want to consider at least delta size set?
-#' @summary_stat = Choose among \code{=c("max", "center-of-mass")}
+#' @param summary_stat = Choose among \code{=c("max", "center-of-mass")}
 #' @param silent \code{FALSE} by default.
 #' @family = if permutation approach, which family for the confidence envelope?
 #' @author Angela Andreella
@@ -30,11 +30,11 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   resO <-oneSample(X=scores,alternative = "two.sided")
   
   scores <- scores[which(mask==1),]
-  res <- testByRandomization(X=scores, B = 1000,alternative = "two.sided") #variables times number of permutation
+  res <- signTest(X=scores, perms = 1000,alternative = "two.sided") #variables times number of permutation
   
-  pvalues <- cbind(res$p,res$p0)
+  pvalues <- cbind(res$pv,res$pv_H0)
   pvalues = t(pvalues)
-  Statmap = array(data = resO$T, dim = c(91,109,91))
+  Statmap = array(data = resO$Test, dim = c(91,109,91))
   Statmap[!mask]=0
   rm(res)
   rm(scores)

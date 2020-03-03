@@ -1,3 +1,20 @@
+#' @title Lower bound true discoveries
+#' @description Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses
+#' @param ix = set-wise of hypotheses considered
+#' @param cv = vector of critical values
+#' @param praw = raw pvalues
+#' @author Angela Andreella
+#' @return Returns the lower confidence bound
+#' @export
+
+dI <- function(ix,cv,praw){
+  
+  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
+  d <- max(u)
+  return(d)
+}
+
+
 #######################Largest size of hyp not rejected by the local test###############
 
 #Lemma 8 admissible paper GS 2019
@@ -26,12 +43,7 @@
 #praw = pvalues raw
 #h = from hI
 
-dI <- function(ix,cv,praw){
-  
-  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
-  d <- max(u)
-  return(d)
-}
+
 
 
 
