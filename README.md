@@ -77,10 +77,10 @@ mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermuta
 Pmap <- system.file("extdata/AuditoryData", "Pvaluemap.nii", package = "ARIpermutation")
 
 #Create Clusters using a threshold equal to 3.2
-Statmap = ARIbrain::get_array(Statmap)
-mask = ARIbrain::get_array(mask)
+Statmap = get_array(Statmap)
+mask = get_array(mask)
 Statmap[!mask]=0
-clstr=cluster_threshold(Tmap>3.2)
+clstr=cluster_threshold(Statmap>3.2)
 
 res_ARI=ARIbrain::ARI(Pmap = Pmap, clusters= clstr, mask=mask, Statmap = Statmap)
 
