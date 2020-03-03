@@ -16,7 +16,7 @@
 ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
                       summary_stat=c("max", "center-of-mass"),silent=FALSE, family = NULL, delta = NULL, B = 1000, ...){
   
-  if(is.character(mask)){mask = readNifti(mask)}
+  if(is.character(mask)){mask = RNifti::readNifti(mask)}
   if(!is.list(copes)){stop("Please insert the list of copes as list class object")}
 
   img_dims <- c(91,  109 , 91)
