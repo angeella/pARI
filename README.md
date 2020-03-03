@@ -94,7 +94,7 @@ Eklund, A., Nichols, E. T., and Knutsson, H. (2016). Cluster failure: Why fmri i
 
 Blanchard, G., Neuvial, P., and Roquain, E. (2019). Post hoc confidence bounds on false positives using reference families. Submitted to the Annals of Statistics.
 
-# Do you find some bugs?
+# Did you find some bugs?
 
 Please write to angela.andreella AT stat DOT unipd DOT it or insert a reproducible example using [reprex](https://github.com/tidyverse/reprex) on my [issue github page](https://github.com/angeella/ARIpermutation/issues).
 
