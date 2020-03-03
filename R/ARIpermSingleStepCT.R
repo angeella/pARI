@@ -93,7 +93,7 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   
   # attr(out,"call")=called
   if(!silent) print(out)
-  out
+  return(list(out = out,clusters = clusters))
 }
 
 
