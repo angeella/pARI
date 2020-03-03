@@ -1,7 +1,9 @@
 #' @title Higher Criticism 
 #' @description Performs HC by Donoho and Jim
 #' @param p = ordered raw pvalues
-
+#' @author Angela Andreella
+#' @return lhc
+#' @export
 
 
 

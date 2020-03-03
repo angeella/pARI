@@ -5,22 +5,24 @@
 #' @param mask = mask map, niftiImage class object or path
 #' @param alpha = alpha level
 #' @param clusters = clusters map as niftiImage class object or path, if NULL it is computed considering the threshold 3.2
-#' @param summary_stat = Choose among \code{=c("max", "center-of-mass")}
+#' @param summary_stat Choose among \code{=c("max", "center-of-mass")}
 #' @param silent \code{FALSE} by default.
-#' @family = which family for the confidence envelope? simes, finner, beta or higher.criticism. default is simes
-#' @param delta = sdo you want to consider at least delta size set?
-#' @B = number of permutation, default 1000
+#' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is simes
+#' @param delta do you want to consider at least delta size set?
+#' @param B number of permutation, default 1000
+#' @param ct set of thresholds
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{discoveries} number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
 #' @export
 
-family_set <- c("simes", "finner", "beta", "higher.criticism")
 
 ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
-                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ...){
+                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1), ...){
+  
+  family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
-  if(is.character(mask)){mask = RNifti::readNifti(mask)}
+  if(is.character(mask)){mask = readNifti(mask)}
   if(!is.list(copes)){stop("Please insert the list of copes as list class object")}
 
   img_dims <- c(91,  109 , 91)
@@ -47,7 +49,7 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   rm(img)
   
   if(is.null(clusters) & !is.null(thr)){clusters <- cluster_threshold(Statmap>thr)}else{
-    if(is.character(clusters)){clusters = RNifti::readNifti(clusters)}
+    if(is.character(clusters)){clusters = readNifti(clusters)}
   } 
   #clusters = get_array(clusters,map_dims=dim(Pmap))
 
@@ -82,7 +84,7 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   }
   
   #apply summaries to each cluster (and all the rest in an extra cluster)
-    out=plyr::laply(clstr_id,function(i){
+    out=laply(clstr_id,function(i){
       ix=clusters==i
       ix[-mask]=FALSE
       

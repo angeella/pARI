@@ -12,7 +12,7 @@ cluster_threshold <- function(map, max_dist=sqrt(3)){
     #an alternative and faster way:
     Suprathreshold_TF=which(map,arr.ind = TRUE)
     #########
-    hc =  fastcluster::hclust.vector(Suprathreshold_TF, "single")
+    hc =  hclust.vector(Suprathreshold_TF, "single")
     # plot(hc)
     # ct = cutree(hc,k=5)
     # pander(table(ct))

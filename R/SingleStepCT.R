@@ -1,11 +1,12 @@
 #' @title Single Step Permutation-based method
 #' @description Performs single step method based on confidence envelope constructed by sign flipping 
-#' @param X = data matrix (rows represent variables, columns observations), the first rows are the raw pvalues.
-#' @param ct = set of thresholds of interest
-#' @param alpha = alpha level
-#' @param family = rfamily of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta
-#' @param delta = do you want to consider at least delta size set?
-#' @ix = set of hypothesis of interest
+#' @param X data matrix (rows represent variables, columns observations), the first rows are the raw pvalues.
+#' @param ct set of thresholds of interest
+#' @param alpha alpha level
+#' @param family family of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta
+#' @param delta do you want to consider at least delta size set?
+#' @param ix set of hypothesis of interest
+#' @param B number of permutations
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{discoveries} number of discoveries in the set selected, \code{pvalues} raw pvalues
 #' @export

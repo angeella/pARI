@@ -1,12 +1,14 @@
 #' @title Plot Permutation Pvalues
 #' @param P permutation matrix pvalues where rows correspond to the permutation, default NULL
-#' @family = which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL
+#' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL
 #' @param alpha type I error allowed to construct the critical family, default 0.1
 #' @param ct set of threshold to construct the critical family, default \code{c(0,1)}
 #' @param path selected the path where the plot will be saved, if NULL the current working directory is used
 #' @param name name plot pdf, if NULL plot is used
 #' @param delta for the family critical values, default NULL
 #' @param copes image copes instead of pvalues, default NULL
+#' @return Returns plot null distribution with critical value curve and observed pvalues in red
+#' @export
 
 family_set <- c("simes", "finner", "beta", "higher.criticism")
 
@@ -32,9 +34,9 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     
     scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
     scores <- scores[which(mask==1),]
-    res <- testByRandomization(X=scores, B = 1000,alternative = "two.sided") #variables times number of permutation
+    res <- signTest(X=scores, B = 1000,alternative = "two.sided") #variables times number of permutation
     
-    pvalues <- cbind(res$p,res$p0)
+    pvalues <- cbind(res$pv,res$pv_H0)
     pvalues = t(pvalues)
     rm(res)
     rm(scores)

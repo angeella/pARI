@@ -43,23 +43,3 @@ arma::mat signFlip(arma::mat X, double B) {
 #str(T)
 */
 
-
-
-
-
-arma::mat testByPermutation(arma::mat X, NumericVector cls, double B) {
-  int m = X.n_rows;
-  //    int n = X.n_cols;
-  arma::mat T(m, B, arma::fill::zeros);
-  
-  // arma::vec eps;
-  // arma::mat Tb;
-  //    RNGScope scope;
-  int bb, ii;
-  for (bb=0; bb<B; bb++) {
-    for (ii=0; ii<m; ii++) {
-      // TODO!
-    }
-  }
-  return(T);
-}

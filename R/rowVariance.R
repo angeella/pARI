@@ -1,6 +1,7 @@
 #' @title Rows Variance
 #' @description Performs the variance for each row in a matrix
-#' @param X = data where rows represents the variables and columns the observations
+#' @param X data where rows represents the variables and columns the observations
+#' @param na.rm remove na? 
 #' @author Angela Andreella
 #' @return rows variance
 #' @export

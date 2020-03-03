@@ -1,18 +1,17 @@
-###########################Lambda Optimal############################
-
-#For every permutation, I compute the best possible lambda. Then I take the alpha w +1quantile due to discreteness.
-
-#The idea with the min and max cut-offs is that you only take into account the p-values between 
-#these cut-offs. So the smaller the interval (mincutoff, maxcutoff) is, the more power you will have. 
-#The interval (mincutoff, maxcutoff) corresponds with the set \Gamma in the paper.
-
-#pvalues = ordered pvalues 
-#ct= vector of cutoffs
-#family = Beta or Simes or Finner
+#' @title Lambda calibration
+#' @description compute lambda parameter
+#' @param pvalues pvalues raw
+#' @param family family
+#' @param alpha alpha
+#' @param ct set threshold
+#' @param delta delta
+#' @author Angela Andreella
+#' @return lambda
+#' @export
 
 family_set <- c("simes", "finner", "beta", "higher.criticism")
 
-lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
+lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
   family <- match.arg(tolower(family), family_set)
   if(is.unsorted(pvalues[1,])){pvalues = rowSortC(pvalues)}
   l <- c()
@@ -72,22 +71,22 @@ lambdaOpt <- function(pvalues, family, ct, alpha, delta = NULL){
 }
 
 
-lambdaOptAprox <- function(pvalues, family, ct = tS, alpha, shift = delta,cb, Kc){
-  l <- c()
-  w <- dim(pvalues)[1]
-  m <- dim(pvalues)[2]
-  quant <- (pvalues+shift)*m/(alpha)
-  lambdaA <- c()
-  for(j in 1:w){
-    minc <- sum(pvalues[j,Kc[,cb]] <=min(ct)) + 1
-    maxc <- sum(pvalues[j,Kc[,cb]] <=max(ct))
+#lambdaOptAprox <- function(pvalues, family, ct = tS, alpha, shift = delta,cb, Kc){
+#  l <- c()
+#  w <- dim(pvalues)[1]
+#  m <- dim(pvalues)[2]
+#  quant <- (pvalues+shift)*m/(alpha)
+#  lambdaA <- c()
+#  for(j in 1:w){
+#    minc <- sum(pvalues[j,Kc[,cb]] <=min(ct)) + 1
+#    maxc <- sum(pvalues[j,Kc[,cb]] <=max(ct))
+#    
+#    if(is.null(shift)){shift = 0}
+#    lambdaA[j] <- min(sapply(c(minc:maxc), function(x) quant[j, Kc[   sort.list(pvalues[j,Kc[,cb]])[x] ,cb   ] ]/x  ))
+#    #lamb <- min(lamb,  betaquantsS[, combs2[   sort.list(pvmatr.uns[j,combs2[,c]]),c]][j,a]/a  )
     
-    if(is.null(shift)){shift = 0}
-    lambdaA[j] <- min(sapply(c(minc:maxc), function(x) quant[j, Kc[   sort.list(pvalues[j,Kc[,cb]])[x] ,cb   ] ]/x  ))
-    #lamb <- min(lamb,  betaquantsS[, combs2[   sort.list(pvmatr.uns[j,combs2[,c]]),c]][j,a]/a  )
     
-    
-  }
+#  }
   
   
   # nRej_Perm <- rejPerm(pvalues,min(ct))
@@ -95,5 +94,5 @@ lambdaOptAprox <- function(pvalues, family, ct = tS, alpha, shift = delta,cb, Kc
   # if(quantRej_min>0){
   #   lambdaE <- min(lambdaE, (min(ct) + shift)*m/(quantRej_min*alpha))}
   
-  return(lambdaA)
-}
+#  return(lambdaA)
+#}

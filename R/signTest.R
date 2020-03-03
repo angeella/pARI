@@ -1,17 +1,18 @@
 #' @title Sign-Flipping Test
 #' @description Performs sign-flipping, i.e. permutation, one-sample t-tests
-#' @param X = data where rows represents the variables and columns the observations
-#' @param B = number of permutations to perform, default is 1000.
-#' @param alternative = character referring to the alternative hypothesis, "two.sided", "greater" or "less". Default is "two.sided"
-#' @param seed = specify seed, default is 1234.
+#' @param X data where rows represents the variables and columns the observations
+#' @param B number of permutations to perform, default is 1000.
+#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "less". Default is "two.sided"
+#' @param seed specify seed, default is 1234.
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
 #' @export
 
 
-alternative_set <- c("two.sided", "greater", "lower")
 
 signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL){
+  
+  alternative_set <- c("two.sided", "greater", "lower")
   
   if(!is.null(seed)){set.seed(seed)}else{set.seed(1234)}
   

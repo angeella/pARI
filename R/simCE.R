@@ -10,18 +10,20 @@
 #' @param delta which size set do you want to consider at least?
 #' @param ct set of threshold
 #' @param family family of confidence bound
+#' @return simulation CE
+#' @export
 
 simCE <- function(m,n,pi0,B,rho,SNR,alpha,delta,ct,family){
   
-  sim <- sansSouci::gaussianSamples(m, rho, n, pi0, SNR = SNR, prob = 1)
+  sim <- gaussianSamples(m, rho, n, pi0, SNR = SNR, prob = 1)
   X <- sim$X #rows represent variables
-  out <- ARIpermutation::testByRandomization(X,B)
-  P <- t(cbind(out$p, out$p0)) #rows represent the permutations  
+  out <- signTest(X,B)
+  P <- t(cbind(out$pv, out$pv_H0)) #rows represent the permutations  
   P_ord <- rowSortC(P)
   p <- P[1,]
   
-  lambda <- ARIpermutation::lambdaOpt(P_ord, family = family, ct = ct, alpha = alpha, delta = delta)
-  cv <- ARIpermutation::cv(pvalues=P_ord, family= family, alpha = alpha, delta = delta, lambda = lambda, ct = ct)
+  lambda <- lambdaOpt(P_ord, family = family, ct = ct, alpha = alpha, delta = delta)
+  cv <- cv(pvalues=P_ord, family= family, alpha = alpha, delta = delta, lambda = lambda, ct = ct)
   
   #Compute the largest size of a set of hyp not rejected by our local test
   #h <- hI(p, cv)

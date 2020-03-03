@@ -2,7 +2,10 @@
 #' @description performs lower confidence bound of true discoveries using permutation local test.
 #' @param ix The selection of hypotheses considered
 #' @param cv critical values 
-#'  @param p raw pvalues
+#' @param p raw pvalues
+#' @author Angela Andreella
+#' @return lower bounds discoveries
+#' @export
 
 TDPerm <- function(ix,cv,p){
   discoveries <- dI(ix,cv,p)

@@ -1,3 +1,6 @@
 useDynLib(ARIpermutation, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
+importFrom("grDevices", "dev.off", "png")
+importFrom("graphics", "lines", "plot")
+importFrom("stats", "cutree", "pbeta", "pnorm", "qbeta")
 exportPattern("^[[:alpha:]]+")
