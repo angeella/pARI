@@ -96,5 +96,5 @@ Blanchard, G., Neuvial, P., and Roquain, E. (2019). Post hoc confidence bounds o
 
 # Did you find some bugs?
 
-Please write to angela.andreella AT stat DOT unipd DOT it or insert a reproducible example using [reprex](https://github.com/tidyverse/reprex) on my [issue github page](https://github.com/angeella/ARIpermutation/issues).
+Please write to angela.andreella[\at]stat[\dot]unipd[\dot]it or insert a reproducible example using [reprex](https://github.com/tidyverse/reprex) on my [issue github page](https://github.com/angeella/ARIpermutation/issues).
 
