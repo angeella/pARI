@@ -8,12 +8,13 @@
 #' @param summary_stat = Choose among \code{=c("max", "center-of-mass")}
 #' @param silent \code{FALSE} by default.
 #' @family = if permutation approach, which family for the confidence envelope?
+#' @B = number of permutation, default 1000
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{discoveries} number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
 #' @export
 
 ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
-                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = NULL, delta = NULL, ...){
+                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = NULL, delta = NULL, B = 1000, ...){
   
   if(is.character(mask)){mask = readNifti(mask)}
   if(!is.list(copes)){stop("Please insert the list of copes as list class object")}
@@ -30,7 +31,7 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   resO <-oneSample(X=scores,alternative = "two.sided")
   
   scores <- scores[which(mask==1),]
-  res <- signTest(X=scores, perms = 1000,alternative = "two.sided") #variables times number of permutation
+  res <- signTest(X=scores, B = B,alternative = "two.sided") #variables times number of permutation
   
   pvalues <- cbind(res$pv,res$pv_H0)
   pvalues = t(pvalues)
