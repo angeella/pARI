@@ -12,8 +12,8 @@
 
 SingleStepCT <- function(X,ct, ix, alpha, family, delta= NULL, B){
 
-  out <- testByRandomization(X, B = B)
-  P <- t(cbind(out$p, out$p0))
+  out <- signTest(X, B = B)
+  P <- t(cbind(out$pv, out$pv_H0))
   P_ord <- rowSortC(P)
   p <- P[1,]
 
