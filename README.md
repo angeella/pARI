@@ -51,10 +51,10 @@ thr = 3.2
 copes <- list()
 sub_ids <- sapply(c(21:40),function(x) paste0(0,x))
 for (sid in 1:length(sub_ids)) {  
-  copes[[sid]] <- RNifti::readNifti(system.file("extdata", paste0("/sub-", sub_ids[sid] , ".nii.gz"), package = "ARIpermutation"))
+  copes[[sid]] <- RNifti::readNifti(system.file("extdata/AuditoryData", paste0("/sub-", sub_ids[sid] , ".nii.gz"), package = "ARIpermutation"))
   
 }
-mask <- system.file("extdata", "mask.nii.gz", package = "ARIpermutation")
+mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
 
 out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
 
@@ -72,10 +72,9 @@ using the parametric method:
 
 ``` r
 
-Statmap <- system.file("extdata", "Statmap.nii", package = "ARIpermutation")
-mask <- system.file("extdata", "mask.nii.gz", package = "ARIpermutation")
-Pmap <- system.file("extdata", "pv_par.nii", package = "ARIpermutation")
-pvalues = system.file("extdata", "PvaluesPerm.Rda", package = "ARIpermutation")
+Statmap <- system.file("extdata/AuditoryData", "Statmap.nii", package = "ARIpermutation")
+mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
+Pmap <- system.file("extdata/AuditoryData", "Pvaluemap.nii", package = "ARIpermutation")
 
 #Create Clusters using a threshold equal to 3.2
 Statmap = ARIbrain::get_array(Statmap)
@@ -83,6 +82,6 @@ mask = ARIbrain::get_array(mask)
 Statmap[!mask]=0
 clstr=cluster_threshold(Tmap>3.2)
 
-res_ARI=ARIbrain::ARI(Pmap = pvalue_name, clusters= clstr, mask=mask, Statmap = Statmap)
+res_ARI=ARIbrain::ARI(Pmap = Pmap, clusters= clstr, mask=mask, Statmap = Statmap)
 
 ```
