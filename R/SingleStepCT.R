@@ -34,32 +34,19 @@ SingleStepCT <- function(X,ct, ix, alpha, family, delta= NULL, B){
   
 }
 
-cvhPerm <- function(praw, alpha, shift, family, lambda){
+#cvhPerm <- function(praw, alpha, shift, family, lambda){
   #p <- pvalues[1,]
 
-  cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
+#  cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
   
   #Compute the largest size of a set of hyp not rejected by our local test
-  h <- hI(praw, cv)
+#  h <- hI(praw, cv)
   
-  cvh <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/h)- shift)
+#  cvh <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/h)- shift)
   
-  return(cvh)
+#  return(cvh)
   
-}
+#}
 
-discoveriesPerm <- function(out, ix){
-  praw <- out[[3]]
-  cv <- out[[4]]
-  discoveries <- dI(ix,cv,praw)
-  TDP <- discoveries/length(ix)
-  
-  return(list(discoveries = discoveries, TDP = TDP, praw = praw))
-  
-}
 
-#a<-SingleStepCT(pvalues=pvalues,ct=c(0.001,0.01), ix = c(1:4000), alpha = 0.1, shift = 0, family='Simes', lambda =1)
-#a[[1]]
-#discoveries(hommel(p = pvalues[1,],simes = TRUE),alpha=0.1,ix = c(1:4000))
-#I have two discoveries more.
 
