@@ -1,8 +1,9 @@
 #' @title Lower bound true discoveries
 #' @description Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses
-#' @param ix = set-wise of hypotheses considered
-#' @param cv = vector of critical values
-#' @param praw = raw pvalues
+#' @usage dI(ix,cv,praw)
+#' @param ix set-wise of hypotheses considered
+#' @param cv vector of critical values
+#' @param praw raw pvalues
 #' @author Angela Andreella
 #' @return Returns the lower confidence bound
 #' @export

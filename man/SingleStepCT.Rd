@@ -4,7 +4,7 @@
 \alias{SingleStepCT}
 \title{Single Step Permutation-based method}
 \usage{
-SingleStepCT(X, ct, ix, alpha, family, delta = NULL, B)
+SingleStepCT(X,ct, ix, alpha, family, delta= NULL, B)
 }
 \arguments{
 \item{X}{data matrix (rows represent variables, columns observations), the first rows are the raw pvalues.}

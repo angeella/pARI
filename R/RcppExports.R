@@ -2,18 +2,18 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 rowSortC <- function(X) {
-    .Call(`_ARIpermutation_rowSortC`, X)
+    .Call('_ARIpermutation_rowSortC', PACKAGE = 'ARIpermutation', X)
 }
 
 signFlip <- function(X, B) {
-    .Call(`_ARIpermutation_signFlip`, X, B)
+    .Call('_ARIpermutation_signFlip', PACKAGE = 'ARIpermutation', X, B)
 }
 
 varBySignFlipping <- function(X, B) {
-    .Call(`_ARIpermutation_varBySignFlipping`, X, B)
+    .Call('_ARIpermutation_varBySignFlipping', PACKAGE = 'ARIpermutation', X, B)
 }
 
 meanBySignFlipping <- function(X, B) {
-    .Call(`_ARIpermutation_meanBySignFlipping`, X, B)
+    .Call('_ARIpermutation_meanBySignFlipping', PACKAGE = 'ARIpermutation', X, B)
 }
 

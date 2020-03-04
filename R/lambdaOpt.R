@@ -1,5 +1,6 @@
 #' @title Lambda calibration
 #' @description compute lambda parameter
+#' @usage lambdaOpt(pvalues,family,ct,alpha, delta = NULL)
 #' @param pvalues pvalues raw
 #' @param family family
 #' @param alpha alpha
@@ -8,10 +9,12 @@
 #' @author Angela Andreella
 #' @return lambda
 #' @export
+#' @importFrom stats pbeta
 
-family_set <- c("simes", "finner", "beta", "higher.criticism")
 
 lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
+  family_set <- c("simes", "finner", "beta", "higher.criticism")
+  
   family <- match.arg(tolower(family), family_set)
   if(is.unsorted(pvalues[1,])){pvalues = rowSortC(pvalues)}
   l <- c()

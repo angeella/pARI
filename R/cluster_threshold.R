@@ -1,3 +1,13 @@
+#' @title Compute cluster map
+#' @description given a threshold, e.g. 3.2, the function returns the map of clusters
+#' @usage cluster_threshold(map, max_dist)
+#' @param map Statistic Parametric Mapping used to create the cluster map
+#' @param max_dist maximum distance to cut the tree
+#' @author Livio Finos
+#' @return Returns cluster map
+#' @export
+#' @importFrom fastcluster hclust.vector
+#' @importFrom stats cutree 
 
 cluster_threshold <- function(map, max_dist=sqrt(3)){
     ### slower:

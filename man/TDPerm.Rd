@@ -4,7 +4,7 @@
 \alias{TDPerm}
 \title{True Discovery Permutation}
 \usage{
-TDPerm(ix, cv, p)
+TDPerm(ix,cv,p)
 }
 \arguments{
 \item{ix}{The selection of hypotheses considered}

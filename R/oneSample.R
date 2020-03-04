@@ -1,5 +1,6 @@
 #' @title One Sample t test
 #' @description Performs One Sample t test
+#' @usage oneSample(X,alternative)
 #' @param X data where rows represents the variables and columns the observations
 #' @param alternative = character referring to the alternative hypothesis, "two.sided", "greater" or "less". Default is "two.sided"
 #' @author Angela Andreella

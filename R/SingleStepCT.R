@@ -1,5 +1,6 @@
 #' @title Single Step Permutation-based method
 #' @description Performs single step method based on confidence envelope constructed by sign flipping 
+#' @usage SingleStepCT(X,ct, ix, alpha, family, delta= NULL, B)
 #' @param X data matrix (rows represent variables, columns observations), the first rows are the raw pvalues.
 #' @param ct set of thresholds of interest
 #' @param alpha alpha level

@@ -4,14 +4,14 @@
 \alias{dI}
 \title{Lower bound true discoveries}
 \usage{
-dI(ix, cv, praw)
+dI(ix,cv,praw)
 }
 \arguments{
-\item{ix}{= set-wise of hypotheses considered}
+\item{ix}{set-wise of hypotheses considered}
 
-\item{cv}{= vector of critical values}
+\item{cv}{vector of critical values}
 
-\item{praw}{= raw pvalues}
+\item{praw}{raw pvalues}
 }
 \value{
 Returns the lower confidence bound

@@ -1,4 +1,5 @@
 #' @title Summary permutation ROI
+#' @usage summary_perm_roi(cv,ix,pvalues)
 #' @description Performs Single step closed testing using permutation local test
 #' @param cv = vector of critical values
 #' @param ix = vector of index regarding the set of hypothesis to analyze

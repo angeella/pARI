@@ -1,5 +1,6 @@
 #' @title True Discovery Permutation
 #' @description performs lower confidence bound of true discoveries using permutation local test.
+#' @usage  TDPerm(ix,cv,p)
 #' @param ix The selection of hypotheses considered
 #' @param cv critical values 
 #' @param p raw pvalues

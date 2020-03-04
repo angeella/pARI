@@ -1,23 +1,25 @@
 #' @title ARI Permutation-based 
 #' @description Performs ARI using permutation local test
-#' @param copes = list of copes map
-#' @param thr = threshold to construct cluster map
-#' @param mask = mask map, niftiImage class object or path
-#' @param alpha = alpha level
-#' @param clusters = clusters map as niftiImage class object or path, if NULL it is computed considering the threshold 3.2
-#' @param summary_stat Choose among \code{=c("max", "center-of-mass")}
-#' @param silent \code{FALSE} by default.
+#' @usage ARIpermCT(copes, thr, mask, alpha, clusters,summary_stat,silent, family, delta, B, ct)
+#' @param copes list of copes map
+#' @param thr threshold to construct cluster map
+#' @param mask mask map, niftiImage class object or path
+#' @param alpha alpha level
+#' @param clusters clusters map as niftiImage class object or path, if NULL it is computed considering the threshold 3.2
+#' @param summary_stat Choose among "max", "center-of-mass"
+#' @param silent FALSE by default.
 #' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is simes
 #' @param delta do you want to consider at least delta size set?
 #' @param B number of permutation, default 1000
 #' @param ct set of thresholds
 #' @author Angela Andreella
-#' @return Returns a list with the following objects: \code{discoveries} number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
+#' @return Returns a list with the following objects: discoveries number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
 #' @export
-
+#' @importFrom RNifti readNifti
+#' @importFrom plyr laply
 
 ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
-                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1), ...){
+                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1)){
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   

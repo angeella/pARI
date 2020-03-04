@@ -1,5 +1,6 @@
 #' @title Critical value
 #' @description compute critical values curve 
+#' @usage cv(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL)
 #' @param pvalues pvalues raw
 #' @param family family
 #' @param alpha alpha
@@ -9,10 +10,12 @@
 #' @author Angela Andreella
 #' @return critical value curve
 #' @export
+#' @importFrom stats qbeta
 
-family_set <- c("simes", "finner", "beta", "higher.criticism")
 
 cv <- function(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL){
+  family_set <- c("simes", "finner", "beta", "higher.criticism")
+  
   family <- match.arg(tolower(family), family_set)
   w <- dim(pvalues)[1]
   m <- dim(pvalues)[2]

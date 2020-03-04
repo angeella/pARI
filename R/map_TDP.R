@@ -1,12 +1,14 @@
 #' @title map True Discovery Proportion
 #' @description Performs brain map True Discovery Proportion
-#' @param ARIout = output object ARI permutation
-#' @param path = path
-#' @param name = name
-#' @param mask = mask map, niftiImage class object or path
+#' @usage map_TDP(ARIout,path,name,mask)
+#' @param ARIout output object ARI permutation
+#' @param path path
+#' @param name name
+#' @param mask mask map, niftiImage class object or path
 #' @author Angela Andreella
 #' @return Returns a TDP map
 #' @export
+#' @importFrom RNifti writeNifti
 
 map_TDP <- function(ARIout,path= getwd(), name = "tdp", mask){
   

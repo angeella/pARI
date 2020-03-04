@@ -4,7 +4,7 @@
 \alias{get_array}
 \title{get_array}
 \usage{
-get_array(map, map_dims = NULL)
+get_array(map,map_dims=NULL)
 }
 \arguments{
 \item{map}{array, character giving the nii file (address and) name.}

@@ -19,7 +19,9 @@ Imports:
     datasets,
     grDevices,
     graphics,
-    plyr
+    plyr,
+    sansSouci,
+    hommel
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: 
     knitr,
@@ -27,3 +29,4 @@ Suggests:
     cherry,
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
+Encoding: UTF-8

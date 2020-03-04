@@ -4,7 +4,7 @@
 \alias{simCE}
 \title{Simulation Confidence Envelope}
 \usage{
-simCE(m, n, pi0, B, rho, SNR, alpha, delta, ct, family)
+simCE(m,n,pi0,B,rho,SNR,alpha,delta,ct,family)
 }
 \arguments{
 \item{m}{Number of variables, i.e. hypotheses}

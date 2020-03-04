@@ -1,18 +1,26 @@
 #' @title Plot Permutation Pvalues
+#' @description create plot permutation pvalues with corresponding critical vectors
+#' @usage plotNullDistribution(P,family,alpha, ct, path, name, delta,copes,mask)
 #' @param P permutation matrix pvalues where rows correspond to the permutation, default NULL
 #' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL
 #' @param alpha type I error allowed to construct the critical family, default 0.1
-#' @param ct set of threshold to construct the critical family, default \code{c(0,1)}
+#' @param ct set of threshold to construct the critical family, default c(0,1)
 #' @param path selected the path where the plot will be saved, if NULL the current working directory is used
 #' @param name name plot pdf, if NULL plot is used
 #' @param delta for the family critical values, default NULL
 #' @param copes image copes instead of pvalues, default NULL
+#' @param mask mask
 #' @return Returns plot null distribution with critical value curve and observed pvalues in red
 #' @export
+#' @importFrom grDevices png
+#' @importFrom grDevices dev.off
+#' @importFrom graphics plot
+#' @importFrom graphics lines
 
-family_set <- c("simes", "finner", "beta", "higher.criticism")
 
 plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL){
+  
+  family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   if(!is.null(family)){family <- match.arg(tolower(family), family_set)}
   if(is.null(copes) & is.null(P)){stop('Please insert pvalues matrix or copes images')}

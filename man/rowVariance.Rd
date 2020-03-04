@@ -4,7 +4,7 @@
 \alias{rowVariance}
 \title{Rows Variance}
 \usage{
-rowVariance(X, na.rm = TRUE)
+rowVariance(X,na.rm = TRUE)
 }
 \arguments{
 \item{X}{data where rows represents the variables and columns the observations}

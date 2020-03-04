@@ -4,7 +4,7 @@
 \alias{summary_perm_roi}
 \title{Summary permutation ROI}
 \usage{
-summary_perm_roi(cv, ix, pvalues)
+summary_perm_roi(cv,ix,pvalues)
 }
 \arguments{
 \item{cv}{= vector of critical values}

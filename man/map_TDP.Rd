@@ -4,16 +4,16 @@
 \alias{map_TDP}
 \title{map True Discovery Proportion}
 \usage{
-map_TDP(ARIout, path = getwd(), name = "tdp", mask)
+map_TDP(ARIout,path,name,mask)
 }
 \arguments{
-\item{ARIout}{= output object ARI permutation}
+\item{ARIout}{output object ARI permutation}
 
-\item{path}{= path}
+\item{path}{path}
 
-\item{name}{= name}
+\item{name}{name}
 
-\item{mask}{= mask map, niftiImage class object or path}
+\item{mask}{mask map, niftiImage class object or path}
 }
 \value{
 Returns a TDP map
