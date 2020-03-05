@@ -57,8 +57,12 @@ lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
       #lambda <- sapply(c(minc:maxc), function(x) rootSolve::uniroot.all(HigherCriticism,pvalue = pvalues[j,x],lower=0, upper=1000))
       #lambda <- unlist(lambda)
 }
-
-    l[j] <- min(lambda)
+    if(family=="beta"){
+      l[j] <- min(lambda[lambda>0])
+    }else{
+      l[j] <- min(lambda)
+    }
+    
   }
   
   lambdaE <- sort(l)[floor(alpha*w)+1]
