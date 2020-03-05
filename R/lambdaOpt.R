@@ -37,8 +37,8 @@ lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
     
     if(family == "finner"){
       minc = minc + delta
-      lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* (c(minc:maxc) - 1))))
-      #lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
+      #lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* (c(minc:maxc) - 1))))
+      lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
       
     }
     
