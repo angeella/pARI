@@ -22,14 +22,14 @@ cv <- function(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL){
   if(is.null(delta) ){delta = 0}
   if(family=="simes"){
     
-    cv <- sapply(c(1:m), function(x) (((x-delta) * alpha * lambda)/(m-delta)))
+    cv <- sapply(c(1:m), function(x) (((x-delta) * alpha * lambda)/(m)))
   }
   if(family=="beta"){
     cv <- qbeta(lambda, c(1:m),m+1-c(1:m))
   }
   if(family=="finner"){
     
-    cv <- sapply(c(1:m), function(x) (((x-delta) * lambda * alpha)/((m-delta) - (x-delta) *(1 - lambda* alpha))))
+    cv <- sapply(c(1:m), function(x) (((x-delta) * lambda * alpha)/((m) - (x-delta) *(1 - lambda* alpha))))
     
   }
 

@@ -23,7 +23,7 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   
   "%ni%" <- Negate("%in%")
   #check alpha
-  val_alpha = sapply(c(1:m), function(x) (m-x)/m)
+  val_alpha = sapply(c(1:B), function(x) (B-x)/B)
   if(alpha %ni% val_alpha){stop('please insert valid values for alpha and B')}
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")

@@ -27,7 +27,7 @@ lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
     if(family =="simes"){
       
       minc = minc + delta
-      lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
+      lambda <- (m*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
       #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
     }
     if(family == "beta"){
@@ -37,8 +37,8 @@ lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
     
     if(family == "finner"){
       minc = minc + delta
-      #lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* c(minc:maxc) + (delta*pvalues[j,c(minc:maxc)]))))
-      lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
+      lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* (c(minc:maxc) - 1))))
+      #lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
       
     }
     
