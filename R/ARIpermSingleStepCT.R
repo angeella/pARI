@@ -21,6 +21,11 @@
 ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
                       summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1)){
   
+  "%ni%" <- Negate("%in%")
+  #check alpha
+  val_alpha = sapply(c(1:m), function(x) (m-x)/m)
+  if(alpha %ni% val_alpha){stop('please insert valid values for alpha and B')}
+  
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
