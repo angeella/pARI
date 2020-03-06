@@ -22,7 +22,7 @@ cv <- function(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL){
   if(is.null(delta) ){delta = 0}
   if(family=="simes"){
     
-    cv <- sapply(c(1:m), function(x) (((x-delta) * alpha * lambda)/(m)))
+    cv <- sapply(c(1:m), function(x) (((x-delta) * alpha * lambda)/(m-delta)))
   }
   if(family=="beta"){
     cv <- qbeta(lambda, c(1:m),m+1-c(1:m))

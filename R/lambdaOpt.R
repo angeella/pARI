@@ -27,7 +27,7 @@ lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
     if(family =="simes"){
       
       minc = minc + delta
-      lambda <- (m*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
+      lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
       #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
     }
     if(family == "beta"){

@@ -78,7 +78,7 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
   #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
   #cv <- sapply(c(1:length(praw)), function(x) (((x-8) * alpha * lambda)/length(praw)))
-  cvOpt = cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda= lambda)
+  cvOpt = cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda= lambda, delta = delta)
  
   # define number of clusters
   clstr_id=sort(unique(as.vector(clusters[mask])),decreasing = TRUE)
