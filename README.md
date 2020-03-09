@@ -100,7 +100,7 @@ alpha = 0.1
 thr = 3.2
 ```
 
-then we can perform the Permutation-based ARI using the function ```r ARIpermCT```(type ?ARIpermutation::ARIpermCT for more details):
+then we can perform the Permutation-based ARI using the function ```ARIpermCT```(type ?ARIpermutation::ARIpermCT for more details):
 
 ``` r
 out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
