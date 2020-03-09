@@ -123,8 +123,9 @@ then we can perform the Permutation-based ARI using the function ```ARIpermCT```
 ``` r
 out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha)
 ```
+if you prefer to insert some cluster map, you can just add the argument ```cluster``` instead of ```thr```. The argument ```cluster``` accepts the map as nifti file or as character name (path where the cluster map is).
 
-you can produce also the True Discovey Proportion brain map (type ```?ARIpermutation::map_TDP``` for more details):
+Finally, you can produce also the True Discovey Proportion brain map (type ```?ARIpermutation::map_TDP``` for more details):
 
 ``` r
 map_TDP(out,path= getwd(), name = "tdp", mask)
