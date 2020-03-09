@@ -76,7 +76,7 @@ We have at least $10$ true discoveries considering the full set of hypotheses.
 This is a basic example using fMRI data from the [Auditory dataset](https://openneuro.org/datasets/ds000116/versions/00003). We need the following data:
 
 
-- The list of copes, one for each subject, in nifti file format: 
+ 1. The list of copes, one for each subject, in nifti file format: 
 
 ``` r
 copes <- list()
@@ -105,13 +105,13 @@ for (sid in 1:length(sub_ids)) {
 ```
 
 
- - the mask, which is a 3D array of logicals (i.e. TRUE/FALSE means in/out of the brain). Alternatively, it may be a (character) nifti file name. If omitted, all voxels are considered.
+ 2. the mask, which is a 3D array of logicals (i.e. TRUE/FALSE means in/out of the brain). Alternatively, it may be a (character) nifti file name. If omitted, all voxels are considered.
 
 ``` r
 mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
 ```
 
-and the $\alpha$ level value and the threshold in order to perform the cluster map using a supra-threshold statistic rule: 
+ 3. the $\alpha$ level value and the threshold in order to perform the cluster map using a supra-threshold statistic rule: 
 
 ``` r
 alpha = 0.1
