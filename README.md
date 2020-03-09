@@ -73,7 +73,10 @@ We have at least $10$ true discoveries considering the full set of hypotheses.
 
 ## fMRI data 
 
-This is a basic example using fMRI data from the [Auditory dataset](https://openneuro.org/datasets/ds000116/versions/00003). We need the list of copes:
+This is a basic example using fMRI data from the [Auditory dataset](https://openneuro.org/datasets/ds000116/versions/00003). We need the following data:
+
+
+- The list of copes, one for each subject, in nifti file format: 
 
 ``` r
 copes <- list()
@@ -84,15 +87,31 @@ for (sid in 1:length(sub_ids)) {
 }
 
 ```
-the mask, which is a 3D array of logicals (i.e. TRUE/FALSE means in/out of the brain). Alternatively, it may be a (character) nifti file name. If omitted, all voxels are considered.
+Alternatively, you can construct the list of copes using your data in this way:
+  - Rename the nifti files as ```sub-x``` where ```x``` is the number identifying the subjects, e.g., ```sub-1```, ```sub-2``` and so on.
+  - Write in ```max_sub``` the last ```x``` number of your set of subjects.
+  - Write in ```path``` the path where your set of nifti files is
 
 ``` r
-
-mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
+copes <- list()
+path <- #write here your path where your set of nifti files is. Don't put the last /
+max_sub <- #write here you last x id subjects
+sub_ids <- sapply(c(1:max_sub),function(x) paste0(x))
+for (sid in 1:length(sub_ids)) {  
+  copes[[sid]] <- RNifti::readNifti(paste0(path,"/sub-", sub_ids[sid] , ".nii.gz"))
+  
+}
 
 ```
-and the $\alpha$ level value and the threshold in order to perform the cluster map using a supra-threshold statistic rule: 
 
+
+ - the mask, which is a 3D array of logicals (i.e. TRUE/FALSE means in/out of the brain). Alternatively, it may be a (character) nifti file name. If omitted, all voxels are considered.
+
+``` r
+mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
+```
+
+and the $\alpha$ level value and the threshold in order to perform the cluster map using a supra-threshold statistic rule: 
 
 ``` r
 alpha = 0.1
