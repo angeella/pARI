@@ -2,9 +2,9 @@
 # ARIpermutation
 DOI: 10.5281/zenodo.3673779
 
-**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method doesn't 't assume any distribution about the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods.
+**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method doesn't 't assume any distribution about the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
 
-As the parametric ARI, this method aims to compute simultaneous lower confidence bounds for the number of true discoveries, i.e., active voxels, in the fMRI framework. The function takes as input the list of copes, i.e., contrast maps, one for each subject, given by neuroimaging tools as FSL, SPM, etc. 
+As the parametric [ARI](https://www.sciencedirect.com/science/article/abs/pii/S105381191830675X?via%3Dihub), this method aims to compute simultaneous lower confidence bounds for the number of true discoveries, i.e., active voxels, in the fMRI framework. The function takes as input the list of copes, i.e., contrast maps, one for each subject, given by neuroimaging tools as FSL, SPM, etc. 
 
 Having these data, you can insert a cluster map that can be the high-level output from some neuroimaging software, a region of interests (ROI), etc. If you want to construct these cluster maps using a supra-threshold statistic rule, you can specify the threshold into the argument ```thr``` of the function.
 
@@ -84,7 +84,7 @@ for (sid in 1:length(sub_ids)) {
 }
 
 ```
-the mask
+the mask, which is a 3D array of logicals (i.e. TRUE/FALSE means in/out of the brain). Alternatively, it may be a (character) nifti file name. If omitted, all voxels are considered.
 
 ``` r
 
@@ -102,10 +102,10 @@ thr = 3.2
 then we can perform the Permutation-based ARI using the function ```ARIpermCT```(type ```?ARIpermutation::ARIpermCT``` for more details):
 
 ``` r
-out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
+out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha)
 ```
 
-you can produce also the True Discovey Proportion brain map:
+you can produce also the True Discovey Proportion brain map(type ```?ARIpermutation::map_TDP``` for more details):
 
 ``` r
 map_TDP(out,path= getwd(), name = "tdp", mask)
