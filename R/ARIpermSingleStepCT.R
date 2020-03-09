@@ -41,6 +41,7 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   }
   
   scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
+  scores[!mask,] = NA
   resO <-oneSample(X=scores,alternative = "two.sided")
   
   scores <- scores[which(mask==1),]
