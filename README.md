@@ -6,9 +6,9 @@ DOI: 10.5281/zenodo.3673779
 
 As the parametric ARI, this method aims to compute simultaneous lower confidence bounds for the number of true discoveries, i.e. active voxels, in the fMRI framework. The function takes as input the list of copes, i.e. constrast maps, one for each subject, given by neuroimaging tools as FSL, SPM etc. 
 
-Having these data, you can insert a cluster map that can be the high-level output from some neuroimaging software, a region of interests (ROI) etc. If you want to construct these cluster maps using a supra-threshold statistic rule, you can specify the threshold into the argument \texttt{thr} of the function.
+Having these data, you can insert a cluster map that can be the high-level output from some neuroimaging software, a region of interests (ROI) etc. If you want to construct these cluster maps using a supra-threshold statistic rule, you can specify the threshold into the argument ```thr``` of the function.
 
-Therefore, the function \texttt{ARIpermCT} returns the lower bounds of true discoveries, i.e. active voxels, for each cluster coming from the cluster map inserted.
+Therefore, the function ```ARIpermCT``` returns the lower bounds of true discoveries, i.e. active voxels, for each cluster coming from the cluster map inserted.
 
 You can insert these cluster maps as many times as you want, because the Permutation-based ARI, as the parametric version, allows for **circular analysis**, still controlling for multiplicity of inferences.
 
@@ -39,7 +39,7 @@ Y <- matrix(rnorm(0.5*m*n, 10, 0.05),ncol=n,nrow=0.5*m) #tests under the alterna
 data <- cbind(X,Y) #full set of datasets
 
 ```
-Then, we perform the sign-flipping test, using $2^n = 1024$ permutations, thanks to the function \texttt{signTest}(type ?ARIpermutation::signTest for more details):
+Then, we perform the sign-flipping test, using $2^n = 1024$ permutations, thanks to the function ```signTest```(type ```?ARIpermutation::signTest``` for more details):
 
 ``` r
 pvalues <- signTest(data, 2^n)
@@ -56,14 +56,14 @@ We create the p-values matrix where the rows represents the permutations and the
 pv <- t(cbind(pvalues$pv,pvalues$pv_H0))
 ```
 
-Then, we use the parametric approach considering the full set of hypotheses, i.e. \texttt{ix} equals \texttt{c(1:10)}, using the function \texttt{hommel} and \texttt{discoveries} from the hommel package (type ?hommel::hommel and hommel::discoveries for more details):
+Then, we use the parametric approach considering the full set of hypotheses, i.e. ```ix``` equals ```c(1:10)```, using the function ```hommel``` and ```discoveries``` from the hommel package (type ```?hommel::hommel``` and ```hommel::discoveries``` for more details):
 
 ``` r
 hom <- hommel(pv[1,], simes = TRUE)
 discoveries(hom,ix = c(1:10),alpha = 0.1)
 
 ```
-and the permutation-based one using the function \texttt{SingleStepCT} (type ?ARIpermutation::SingleStepCT for more details)
+and the permutation-based one using the function ```SingleStepCT``` (type ```?ARIpermutation::SingleStepCT``` for more details)
 
 ``` r
 SingleStepCT(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
@@ -100,7 +100,7 @@ alpha = 0.1
 thr = 3.2
 ```
 
-then we can perform the Permutation-based ARI using the function ```ARIpermCT```(type ?ARIpermutation::ARIpermCT for more details):
+then we can perform the Permutation-based ARI using the function ```ARIpermCT```(type ```?ARIpermutation::ARIpermCT``` for more details):
 
 ``` r
 out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
