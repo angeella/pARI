@@ -2,15 +2,18 @@
 # ARIpermutation
 DOI: 10.5281/zenodo.3673779
 
-Under construction.... 
+**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method doesn 't assume any distribution about the null distribution of the p-values, It needs to satisfy the exchaneability assumption as all permutation-based methods.
 
-<i class="fas fa-hammer"></i>
+As the parametric ARI, this method aims to compute simultaneous lower confidence bounds for the number of true discoveries, i.e. active voxels, in the fMRI framework. The function takes as input the list of copes, i.e. constrast maps, one for each subject, given by neuroimaging tools as FSL, SPM etc. 
 
+Having these data, you can insert a cluster map that can be the high-level output from some neuroimaging software, a region of interests (ROI) etc. If you want to construct these cluster maps using a supra-threshold statistic rule, you can specify the threshold into the argument \texttt{thr} of the function.
+
+Therefore, the function \texttt{ARIpermCT} returns the lower bounds of true discoveries, i.e. active voxels, for each cluster coming from the cluster map inserted.
+
+You can insert these cluster maps as many times as you want, because the Permutation-based ARI, as the parametric version, allows for **circular analysis**, still controlling for multiplicity of inferences.
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-The aim of ARIpermutation is to ...
 
 ## Installation
 
@@ -20,55 +23,96 @@ You can install the released version of ARIpermutation with:
 devtools::install_github("angeella/ARIpermutation")
 ```
 
-## Example
+## Simulation
 
-This is a basic example :
+Here, you can perform a toy example, using simulated data where the tests under the null hypotheses come from a Normal distribution with mean $0$ and variance $0.05$ and the tests under the alternative come from a Normal distribution with mean $10$ and variance $0.05$. We simulate $10$ tests under the null and $10$ under the alternative considering $10$ observations. Therefore, we have a matrix with dimensions $10 \times 20$, where the rows represent the observations and the columns the variables, i.e. tests.
+
+We expect that lower bound of the number of true discoveries, considering the full set of hypotheses, equals to $10$.
 
 ``` r
 library(ARIpermutation)
 
-m <- 20
-n <- 10
-X <- matrix(runif(0.5*m*n, 0, 0.05),ncol=n,nrow=0.5*m)
-Y <- matrix(runif(0.5*m*n, 1, 2),ncol=n,nrow=0.5*m)
-data <- rbind(X,Y)
+m <- 20 #number of tests
+n <- 10 $number of observations
+X <- matrix(rnorm(0.5*m*n, 0, 0.05),ncol=n,nrow=0.5*m) #tests under the null
+Y <- matrix(rnorm(0.5*m*n, 10, 0.05),ncol=n,nrow=0.5*m) #tests under the alternative
+data <- cbind(X,Y) #full set of datasets
+
+```
+Then, we perform the sign-flipping test, using $2^n = 1024$ permutations, thanks to the function \texttt{signTest}(type ?ARIpermutation::signTest for more details):
+
+``` r
 pvalues <- signTest(data, 2^n)
+```
+and we plot it in $-log_{10}$ scale:
+
+``` r
 plot(-log(pvalues$pv,base = 10), pch = 20)
+```
+
+We create the p-values matrix where the rows represents the permutations and the columns the variables, i.e. the first row represents the observed p-values, the remain rows represent the p-values under the null distribution.
+
+``` r
 pv <- t(cbind(pvalues$pv,pvalues$pv_H0))
+```
+
+Then, we use the parametric approach considering the full set of hypotheses, i.e. \texttt{ix} equals \texttt{c(1:10)}, using the function \texttt{hommel} and \texttt{discoveries} from the hommel package (type ?hommel::hommel and hommel::discoveries for more details):
+
+``` r
 hom <- hommel(pv[1,], simes = TRUE)
 discoveries(hom,ix = c(1:10),alpha = 0.1)
+
+```
+and the permutation-based one using the function \texttt{SingleStepCT} (type ?ARIpermutation::SingleStepCT for more details)
+
+``` r
 SingleStepCT(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
 
 ```
-## Example
 
-This is a basic example using fMRI data :
+We have at least $10$ true discoveries considering the full set of hypotheses.
+
+## fMRI data 
+
+This is a basic example using fMRI data from the [Auditory dataset](https://openneuro.org/datasets/ds000116/versions/00003). We need the list of copes:
 
 ``` r
-alpha = 0.1
-thr = 3.2
-
 copes <- list()
 sub_ids <- sapply(c(21:40),function(x) paste0(0,x))
 for (sid in 1:length(sub_ids)) {  
   copes[[sid]] <- RNifti::readNifti(system.file("extdata/AuditoryData", paste0("/sub-", sub_ids[sid] , ".nii.gz"), package = "ARIpermutation"))
   
 }
-mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
-
-out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
 
 ```
-you can produce the True Discovey Proportion brain map:
+the mask
 
 ``` r
 
+mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
+
+```
+and the $\alpha$ level value and the threshold in order to perform the cluster map using a supra-threshold statistic rule: 
+
+
+``` r
+alpha = 0.1
+thr = 3.2
+```
+
+then we can perform the Permutation-based ARI using the function \texttt{ARIpermCT}(type ?ARIpermutation::ARIpermCT for more details):
+
+``` r
+out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha,family = "Simes")
+```
+
+you can produce also the True Discovey Proportion brain map:
+
+``` r
 map_TDP(out,path= getwd(), name = "tdp", mask)
 ```
 
-
-
-using the parametric method:
+Then, you can compare it with the parametric method ARI using the [ARI](https://github.com/angeella/ARIbrain) package: 
 
 ``` r
 Statmap <- system.file("extdata/AuditoryData", "Statmap.nii", package = "ARIpermutation")
