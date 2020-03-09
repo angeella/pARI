@@ -2,7 +2,7 @@
 # ARIpermutation
 DOI: 10.5281/zenodo.3673779
 
-**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method doesn't 't assume any distribution about the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
+**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method doesn't assume any distribution about the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
 
 As the parametric [ARI](https://www.sciencedirect.com/science/article/abs/pii/S105381191830675X?via%3Dihub), this method aims to compute simultaneous lower confidence bounds for the number of true discoveries, i.e., active voxels, in the fMRI framework. The function takes as input the list of copes, i.e., contrast maps, one for each subject, given by neuroimaging tools as FSL, SPM, etc. 
 
