@@ -144,7 +144,7 @@ mask = get_array(mask)
 Statmap[!mask]=0
 clstr=cluster_threshold(Statmap>3.2)
 
-res_ARI=ARIbrain::ARI(Pmap = Pmap, clusters= clstr, mask=mask, Statmap = Statmap)
+res_ARI=ARIbrain::ARI(Pmap = Pmap, clusters= clstr, mask=mask, Statmap = Statmap, alpha = alpha)
 
 ```
 # References
