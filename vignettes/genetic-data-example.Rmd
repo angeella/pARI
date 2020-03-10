@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(ARIpermutation)
 library(hommel)
+library(ggplot2)
 ```
 
 The data set VIJVER includes expression values of 24481 genes in 295 tumor samples. 
