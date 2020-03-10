@@ -15,69 +15,57 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-# library(ARIpermutation)
-# library(Biobase) #for the dataset
-# library(cancerdata) #for the dataset
-# library(hommel)
+library(ARIpermutation)
+library(hommel)
 ```
 
 The data set VIJVER includes expression values of 24481 genes in 295 tumor samples. 
 
 ```{r}
-# data(VIJVER1)
-# X <- exprs(VIJVER1)
-# m <- dim(X)[2] #24481 variables
-# #Clean datasets from NA
-# X <- X[rowSums(is.na(X[ , 1:m])) == 0, ]
-# n <- dim(X)[2] #295 observations
-# m <- dim(X)[1] #24481 variables
-# ct = c(0,1)
-# alpha = 0.1
-# family = "Simes"
-# delta = 8
-# B = 1000
+out3  <- system.file("extdata/vignettes_data", "pvalues_genetic.RData", package = "ARIpermutation")
+alpha = 0.1
 ```
 
 So, we apply the method considering the full set of variables, i.e. genes:
 
 ```{r}
-# ix <- c(1:m)
-# out <- SingleStepCT(X,ct, ix, alpha, family, delta, B)
-# 
-# out[[1]]
+ix <- c(1:m)
+out <- SingleStepCT(ix = ix, alpha = alpha, pvalues = pvalues)
+
+out[[1]]
 ```
 
-We have $3078$ false null hypothesis. Using the hommel method by Goeman et al.:
+We have $698$ false null hypothesis. Using the hommel method by Goeman et al.:
 
 ```{r}
-# ix <- c(1:m)
-# 
-# res <- signTest(X, B = 1000)
-# 
-# praw <- res$pv
-# out1 <- hommel(praw)
-# 
-# hommel::discoveries(out1,ix,alpha = alpha)
+
+praw <- pvalues[1,]
+out1 <- hommel(praw)
+
+discoveries(out1,ix,alpha = 0.1)
 ```
 
-we have $2897$ discoveries. So, we can note that we gain some power respect to the parametric method.
+we have $566$ discoveries. So, we can note that we gain some power respect to the parametric method.
 
 Then, we can see how this works considering different subset of hypothesis.
 
 ```{r}
-# p_sort = sort(praw)
-# R = sapply(p_sort, function(t) sum(p_sort <=t)) 
-# 
-# out3 <- sapply(R, function(x) discoveriesPerm(out,ix = c(1:x))[[1]])
-# 
-# out4 <- sapply(R, function(x) hommel::discoveries(out1, ix = c(1:x), alpha = alpha))
-# 
-# plot(R, out4/pmax(1,R), type = "l", col = "black", lwd = 2, xlab = expression(S[(i)]), ylab = "TDP", ylim= c(0,1))
-# lines(R, out3/pmax(1,R), type="l", col="red", lwd=2)
-# legend(1000,1, legend=c("Permutation", "Parametric"),
-#        col=c("red", "black"))
-```
+p_sort = sort(praw)
+R = sapply(p_sort, function(t) sum(p_sort <=t)) 
 
+#out3 <- sapply(R, function(x) discoveriesPerm(out,ix = c(1:x))[[1]])
+
+out3  <- system.file("extdata/vignettes_data", "TD_permutation_genetic.RData", package = "ARIpermutation")
+
+out4 <- sapply(R, function(x) discoveries(out1, ix = c(1:x), alpha = 0.1))
+
+ggplot() + ylim(0,0.2) +
+   geom_line(aes(x = R, y = out4/pmax(1,R), colour = "Parametric"))+ 
+   geom_line(aes(x = R, y = out3/pmax(1,R), colour = "Nonparametric")) +
+   xlab('Number of rejections') +
+   ylab('True Discovery Proportion')  + theme(legend.title=element_blank())
+
+```
 
 
 
