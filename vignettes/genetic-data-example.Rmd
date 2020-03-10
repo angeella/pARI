@@ -57,7 +57,7 @@ R = sapply(p_sort, function(t) sum(p_sort <=t))
 
 #out3 <- sapply(R, function(x) discoveriesPerm(out,ix = c(1:x))[[1]])
 
-out3  <- load(system.file("extdata/vignettes_data", "TD_permutation_genetic.RData", package = "ARIpermutation"))
+load(system.file("extdata/vignettes_data", "TD_permutation_genetic.RData", package = "ARIpermutation"))
 
 out4 <- sapply(R, function(x) discoveries(out1, ix = c(1:x), alpha = 0.1))
 
