@@ -21,7 +21,8 @@ Imports:
     graphics,
     plyr,
     sansSouci,
-    hommel
+    hommel, 
+    ggplot2
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: 
     knitr,
