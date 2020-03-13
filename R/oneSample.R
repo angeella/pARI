@@ -16,8 +16,10 @@ oneSample<- function(X,alternative = "two.sided"){
   m <- nrow(X)
   
   alternative <- match.arg(tolower(alternative), alternative_set)
+  rowV <- rowVariance(X)
+  rowV <- ifelse(rowV==0,.Machine$double.xmin, rowV)
+  Test = rowMeans(X)/(sqrt((rowV)/n))
   
-  Test = rowMeans(X)/(sqrt((rowVariance(X))/n))
   pv <- switch(alternative, 
               "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
               "greater" = pnorm(Test, lower.tail=FALSE),

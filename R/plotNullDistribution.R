@@ -21,8 +21,8 @@
 plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL){
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")
-  
-  if(!is.null(family)){family <- match.arg(tolower(family), family_set)}
+  fam_match <- function(x) {match.arg(tolower(x), family_set)}
+  if(!is.null(family)){family <- unlist(lapply(family, fam_match))}
   if(is.null(copes) & is.null(P)){stop('Please insert pvalues matrix or copes images')}
   
   if(!is.null(P) & is.unsorted(P[1,])){pvalues_ord <- rowSortC(P)}
@@ -67,8 +67,12 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     lines(pvalues_ord[1,], lwd =2, col= 'red')
     dev.off()
   }else{
-    lambdaO <- lambdaOpt(pvalues = pvalues_ord,family=family,ct=ct,alpha=alpha, delta = delta)
-    cvO <- cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
+    lcv <- function(family,delta=NULL){
+      lambdaO <- lambdaOpt(pvalues = pvalues_ord,family=family,ct=ct,alpha=alpha, delta = delta)
+      cvO<- cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
+      lines(cvO, lwd =2, col= 'blue')
+      }
+
 
     png(paste0(path,"/", name, ".png")) 
     plot(pvalues_ord[1,], type = 'l', col = ' red', xlab = expression(i), ylab = expression(p[(i)]))
@@ -78,7 +82,9 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
       
     }
     lines(pvalues_ord[1,], lwd =2, col= 'red')
-    lines(cvO, col= 'blue', lwd =2)
+    #lines(cvO, col= 'blue', lwd =2)
+    mapply(lcv, family, delta)
+    
     dev.off()
   }
   

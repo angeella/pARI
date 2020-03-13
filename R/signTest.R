@@ -26,8 +26,9 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL){
   m <- nrow(X)
 
   ## Observed test statistics and p-values
-  
-  Test <- rowMeans(X)/(sqrt((rowVariance(X))/n))
+  rowV <- rowVariance(X)
+  rowV <- ifelse(rowV==0,.Machine$double.xmin, rowV)
+  Test <- rowMeans(X)/(sqrt((rowV)/n))
   pv <- switch(alternative, 
               "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
               "greater" = pnorm(Test, lower.tail=FALSE),
@@ -38,6 +39,7 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL){
   #Test_H0 <- signFlip(X,B)
   T0_m <- meanBySignFlipping(X,B)
   T0_v <- varBySignFlipping(X,B)
+  T0_v <- ifelse(T0_v==0,.Machine$double.xmin, T0_v)
   Test_H0 <- T0_m/ sqrt((T0_v)/n)
   
   pv_H0 <- switch(alternative, 
