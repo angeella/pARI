@@ -67,13 +67,13 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     lines(pvalues_ord[1,], lwd =2, col= 'red')
     dev.off()
   }else{
-    lcv <- function(family,delta=NULL){
+    lcv <- function(family,delta=NULL, cols = "blue"){
       lambdaO <- lambdaOpt(pvalues = pvalues_ord,family=family,ct=ct,alpha=alpha, delta = delta)
       cvO<- cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
-      lines(cvO, lwd =2, col= 'blue')
+      lines(cvO, lwd =2, col= cols)
       }
-
-
+    lcvV <- Vectorize(lcv,vectorize.args = c("family", "delta", "cols"))
+    cols = rainbow(length(family))
     png(paste0(path,"/", name, ".png")) 
     plot(pvalues_ord[1,], type = 'l', col = ' red', xlab = expression(i), ylab = expression(p[(i)]))
     for(i in 2:nrow(pvalues_ord)){
@@ -83,7 +83,8 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     }
     lines(pvalues_ord[1,], lwd =2, col= 'red')
     #lines(cvO, col= 'blue', lwd =2)
-    mapply(lcv, family, delta)
+    mapply(lcv, family, delta, cols)
+    legend('top',paste0(family, " ", delta), col= cols,lwd =2)
     
     dev.off()
   }
