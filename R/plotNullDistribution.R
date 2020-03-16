@@ -16,7 +16,8 @@
 #' @importFrom grDevices dev.off
 #' @importFrom graphics plot
 #' @importFrom graphics lines
-
+#' @importFrom grDevices rainbow
+#' @importFrom graphics legend
 
 plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL){
   

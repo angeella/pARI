@@ -22,12 +22,13 @@ Imports:
     plyr,
     sansSouci,
     hommel, 
-    ggplot2
+    ggplot2,
+    tools
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: 
     knitr,
     rmarkdown,
     cherry,
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Encoding: UTF-8

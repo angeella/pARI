@@ -23,7 +23,7 @@ m <- 1e3 #number of variables
 n <- 20 #number of observations
 pi0 <- 0.5 #Proportion of true null hypotheses
 B <- 1e3 #number of permutation
-rhos <- seq(0,0.9,0.10) #Level of equi-correlation between pairs of variables
+rhos <- seq(0,0.9,0.10) #Level of equi correlation between pairs of variables
 SNR <-5 #Signal to noise ratio. 
 alpha <- 0.1 #alpha level
 delta <- seq(1,500,10)
@@ -85,7 +85,7 @@ ggplot() +
    geom_line(aes(x = rhos[1:10], y = unique(EC)[1:10]))+ ylim(0.75,1.005) +
    geom_line(aes(x = rhos[1:10], y = rep(0.8, 10)), col = "red") +
    xlab(expression(rho)) +
-   ylab('Empirical Coverage')
+   ylab("Empirical Coverage")
 
 ses <- sqrt(unique(EC)*(1-unique(EC))/B)
 ```
@@ -108,7 +108,7 @@ ggplot() +
    geom_line(aes(x = R, y = (R-Bperm)/pmax(1,R), colour = "Permation TDP")) +
   geom_line(aes(x = R, y = (R-V)/pmax(1,R), colour = "True TDP") )+
    xlab("Number of rejections") +
-   ylab('True Discoveries Proportion')  + theme(legend.title=element_blank())
+   ylab("True Discoveries Proportion")  + theme(legend.title=element_blank())
 
 ```
 

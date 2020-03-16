@@ -4,25 +4,27 @@
 \alias{SingleStepCT}
 \title{Single Step Permutation-based method}
 \usage{
-SingleStepCT(X,ct, ix, alpha, family, delta= NULL, B)
+SingleStepCT(X,ct, ix, alpha, family, delta, B, pvalues)
 }
 \arguments{
 \item{X}{data matrix (rows represent variables, columns observations), the first rows are the raw pvalues.}
 
-\item{ct}{set of thresholds of interest}
+\item{ct}{set of thresholds of interest, default c(0,1)}
 
 \item{ix}{set of hypothesis of interest}
 
-\item{alpha}{alpha level}
+\item{alpha}{alpha level, default 0.1}
 
 \item{family}{family of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta}
 
 \item{delta}{do you want to consider at least delta size set?}
 
 \item{B}{number of permutations}
+
+\item{pvalues}{matrix pvalues instead of data, default NULL}
 }
 \value{
-Returns a list with the following objects: \code{discoveries} number of discoveries in the set selected, \code{pvalues} raw pvalues
+Returns a list with the following objects discoveries number of discoveries in the set selected, pvalues raw pvalues
 }
 \description{
 Performs single step method based on confidence envelope constructed by sign flipping
