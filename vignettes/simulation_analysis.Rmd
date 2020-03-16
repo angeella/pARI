@@ -2,7 +2,7 @@
 title: "Parametric vs NoParametric"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{toy}
+  %\VignetteIndexEntry{simulation_analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
