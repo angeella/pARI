@@ -18,7 +18,7 @@
 #' @importFrom RNifti readNifti
 #' @importFrom plyr laply
 
-ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
+ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL,
                       summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1)){
   
   "%ni%" <- Negate("%in%")
@@ -56,12 +56,18 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   rm(copes)
   rm(img)
   
-  if(is.null(clusters) & !is.null(thr)){clusters <- cluster_threshold(Statmap>thr)}else{
+  if(is.null(clusters) & !is.null(thr)){clusters <- cluster_threshold(Statmap>thr)}
+  if(!is.null(clusters) & !is.null(thr)){
     if(is.character(clusters)){
       clusters = readNifti(clusters)
+    }else{
+      clusters = get_array(clusters)
+    }
+
       clusters = array(clusters,dim(clusters))
-      }
   } 
+  if(is.null(clusters) & is.null(thr) & !is.null(mask)){clusters <- array(mask,dim(mask))}
+  if(is.null(clusters) & is.null(thr) & is.null(mask)){stop("Please insert mask, threshold value or cluster map")}
   #clusters = get_array(clusters,map_dims=dim(Pmap))
 
   # called=match.call()
@@ -108,7 +114,10 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
                summary_cluster(cluster_ids)[-1])
       )
     })
-  rownames(out)=paste("cl",sep="",clstr_id)
+  if(!is.null(dim(out))){
+    rownames(out)=paste("cl",sep="",clstr_id)
+  }
+  
   
   # attr(out,"call")=called
   if(!silent) print(out)
