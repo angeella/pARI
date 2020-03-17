@@ -114,7 +114,7 @@ lambdaPlot <- function(copes = NULL, family, ct = c(0,1), alpha, delta = NULL, P
   }
   lines(pvalues[1,], lwd =2, col= 'red')
   lines(cvE, col= 'blue', lwd =2)
-  
+  legend('top',c("Observed Pvalues", "Null Pvalues", "Optimal Critical Vector", "Critical Vectors"), col= c("red", "black", "blue", "green"),lwd =2)
 
   dev.off()
   
