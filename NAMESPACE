@@ -2,6 +2,7 @@
 export(ARIpermCT)
 export(SingleStepCT)
 export(TDPerm)
+export(lambdaPlot)
 export(cluster_threshold)
 export(cv)
 export(dI)
