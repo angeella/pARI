@@ -98,14 +98,15 @@ lambdaPlot <- function(copes = NULL, family, ct = c(0,1), alpha, delta = NULL, P
   
   lambdaE <- sort(l)[floor(alpha*w)+1]
   cvE<- cv(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
-  lcvL <- function(family,delta=NULL, cols = "blue", lambda){
+  lcvL <- function(family,delta=NULL, lambda){
     cvO<- cv(pvalues = pvalues, family = family, alpha = alpha, lambda = lambda, delta = delta)
-    lines(cvO, lwd =2, col= "red")
+    lines(cvO, lwd =1, col= "green")
   }
   lcvLV <- Vectorize(lcvL,vectorize.args = c("lambda"))
   
   png(paste0(path,"/", name, ".png")) 
   plot(pvalues[1,], type = 'l', col = ' red', xlab = expression(i), ylab = expression(p[(i)]))
+  lcvLV(family = family, delta = delta, lambda = l)
   for(i in 2:nrow(pvalues)){
     
     lines(pvalues[i,],col='black',type="l")
@@ -113,7 +114,7 @@ lambdaPlot <- function(copes = NULL, family, ct = c(0,1), alpha, delta = NULL, P
   }
   lines(pvalues[1,], lwd =2, col= 'red')
   lines(cvE, col= 'blue', lwd =2)
-  mapply(lcvLV, l)
+  
 
   dev.off()
   
