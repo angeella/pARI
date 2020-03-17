@@ -57,7 +57,10 @@ ARIpermCT <- function(copes, thr, mask=NULL, alpha=.1, clusters = NULL,
   rm(img)
   
   if(is.null(clusters) & !is.null(thr)){clusters <- cluster_threshold(Statmap>thr)}else{
-    if(is.character(clusters)){clusters = readNifti(clusters)}
+    if(is.character(clusters)){
+      clusters = readNifti(clusters)
+      clusters = array(clusters,dim(clusters))
+      }
   } 
   #clusters = get_array(clusters,map_dims=dim(Pmap))
 
