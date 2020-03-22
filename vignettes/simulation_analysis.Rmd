@@ -23,8 +23,8 @@ m <- 1e3 #number of variables
 n <- 20 #number of observations
 pi0 <- 0.5 #Proportion of true null hypotheses
 B <- 1e3 #number of permutation
-rhos <- seq(0,0.9,0.10) #Level of equi correlation between pairs of variables
-SNR <-5 #Signal to noise ratio. 
+rhos <- seq(-1,1,0.05) #Level of equi correlation between pairs of variables
+SNR <-20 #Signal to noise ratio. 
 alpha <- 0.1 #alpha level
 delta <- seq(1,500,10)
 delta <- 0
@@ -33,11 +33,10 @@ ct = c(0,1)
 ```
 
 ```{r}
-simEC <- function(m,rho,n,pi0,SNR){
+simEC <- function(m,rho,n,pi0,SNR,B){
   
-  out <- sansSouci::gaussianSamples(m,rho,n,pi0,SNR)
-  H <- out$H
-  X <-out$X
+  X <-replicate(n,ARIpermutation::simulateData(pi0=pi0,m=m,rho = rho,SNR = SNR),simplify = TRUE)
+
   res <- ARIpermutation::signTest(X,B)
   Test <- cbind(res$Test,res$Test_H0)
   P <- cbind(res$pv,res$pv_H0)
@@ -45,12 +44,9 @@ simEC <- function(m,rho,n,pi0,SNR){
   Psort <- t(apply(P,1,sort))
   lambdaSimes <- ARIpermutation::lambdaOpt(pvalues = P,family = family,ct = ct,alpha = alpha,delta = 0)
   cvSimes <- ARIpermutation::cv(pvalues = Psort,family = family,alpha = alpha,lambda = lambdaSimes,ct = ct,delta = 0)
-  ec <- sansSouci:::empiricalCoverage(cvSimes, Test)
-  out <- as.data.frame(cbind(cvSimes, res$pv, 
-                             rep(n = length(cv), ec), H))
+  out <- as.data.frame(cbind(cvSimes, res$pv, res$Test))
   colnames(out) <- c("CriticalValue", 
-                     "Pvalues", 
-                     "EC", "H"
+                     "Pvalues", "Test"
   )
   return(out)
 }
@@ -58,40 +54,32 @@ simEC <- function(m,rho,n,pi0,SNR){
 
 ```{r}
 
-out <- sapply(c(1:length(rhos)), function(x) simEC(m = m,rho = rhos[x],n = n,pi0 = pi0,SNR = SNR),simplify = FALSE)
-
+#out <- sapply(c(1:length(rhos)), function(x) simEC(m = m,rho = rhos[x],n = n,pi0 = pi0,SNR = SNR,B=B),simplify = FALSE)
+load(system.file("extdata/vignettes_data", "out.RData", package = "ARIpermutation"))
 cv <- sapply(c(1:length(rhos)), function(x) out[[x]]$CriticalValue)
 Pvalues <- sapply(c(1:length(rhos)), function(x) out[[x]]$Pvalues)
-EC <- sapply(c(1:length(rhos)), function(x) out[[x]]$EC)
-H <- sapply(c(1:length(rhos)), function(x) out[[x]]$H)
-H <- H[,1]
+Test <- sapply(c(1:length(rhos)), function(x) out[[x]]$Test)
 
-discoveriesPerm <- sapply(c(1:length(rhos)), function(x) ARIpermutation::dI(ix = c(1:1000),cv = cv[,x],praw = Pvalues[,x]))
+m0 <- round(m * pi0)
+m1 <- m - m0
+H <- rep(c(0, 1), times = c(m0, m1))
 
-discoveriesHommel <- sapply(c(1:length(rhos)), function(x) hommel::discoveries(hommel(Pvalues[,x]),ix = c(1:1000)))
+discoveriesPerm <- sapply(c(1:length(rhos)), function(x) ARIpermutation::dI(ix = c(1:m),cv = cv[,x],praw = Pvalues[,x]))
 
+discoveriesHommel <- sapply(c(1:length(rhos)), function(x) hommel::discoveries(hommel(Pvalues[,x]),ix = c(1:m),alpha = alpha))
 
+True <- rep(sum(H==1),length(rhos))
 ggplot() +
    geom_line(aes(x = rhos, y = discoveriesPerm, colour = "Nonparametric"))+ 
    geom_line(aes(x = rhos, y = discoveriesHommel, colour = "Parametric")) +
+   geom_line(aes(x = rhos, y = True, colour = "True")) +
    xlab(expression(rho)) +
    ylab('number of True Discoveries')  + theme(legend.title=element_blank())
 
 ```
 
 ```{r}
-
-ggplot() +
-   geom_line(aes(x = rhos[1:10], y = unique(EC)[1:10]))+ ylim(0.75,1.005) +
-   geom_line(aes(x = rhos[1:10], y = rep(0.8, 10)), col = "red") +
-   xlab(expression(rho)) +
-   ylab("Empirical Coverage")
-
-ses <- sqrt(unique(EC)*(1-unique(EC))/B)
-```
-
-```{r}
-id <- 8
+id <- 15
 p <- sort(Pvalues[,id])
 R = sapply(p, function(t) sum(p <=t)) 
 load(system.file("extdata/vignettes_data", "Bperm.RData", package = "ARIpermutation"))
@@ -99,25 +87,19 @@ load(system.file("extdata/vignettes_data", "Bperm.RData", package = "ARIpermutat
 #Bperm = sapply(1:length(p), function(i) i-ARIpermutation::dI(ix = c(1:i),cv = cv[,id],praw = Pvalues[,id]))       
 Bpar = sapply(1:length(p), function(i) i-hommel::discoveries(hommel(Pvalues[,id], simes = TRUE), ix=1:i, alpha=alpha))
 
-H0 <- which(H == 0)
-o <- order(Pvalues[,id], decreasing = TRUE)
-V <- cumsum(o %in% H0)
+V <- c(rep(0,m1),seq(1,m0,1))
 
 ggplot() +
-   geom_line(aes(x = R, y = (R-Bpar)/pmax(1,R), colour = "Parametric TDP"))+ ylim(0,0.5) +
-   geom_line(aes(x = R, y = (R-Bperm)/pmax(1,R), colour = "Permation TDP")) +
-  geom_line(aes(x = R, y = (R-V)/pmax(1,R), colour = "True TDP") )+
+   geom_line(aes(x = R, y = (R-Bpar)/pmax(1,R), colour = "Parametric TDP"))+ ylim(0,pi0+0.01) +
+   geom_line(aes(x = R, y = (R-Bperm)/pmax(1,R), colour = "Permutation TDP")) +
+  geom_line(aes(x = R, y = V/pmax(1,R), colour = "True TDP") )+
    xlab("Number of rejections") +
-   ylab("True Discoveries Proportion")  + theme(legend.title=element_blank())
+   ylab("True Discoveries Proportion") + ggtitle(expression(paste(rho, " = ", -0.3, sep = ""))) + theme(legend.title=element_blank())
 
 ```
 
 ```{r}
-out <- sansSouci::gaussianSamples(m,rho=0.7,n,pi0,SNR)
-H <- out$H
-X <-out$X
-res <- ARIpermutation::signTest(X,B)
-Test <- res$Test
+Test <- Test[,id]
 data <- as.data.frame(cbind(Test,H))
 colnames(data) <- c("Test", "Hyp")
 data$Hyp <- ifelse(data$Hyp==0, "Null", "Alternative")

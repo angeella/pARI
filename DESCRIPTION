@@ -29,6 +29,7 @@ Suggests:
     knitr,
     rmarkdown,
     cherry,
+    gridExtra   
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 Encoding: UTF-8
