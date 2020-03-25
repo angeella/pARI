@@ -72,20 +72,27 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
       lambdaO <- lambdaOpt(pvalues = pvalues_ord,family=family,ct=ct,alpha=alpha, delta = delta)
       cvO<- cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
       lines(cvO, lwd =2, col= cols)
-      }
+    }
+    firstup <- function(x) {
+      substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+      x
+    }
     lcvV <- Vectorize(lcv,vectorize.args = c("family", "delta", "cols"))
     cols = rainbow(length(family))
     png(paste0(path,"/", name, ".png")) 
-    plot(pvalues_ord[1,], type = 'l', col = ' red', xlab = expression(i), ylab = expression(p[(i)]))
+    plot(pvalues_ord[1,], type = 'l', col = ' green', xlab = expression(i), ylab = expression(p[(i)]))
     for(i in 2:nrow(pvalues_ord)){
       
       lines(pvalues_ord[i,],col='black',type="l")
       
     }
-    lines(pvalues_ord[1,], lwd =2, col= 'red')
+    lines(pvalues_ord[1,], lwd =2, col= 'green')
     #lines(cvO, col= 'blue', lwd =2)
     mapply(lcv, family, delta, cols)
-    legend('top',paste0(family, " ", delta), col= cols,lwd =2)
+    family <- firstup(family)
+    legend('top',legend=c(sapply(c(1:length(family)), 
+                                 function(x) as.expression(bquote(~ .(family[x]) ~ delta == .(delta[x]) ))), 
+                          " Observed Pvalues"), col= c(cols, "green"),lwd =2)
     
     dev.off()
   }

@@ -74,7 +74,7 @@ ggplot() +
    geom_line(aes(x = rhos, y = discoveriesHommel, colour = "Parametric")) +
    geom_line(aes(x = rhos, y = True, colour = "True")) +
    xlab(expression(rho)) +
-   ylab('number of True Discoveries')  + theme(legend.title=element_blank())
+   ylab(expression(bar(a)(S)))  + theme(legend.title=element_blank())
 
 ```
 
