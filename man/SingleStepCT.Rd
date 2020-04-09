@@ -7,9 +7,9 @@
 SingleStepCT(X,ct, ix, alpha, family, delta, B, pvalues)
 }
 \arguments{
-\item{X}{data matrix (rows represent variables, columns observations), the first rows are the raw pvalues.}
+\item{X}{data matrix rows represent variables, columns observations, the first rows are the raw pvalues.}
 
-\item{ct}{set of thresholds of interest, default c(0,1)}
+\item{ct}{set of thresholds of interest}
 
 \item{ix}{set of hypothesis of interest}
 

@@ -19,9 +19,9 @@ knitr::opts_chunk$set(
 library(ARIpermutation)
 library(hommel)
 library(ggplot2)
-m <- 1e3 #number of variables
+m <- 1e4 #number of variables
 n <- 20 #number of observations
-pi0 <- 0.5 #Proportion of true null hypotheses
+pi0 <- 0.9 #Proportion of true null hypotheses
 B <- 1e3 #number of permutation
 rhos <- seq(-1,1,0.05) #Level of equi correlation between pairs of variables
 SNR <-20 #Signal to noise ratio. 

@@ -27,8 +27,9 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL){
 
   ## Observed test statistics and p-values
   rowV <- rowVariance(X)
-  rowV <- ifelse(rowV==0,.Machine$double.xmin, rowV)
-  Test <- rowMeans(X)/(sqrt((rowV)/n))
+  #rowV <- ifelse(rowV==0,.Machine$double.xmin, rowV)
+  #Test <- rowMeans(X)/(sqrt((rowV)/n))
+  Test <- ifelse(rowV==0,0, rowMeans(X)/(sqrt((rowV)/n)))
   pv <- switch(alternative, 
               "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
               "greater" = pnorm(Test, lower.tail=FALSE),

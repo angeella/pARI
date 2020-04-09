@@ -23,7 +23,8 @@ Imports:
     sansSouci,
     hommel, 
     ggplot2,
-    tools
+    tools,
+    mvtnorm
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: 
     knitr,
