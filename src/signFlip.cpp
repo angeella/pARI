@@ -11,7 +11,7 @@ arma::mat signFlip(arma::mat X, double B) {
   
   
   arma::mat T(m, B, arma::fill::zeros);
-  arma::vec eps, Tb, Tb0, Tb1, eps1;
+  arma::vec eps, Tb, Tb0, Tb1, Tb2, eps1;
   
   //X = X / sqrt(n);    // scaling
   
@@ -20,11 +20,10 @@ arma::mat signFlip(arma::mat X, double B) {
     eps = Rcpp::rbinom(n, 1, 0.5)*2 - 1;  // signs 
     eps1 = Rcpp::rbinom(n, 1, 1)*2 - 1;  // identity    
     Tb = X * eps;
-    Tb1 = Tb / n;
-    Tb0 = pow(X, 2) * eps1;
-    //Tb0 = Tb0/n;
-    Tb = (Tb0 - n * pow(Tb1,2))/(n-1); //(without Tb0 = Tb0/n)
-    //Tb = (Tb0 - pow(Tb1,2));
+    Tb1 = Tb / n; //mean
+    Tb0 = (pow(X, 2) * eps1)/n; //E(x^2)
+    Tb2 = pow(Tb1,2)/pow(n,2); //E(X)^2
+    Tb =  (Tb0-Tb2)*(n/(n-1)); //sample var
     T.col(bb) = Tb1/sqrt(Tb/n);
     
   }

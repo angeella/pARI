@@ -37,11 +37,11 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL){
   
   ## Test statistics and p-values under H0
   
-  #Test_H0 <- signFlip(X,B)
-  T0_m <- meanBySignFlipping(X,B)
-  T0_v <- varBySignFlipping(X,B)
-  T0_v <- ifelse(T0_v==0,.Machine$double.xmin, T0_v)
-  Test_H0 <- T0_m/ sqrt((T0_v)/n)
+  Test_H0 <- signFlip(X,B)
+  #T0_m <- meanBySignFlipping(X,B)
+  #T0_v <- varBySignFlipping(X,B)
+  #T0_v <- ifelse(T0_v==0,.Machine$double.xmin, T0_v)
+  #Test_H0 <- T0_m/ sqrt((T0_v)/n)
   
   pv_H0 <- switch(alternative, 
                  "two.sided" = 2*(pnorm(abs(Test_H0), lower.tail=FALSE)),
