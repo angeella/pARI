@@ -20,7 +20,6 @@ Imports:
     grDevices,
     graphics,
     plyr,
-    sansSouci,
     hommel, 
     ggplot2,
     tools,
