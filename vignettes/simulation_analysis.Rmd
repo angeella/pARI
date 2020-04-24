@@ -21,7 +21,7 @@ library(hommel)
 library(ggplot2)
 m <- 2e3 #number of variables
 n <- 20 #number of observations
-pi0 <- 0.8 #Proportion of true null hypotheses
+pi0 <- 0.5 #Proportion of true null hypotheses
 B <- 1e3 #number of permutation
 rhos <- seq(-1,1,0.05) #Level of equi correlation between pairs of variables
 SNR <-20 #Signal to noise ratio. 
@@ -53,7 +53,7 @@ simEC <- function(m,rho,n,pi0,SNR,B){
 
 ```{r}
 
-#out1 <- sapply(c(1:length(rhos)), function(x) simEC(m = m,rho = rhos[x],n = n,pi0 = pi0,SNR = SNR,B=B),simplify = FALSE)
+#out5 <- sapply(c(1:length(rhos)), function(x) simEC(m = m,rho = rhos[x],n = n,pi0 = pi0,SNR = SNR,B=B),simplify = FALSE)
 load(system.file("extdata/vignettes_data", "out.RData", package = "ARIpermutation"))
 cv <- sapply(c(1:length(rhos)), function(x) out[[x]]$CriticalValue)
 Pvalues <- sapply(c(1:length(rhos)), function(x) out[[x]]$Pvalues)
