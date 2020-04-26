@@ -49,6 +49,7 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   #T0_v <- varBySignFlipping(X,B)
   #T0_v <- ifelse(T0_v==0,.Machine$double.xmin, T0_v)
   #Test_H0 <- T0_m/ sqrt((T0_v)/n)
+  Test_H0 <- ifelse(is.na(Test_H0), 0 , Test_H0)
   
   pv_H0 <- switch(alternative, 
                  "two.sided" = 2*(pnorm(abs(Test_H0), lower.tail=FALSE)),
