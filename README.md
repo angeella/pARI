@@ -123,7 +123,24 @@ then we can perform the Permutation-based ARI using the function ```ARIpermCT```
 ``` r
 out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha)
 ```
-if you prefer to insert some cluster map, you can just add the argument ```cluster``` instead of ```thr```. The argument ```cluster``` accepts the map as nifti file or as character name (path where the cluster map is).
+if you prefer to insert some cluster map, you can just add the argument ```cluster``` instead of ```thr```. The argument ```cluster``` accepts the map as nifti file or as character name (path where the cluster map is). You can create the Random Field Theory based cluster map using FSL. Let the Statmap, that you can compute using 
+
+``` r
+Statmap(copes,alternative = "two.sided",path = "your path",mask = mask)
+```
+
+and you need to type in the shell the following commands:
+
+```fslmaths Statmap.nii.gz -mas mask.nii.gz Statmap_mask.nii.gz```
+```smoothest -d X -r res4d -m mask```
+
+where X is the number of subjects. Then, you have the smoothness estimate value (DLH) and the number of voxels in the mask (VOLUME) that you insert in the following command:
+
+```cluster -i Statmap_mask -t 3.2 -p 1 --dlh=DLH –volume=VOLUME --mm -o cluster.nii > cluster.txt```
+
+Then, the cluster.nii is the cluster map that you can use in ARI.
+
+For help about this FSL code, see [the FSL book code](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Cluster). 
 
 Finally, you can produce also the True Discovey Proportion brain map (type ```?ARIpermutation::map_TDP``` for more details):
 
