@@ -132,6 +132,7 @@ Statmap(copes,alternative = "two.sided",path = "your path",mask = mask)
 and you need to type in the shell the following commands:
 
 ```fslmaths Statmap.nii.gz -mas mask.nii.gz Statmap_mask.nii.gz```
+
 ```smoothest -d X -r res4d -m mask```
 
 where X is the number of subjects. Then, you have the smoothness estimate value (DLH) and the number of voxels in the mask (VOLUME) that you insert in the following command:
