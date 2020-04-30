@@ -1,6 +1,6 @@
 
 # ARIpermutation
-DOI: 10.5281/zenodo.3673779
+[![DOI](https://zenodo.org/badge/239997594.svg)](https://zenodo.org/badge/latestdoi/239997594)
 
 **ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method doesn't assume any distribution about the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
 
