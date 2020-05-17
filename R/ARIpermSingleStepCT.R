@@ -12,6 +12,7 @@
 #' @param delta do you want to consider at least delta size set?
 #' @param B number of permutation, default 1000
 #' @param ct set of thresholds
+#' @param rand logical. Should p values computed by permutation distribution?
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: discoveries number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
 #' @export
@@ -19,7 +20,7 @@
 #' @importFrom plyr laply
 
 ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL,
-                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1)){
+                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1), rand = FALSE){
   
   "%ni%" <- Negate("%in%")
   #check alpha
@@ -45,7 +46,7 @@ ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL,
   resO <-oneSample(X=scores,alternative = "two.sided")
   
   scores <- scores[which(mask==1),]
-  res <- signTest(X=scores, B = B,alternative = "two.sided") #variables times number of permutation
+  res <- signTest(X=scores, B = B,alternative = "two.sided", rand = rand) #variables times number of permutation
   
   pvalues <- cbind(res$pv,res$pv_H0)
   pvalues = t(pvalues)
