@@ -12,10 +12,10 @@
 #' @export
 #' @importFrom stats pnorm
 #' @importFrom RNifti readNifti
+#' @importFrom matrixStats rowRanks
 
 
-
-signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = FALSE){
+signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand){
   
   alternative_set <- c("two.sided", "greater", "lower")
   
