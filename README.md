@@ -129,7 +129,25 @@ if you prefer to insert some cluster map, you can just add the argument ```clust
 Statmap(copes,alternative = "two.sided",path = "your path",mask = mask)
 ```
 
-and you need to type in the shell the following commands:
+P.S: If you are using your copes images, before using the function ```Statmap``` you need to perform an affine registration using the command ```flirt``` of FSL to have the copes images with dimensions 91 x 109 x 91 instead of 64 x 64 x 30:
+
+```flirt  -in /your_feat_directory/stats/cope3.nii -ref /your_feat_directory/reg/standard.nii  -applyxfm -init /your_feat_directory/reg/example_func2standard.mat -out cope_flirt```
+
+the new cope image in this case is called ```cope_flirt```.
+
+After using the ```Statmap``` function, you need to type in R:
+
+``` r
+mask <- mask_path
+Statmap <- Statmap_path
+
+mask <- RNifti::readNifti(mask)
+Statmap <- RNifti::readNifti(Statmap)
+mask=mask!=0
+Statmap[!mask]=0
+RNifti::writeNifti(Statmap, file = "Statmap.nii.gz")
+```
+So, you have the Statmap.nii.gz that you will use in FSL to perform the cluster analysis, typing in the shell the following commands:
 
 ```fslmaths Statmap.nii.gz -mas mask.nii.gz Statmap_mask.nii.gz```
 
