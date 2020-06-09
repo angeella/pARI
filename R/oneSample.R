@@ -23,7 +23,7 @@ oneSample<- function(X,alternative = "two.sided"){
   pv <- switch(alternative, 
               "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
               "greater" = pnorm(Test, lower.tail=FALSE),
-              "less" = 1-pnorm(Test, lower.tail=FALSE))
+              "lower" = 1-pnorm(Test, lower.tail=FALSE))
   
   res <- list(Test = Test, pv = pv)
   

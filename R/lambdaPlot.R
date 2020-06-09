@@ -43,7 +43,7 @@ lambdaPlot <- function(copes = NULL, family, ct = c(0,1), alpha, delta = NULL, P
     
     scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
     scores <- scores[which(mask==1),]
-    res <- signTest(X=scores, B = 1000,alternative = "two.sided") #variables times number of permutation
+    res <- signTest(X=scores, B = 1000,alternative = "two.sided", rand = F) #variables times number of permutation
     
     pvalues <- cbind(res$pv,res$pv_H0)
     pvalues = t(pvalues)
@@ -100,7 +100,7 @@ lambdaPlot <- function(copes = NULL, family, ct = c(0,1), alpha, delta = NULL, P
   cvE<- cv(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
   lcvL <- function(family,delta=NULL, lambda){
     cvO<- cv(pvalues = pvalues, family = family, alpha = alpha, lambda = lambda, delta = delta)
-    lines(cvO, lwd =1, col= "green")
+    lines(cvO, lwd =1, col= "grey")
   }
   lcvLV <- Vectorize(lcvL,vectorize.args = c("lambda"))
   
@@ -113,8 +113,8 @@ lambdaPlot <- function(copes = NULL, family, ct = c(0,1), alpha, delta = NULL, P
     
   }
   lines(pvalues[1,], lwd =2, col= 'red')
-  lines(cvE, col= 'blue', lwd =2)
-  legend('top',c("Observed Pvalues", "Null Pvalues", "Optimal Critical Vector", "Critical Vectors"), col= c("red", "black", "blue", "green"),lwd =2)
+  lines(cvE, col= 'red', lwd =2, lty = "dashed")
+  legend('top',c("Observed Pvalues", "Null Pvalues", "Optimal Critical Vector", "Critical Vectors"), col= c("red", "black", "red", "grey"),lty=c(1,1,2,1),lwd =2)
 
   dev.off()
   
