@@ -10,6 +10,7 @@
 #' @param delta for the family critical values, default NULL
 #' @param copes image copes instead of pvalues, default NULL
 #' @param mask mask
+#' @param rand logical. Should p values computed by permutation distribution?
 #' @return Returns plot null distribution with critical value curve and observed pvalues in red
 #' @export
 #' @importFrom grDevices png
@@ -19,7 +20,7 @@
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
 
-plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL){
+plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL, rand = F){
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}
@@ -43,7 +44,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     
     scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
     scores <- scores[which(mask==1),]
-    res <- signTest(X=scores, B = 1000,alternative = "two.sided") #variables times number of permutation
+    res <- signTest(X=scores, B = 1000,alternative = "two.sided", rand = rand) #variables times number of permutation
     
     pvalues <- cbind(res$pv,res$pv_H0)
     pvalues = t(pvalues)
@@ -80,19 +81,19 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     lcvV <- Vectorize(lcv,vectorize.args = c("family", "delta", "cols"))
     cols = rainbow(length(family))
     png(paste0(path,"/", name, ".png")) 
-    plot(pvalues_ord[1,], type = 'l', col = ' green', xlab = expression(i), ylab = expression(p[(i)]))
+    plot(pvalues_ord[1,], type = 'l', col = ' red', lty = "dashed", xlab = expression(i), ylab = expression(p[(i)]))
     for(i in 2:nrow(pvalues_ord)){
       
       lines(pvalues_ord[i,],col='black',type="l")
       
     }
-    lines(pvalues_ord[1,], lwd =2, col= 'green')
+    lines(pvalues_ord[1,], lwd =2, col= 'red', lty = "dashed")
     #lines(cvO, col= 'blue', lwd =2)
     mapply(lcv, family, delta, cols)
     family <- firstup(family)
     legend('top',legend=c(sapply(c(1:length(family)), 
                                  function(x) as.expression(bquote(~ .(family[x]) ~ delta == .(delta[x]) ))), 
-                          " Observed Pvalues"), col= c(cols, "green"),lwd =2)
+                          " Observed Pvalues"), col= c(cols, "red"),lwd =2, lty =c(rep("solid", length(family)), "dashed"))
     
     dev.off()
   }
