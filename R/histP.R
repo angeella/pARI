@@ -2,12 +2,14 @@
 #' @description create histogram p-values
 #' @usage histP(copes, alternative, mask, zstat, path, name)
 #' @param copes image copes instead of pvalues, default NULL
-#' @param alternative alternative
-#' @param mask mask
-#' @param zstat zstat
+#' @param alternative alternative, default is "two.sided"
+#' @param mask mask, default is NULL
+#' @param zstat zstat, default is NULL
 #' @param path path
 #' @param name name
 #' @param method method to compute the zstat
+#' @param rand logical. Should p values computed by permutation distribution?
+#' @param B number of permutations to perform, default is 1000, if matrix p-value is computed directly.
 #' @return Returns hist
 #' @export
 #' @importFrom grDevices png
@@ -16,7 +18,7 @@
 #' @importFrom grDevices rgb
 #' @importFrom graphics legend
 
-histP <- function(copes =NULL, alternative, mask, zstat = NULL, path = getwd(), name = "hist",method=NULL){
+histP <- function(copes =NULL, alternative = "two.sided", mask = NULL, zstat = NULL, path = getwd(), name = "hist",method=NULL, rand = F, B = 1000){
   
 
   if(is.null(copes) & is.null(zstat)){stop('Please insert observed pvalues or copes images')}
@@ -37,7 +39,7 @@ histP <- function(copes =NULL, alternative, mask, zstat = NULL, path = getwd(), 
     
     scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
     scores <- scores[which(mask==1),]
-    res <- signTest(X=scores, B = 1000,alternative = alternative) #variables times number of permutation
+    res <- signTest(X=scores, B = B,alternative = alternative, rand = rand) #variables times number of permutation
     
     pvalues <- cbind(res$pv,res$pv_H0)
     pvalues = t(pvalues)
