@@ -10,6 +10,7 @@
 #' @param delta for the family critical values, default NULL
 #' @param copes image copes instead of pvalues, default NULL
 #' @param mask mask
+#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
 #' @param rand logical. Should p values computed by permutation distribution?
 #' @param B number of permutations to perform, default is 1000, if matrix p-value is computed directly.
 #' @return Returns plot null distribution with critical value curve and observed pvalues in red
@@ -21,10 +22,12 @@
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
 
-plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL, rand = F, B = 1000){
+plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}
+  alternative_set <- c("two.sided", "greater", "lower")
+  alternative <- match.arg(tolower(alternative), alternative_set)
   if(!is.null(family)){family <- unlist(lapply(family, fam_match))}
   if(is.null(copes) & is.null(P)){stop('Please insert pvalues matrix or copes images')}
   
@@ -45,7 +48,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     
     scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
     scores <- scores[which(mask==1),]
-    res <- signTest(X=scores, B = B,alternative = "two.sided", rand = rand) #variables times number of permutation
+    res <- signTest(X=scores, B = B,alternative = alternative, rand = rand) #variables times number of permutation
     
     pvalues <- cbind(res$pv,res$pv_H0)
     pvalues = t(pvalues)
