@@ -6,6 +6,7 @@
 #' @param mask mask map, niftiImage class object or path
 #' @param alpha alpha level
 #' @param clusters clusters map as niftiImage class object or path, if NULL it is computed considering the threshold 3.2
+#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
 #' @param summary_stat Choose among "max", "center-of-mass"
 #' @param silent FALSE by default.
 #' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is simes
@@ -19,7 +20,7 @@
 #' @importFrom RNifti readNifti
 #' @importFrom plyr laply
 
-ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL,
+ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alternative = "two.sided", 
                       summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1), rand = FALSE){
   
   "%ni%" <- Negate("%in%")
@@ -28,8 +29,10 @@ ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL,
   if(alpha %ni% val_alpha){stop('please insert valid values for alpha and B')}
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")
-  
+  alternative_set <- c("two.sided", "greater", "lower")
   family <- match.arg(tolower(family), family_set)
+  alternative <- match.arg(tolower(alternative), alternative_set)
+  
   if(is.character(mask)){mask = readNifti(mask)}
   if(!is.list(copes)){stop("Please insert the list of copes as list class object")}
 
@@ -43,10 +46,10 @@ ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL,
   
   scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
   scores[!mask,] = NA
-  resO <-oneSample(X=scores,alternative = "two.sided")
+  resO <-oneSample(X=scores,alternative = alternative)
   
   scores <- scores[which(mask==1),]
-  res <- signTest(X=scores, B = B,alternative = "two.sided", rand = rand) #variables times number of permutation
+  res <- signTest(X=scores, B = B,alternative = alternative, rand = rand) #variables times number of permutation
   
   pvalues <- cbind(res$pv,res$pv_H0)
   pvalues = t(pvalues)

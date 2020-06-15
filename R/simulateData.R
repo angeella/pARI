@@ -23,7 +23,7 @@ simulateData <- function(pi0,m,rho,mu, set.seed = NULL, n, power = NULL, d = NUL
   if(is.null(d)){d<-power.t.test(n = n, power = power, type = "one.sample", alternative = "two.sided")$delta}
   sigma <- matrix(rep(rho,m*m),nrow = m,ncol=m) + diag(m)*(1-rho)
   eps <- rmvnorm(n = 1,mean = rep(0, nrow(sigma)),sigma = sigma)
-  mu <- c(rep(0,m0),rep(d,m1))
+  mu <- c(rep(0,m0),rep(d*sqrt(n),m1))
   X <- mu + eps
   
   return(X)

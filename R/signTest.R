@@ -3,7 +3,7 @@
 #' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL)
 #' @param X data where rows represents the variables and columns the observations
 #' @param B number of permutations to perform, default is 1000.
-#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "less". Default is "two.sided"
+#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
 #' @param seed specify seed, default is 1234.
 #' @param mask mask to apply, it can be nii format or path
 #' @param rand logical. Should p values computed by permutation distribution?
