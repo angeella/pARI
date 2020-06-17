@@ -7,10 +7,9 @@
 #' @return Returns a list with the following objects: \code{Test} test statistic, and \code{pv} corresponding raw pvalues.
 #' @export
 
-
+alternative_set <- c("two.sided", "greater", "lower")
 
 oneSample<- function(X,alternative = "two.sided"){
-  alternative_set <- c("two.sided", "greater", "lower")
   
   n <- ncol(X)
   m <- nrow(X)
