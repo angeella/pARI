@@ -16,7 +16,6 @@
 
 simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.05){
   if(is.null(set.seed)){set.seed(sample.int(1e5, 1))}
-  if(is.null(d) & is.null(power)){stop("Please insert power or effect size")}
   if(is.null(n) & !is.null(power)){stop("Please insert sample size n")}
   m0 = round(m*pi0)
   m1 = round(m -m0)
