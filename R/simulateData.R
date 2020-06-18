@@ -6,7 +6,6 @@
 #' @param n number of observations
 #' @param rho Level of equi-correlation between pairs of variables
 #' @param set.seed specify seed 
-#' @param d effect size
 #' @param power power
 #' @param alpha alpha value for power analysis
 #' @author Angela Andreella
@@ -15,16 +14,16 @@
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom stats pwr.t.test
 
-simulateData <- function(pi0,m,n, rho, set.seed = NULL, d = NULL, power = NULL, alpha = 0.1){
+simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.05){
   if(is.null(set.seed)){set.seed(sample.int(1e5, 1))}
   if(is.null(d) & is.null(power)){stop("Please insert power or effect size")}
   if(is.null(n) & !is.null(power)){stop("Please insert sample size n")}
   m0 = round(m*pi0)
   m1 = round(m -m0)
-  if(is.null(d)){d<-power.t.test(n = n, power = power, sig.level = alpha, type = "one.sample", alternative = "two.sided")$delta}
+  if(is.null(d)){diff_mean<-power.t.test(n = n, power = power, sig.level = alpha, type = "one.sample", alternative = "two.sided", sd = sqrt(n))$delta}
   sigma <- matrix(rep(rho,m*m),nrow = m,ncol=m) + diag(m)*(1-rho)
-  eps <- rmvnorm(n = 1,mean = rep(0, nrow(sigma)),sigma = sigma)
-  mu <- c(rep(0,m0),rep(d,m1))
+  eps <- rmvnorm(n = n,mean = rep(0, nrow(sigma)),sigma = sigma)
+  mu <- c(rep(0,m0),rep(diff_mean,m1))
   X <- mu + eps
   
   return(X)
