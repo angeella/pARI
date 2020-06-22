@@ -19,9 +19,8 @@ simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.
   if(is.null(n) & !is.null(power)){stop("Please insert sample size n")}
   m0 = round(m*pi0)
   m1 = round(m -m0)
-  pwo <- power.t.test(power = power, sig.level = alpha, type = "one.sample", alternative = "two.sided", sd = sqrt(n))
-  diff_mean<-pwo$delta * pwo$sd
-  n <- round(pwo$n)
+  pwo <- power.t.test(power = power, n=n, sig.level = alpha, type = "one.sample", alternative = "two.sided", sd = sqrt(n))
+  diff_mean<-pwo$delta
   sigma <- matrix(rep(rho,m*m),nrow = m,ncol=m) + diag(m)*(1-rho)
   eps <- rmvnorm(n = n,mean = rep(0, nrow(sigma)),sigma = sigma)
   mu <- c(rep(0,m0),rep(diff_mean,m1))
