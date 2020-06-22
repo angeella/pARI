@@ -21,7 +21,7 @@ simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.
   m1 = round(m -m0)
   pwo <- power.t.test(n = n, power = power, sig.level = alpha, type = "one.sample", alternative = "two.sided", sd = sqrt(n))
   diff_mean<-pwo$delta * pwo$sd
-  n <- pwo$n
+  n <- round(pwo$n)
   sigma <- matrix(rep(rho,m*m),nrow = m,ncol=m) + diag(m)*(1-rho)
   eps <- rmvnorm(n = n,mean = rep(0, nrow(sigma)),sigma = sigma)
   mu <- c(rep(0,m0),rep(diff_mean,m1))
