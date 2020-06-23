@@ -106,8 +106,9 @@ lambdaPlot <- function(copes = NULL, family, ct = c(0,1), alpha, delta = NULL, P
   
   png(paste0(path,"/", name, ".png")) 
   plot(pvalues[1,], type = 'l', col = ' red', xlab = expression(i), ylab = expression(p[(i)]))
-  lcvLV(family = family, delta = delta, lambda = l)
-  for(i in 2:nrow(pvalues)){
+  sample_B <-sample.int(nrow(pvalues),size = 100)
+  lcvLV(family = family, delta = delta, lambda = l[sample_B])
+  for(i in sample_B){
     
     lines(pvalues[i,],col='black',type="l")
     
