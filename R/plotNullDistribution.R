@@ -31,7 +31,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
   if(!is.null(family)){family <- unlist(lapply(family, fam_match))}
   if(is.null(copes) & is.null(P)){stop('Please insert pvalues matrix or copes images')}
   
-  if(!is.null(P) & is.unsorted(P[1,])){pvalues_ord <- rowSortC(P)}
+  if(!is.null(P) & is.unsorted(P[1,])){pvalues_ord <- rowSortC(P)}else{pvalues_ord <- P}
   if(!is.null(copes)){
     
     if(is.null(mask)){stop('please insert the mask as character path or Nifti image')}
