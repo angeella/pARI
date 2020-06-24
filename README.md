@@ -1,3 +1,4 @@
+<img src="sticker.png" align="right" alt="" width="200" />
 
 # ARIpermutation
 [![DOI](https://zenodo.org/badge/239997594.svg)](https://zenodo.org/badge/latestdoi/239997594)
