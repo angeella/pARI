@@ -15,19 +15,20 @@
 #' @importFrom stats pwr.t.test
 
 simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.05){
-  if(is.null(set.seed)){set.seed(sample.int(1e5, 1))}
+  #if(is.null(set.seed)){set.seed(sample.int(1e5, 1))}
   if(is.null(n) & !is.null(power)){stop("Please insert sample size n")}
   m0 = round(m*pi0)
   m1 = round(m -m0)
-  pwo <- power.t.test(power = power, n=n, sig.level = alpha, type = "one.sample", alternative = "two.sided", sd = sqrt(n))
-  diff_mean <-rgamma(m1, shape = pwo$delta, scale = 5)
-  #diff_mean<-pwo$delta
-  sigma <- matrix(rep(rho,m*m),nrow = m,ncol=m) + diag(m)*(1-rho)
-  eps <- rmvnorm(n = n,mean = rep(0, nrow(sigma)),sigma = sigma)
-  #mu <- c(rep(0,m0),rep(diff_mean,m1))
-  mu <- c(rep(0,m0),diff_mean)
-  
-  X <- mu + eps
+  pwo <- power.t.test(power = power, n=n, sig.level = alpha, type = "one.sample", alternative = "two.sided", sd = 1)
+  diff_mean<-pwo$delta
+  #diff_mean <-rgamma(m1, shape = pwo$delta, scale = 1)
+  #diff_mean <- rnorm(m1, mean = pwo$delta, sd = 1000)
+  shared <- matrix(rep(rnorm(n),m), ncol=m) # shared variation (equal for each column)
+  own <- matrix(rnorm(m*n), ncol=m) # own variation
+  eps <- sqrt(1-rho)*own + sqrt(rho)*shared
+  mu <- c(diff_mean, rep(0, m-m1))
+  mu <- c(rep(diff_mean,m1), rep(0, m-m1))
+  X <- matrix(rep(mu, each=n), ncol=m) + eps
   
   return(X)
 }
