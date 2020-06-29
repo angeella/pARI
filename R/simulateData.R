@@ -23,11 +23,9 @@ simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.
   diff_mean<-pwo$delta
   #diff_mean <-rgamma(m1, shape = pwo$delta, scale = 1)
   #diff_mean <- rnorm(m1, mean = pwo$delta, sd = 1000)
-  shared <- matrix(rep(rnorm(n),m), ncol=m) # shared variation (equal for each column)
-  own <- matrix(rnorm(m*n), ncol=m) # own variation
-  eps <- sqrt(1-rho)*own + sqrt(rho)*shared
-  mu <- c(diff_mean, rep(0, m-m1))
-  mu <- c(rep(diff_mean,m1), rep(0, m-m1))
+  eps <- sqrt(1-rho)*matrix(rnorm(m*n), ncol=m)  + sqrt(rho)*matrix(rep(rnorm(n),m), ncol=m) 
+  mu <- c(diff_mean, rep(0, m0))
+  mu <- c(rep(diff_mean,m1), rep(0, m0))
   X <- matrix(rep(mu, each=n), ncol=m) + eps
   
   return(X)
