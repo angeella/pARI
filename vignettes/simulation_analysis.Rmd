@@ -21,21 +21,21 @@ library(hommel)
 library(ggplot2)
 m <- 2e3 #number of variables
 n <- 20 #number of observations
-pi0 <- 0.5 #Proportion of true null hypotheses
+pi0 <- 0.9 #Proportion of true null hypotheses
 B <- 1e3 #number of permutation
-rhos <- seq(-1,1,0.05) #Level of equi correlation between pairs of variables
-SNR <-20 #Signal to noise ratio. 
-alpha <- 0.1 #alpha level
-delta <- seq(1,500,10)
+rhos <- seq(0,1,0.05) #Level of equi correlation between pairs of variables
+alpha <- 0.05 #alpha level
+power <- 0.8
 delta <- 0
 family = "Simes"
 ct = c(0,1)
 ```
 
 ```{r}
-simEC <- function(m,rho,n,pi0,SNR,B){
+simEC <- function(m,rho,n,pi0,power,B, alpha){
   
-  X <-replicate(n,ARIpermutation::simulateData(pi0=pi0,m=m,rho = rho,SNR = SNR),simplify = TRUE)
+  X <-simulateData(pi0,m,n, rho, power = power, alpha = alpha)
+  X <- t(X)
   res <- ARIpermutation::signTest(X,B)
   Test <- cbind(res$Test,res$Test_H0)
   P <- cbind(res$pv,res$pv_H0)
@@ -52,9 +52,7 @@ simEC <- function(m,rho,n,pi0,SNR,B){
 ```
 
 ```{r}
-
-#out5 <- sapply(c(1:length(rhos)), function(x) simEC(m = m,rho = rhos[x],n = n,pi0 = pi0,SNR = SNR,B=B),simplify = FALSE)
-load(system.file("extdata/vignettes_data", "out.RData", package = "ARIpermutation"))
+out <- sapply(c(1:length(rhos)), function(x) simEC(m = m,rho = rhos[x],n = n,pi0 = pi0,B=B, power = power, alpha = alpha),simplify = FALSE)
 cv <- sapply(c(1:length(rhos)), function(x) out[[x]]$CriticalValue)
 Pvalues <- sapply(c(1:length(rhos)), function(x) out[[x]]$Pvalues)
 Test <- sapply(c(1:length(rhos)), function(x) out[[x]]$Test)
@@ -72,37 +70,17 @@ ggplot() +
    geom_line(aes(x = rhos, y = discoveriesPerm, colour = "Nonparametric"))+ 
    geom_line(aes(x = rhos, y = discoveriesHommel, colour = "Parametric")) +
    geom_line(aes(x = rhos, y = True, colour = "True")) +
-   xlab(expression(rho)) +
+   xlab(expression(rho)) + theme_bw() +
    ylab(expression(bar(a)(S)))  + theme(legend.title=element_blank())
 
 ```
 
 ```{r}
-id <- 15
-p <- sort(Pvalues[,id])
-#idx <- sort(Pvalues[,id], index.return= TRUE)$ix
-R = sapply(p, function(t) sum(p <=t)) 
-load(system.file("extdata/vignettes_data", "Bperm.RData", package = "ARIpermutation"))
-
-Bperm = sapply(1:length(p), function(i) i-ARIpermutation::dI(ix = c(1:i),cv = cv[,id],praw = Pvalues[,id]))       
-Bpar = sapply(1:length(p), function(i) i-hommel::discoveries(hommel(Pvalues[,id], simes = TRUE), ix=1:i, alpha=alpha))
-
-V <- c(rep(0,m1),seq(1,m0,1))
-
-ggplot() +
-   geom_line(aes(x = R, y = (R-Bpar)/pmax(1,R), colour = "Parametric TDP"))+ #ylim(0,pi0+0.01) +
-   geom_line(aes(x = R, y = (R-Bperm)/pmax(1,R), colour = "Permutation TDP")) +
-  geom_line(aes(x = R, y = V/pmax(1,R), colour = "True TDP") )+
-   xlab("Number of rejections") +
-   ylab("True Discoveries Proportion") + ggtitle(expression(paste(rho, " = ", -0.3, sep = ""))) + theme(legend.title=element_blank())
-
-```
-
-```{r}
+id <- 1
 Test <- Test[,id]
 data <- as.data.frame(cbind(Test,H))
 colnames(data) <- c("Test", "Hyp")
-data$Hyp <- ifelse(data$Hyp==0, "Null", "Alternative")
+data$Hyp <- c(rep("Alternative", m1), rep("Null", m0))
 data$Hyp <- as.factor(data$Hyp)
 ggplot(data,aes(x=c(1:m), y=Test, color=Hyp)) +
   geom_point() + ylab("Test") + xlab("Index hyp")
