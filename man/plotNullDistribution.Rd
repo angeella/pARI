@@ -24,6 +24,12 @@ plotNullDistribution(P,family,alpha, ct, path, name, delta,copes,mask)
 \item{copes}{image copes instead of pvalues, default NULL}
 
 \item{mask}{mask}
+
+\item{alternative}{character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"}
+
+\item{rand}{logical. Should p values computed by permutation distribution?}
+
+\item{B}{number of permutations to perform, default is 1000, if matrix p-value is computed directly.}
 }
 \value{
 Returns plot null distribution with critical value curve and observed pvalues in red

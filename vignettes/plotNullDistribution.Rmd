@@ -26,7 +26,7 @@ m <- 1e3 #number of variables
 n <- 20 #number of observations
 pi0 <- 0.9 #Proportion of true null hypotheses
 B <- 999 #number of permutation
-rhos <- seq(0,1,0.05) #Level of equi correlation between pairs of variables
+rho <- 0 #Level of equi correlation between pairs of variables
 alpha <- 0.05 #alpha level
 power <- 0.8
 delta <- 0
@@ -37,7 +37,7 @@ ct = c(0,1)
 Create simulate data 
 
 ```{r}
-X <-simulateData(pi0,m,n, rho, power = power, alpha = alpha)
+X <-simulateData(pi0,m,n, rho, power = power, alpha = alpha, rho = rho)
 X <- t(X)
 res <- ARIpermutation::signTest(X,B)
 Test <- cbind(res$Test,res$Test_H0)

@@ -11,11 +11,15 @@ simulateData(pi0,m,rho,SNR, set.seed = NULL)
 
 \item{m}{number of variables, i.e., hypothesis}
 
+\item{n}{number of observations}
+
 \item{rho}{Level of equi-correlation between pairs of variables}
 
-\item{SNR}{Signal to noise ratio}
-
 \item{set.seed}{specify seed}
+
+\item{power}{power}
+
+\item{alpha}{alpha value for power analysis}
 }
 \value{
 Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0

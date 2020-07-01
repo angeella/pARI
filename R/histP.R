@@ -1,6 +1,6 @@
 #' @title Histogram Pvalues
 #' @description create histogram p-values
-#' @usage histP(copes, alternative, mask, zstat, path, name)
+#' @usage histP(copes, alternative, mask, zstat, path, name, method, rand, B)
 #' @param copes image copes instead of pvalues, default NULL
 #' @param alternative alternative, default is "two.sided"
 #' @param mask mask, default is NULL
@@ -18,7 +18,8 @@
 #' @importFrom grDevices rgb
 #' @importFrom graphics legend
 
-histP <- function(copes =NULL, alternative = "two.sided", mask = NULL, zstat = NULL, path = getwd(), name = "hist",method=NULL, rand = F, B = 1000){
+histP <- function(copes =NULL, alternative = "two.sided", mask = NULL, zstat = NULL, 
+                  path = getwd(), name = "hist",method=NULL, rand = F, B = 1000){
   
 
   if(is.null(copes) & is.null(zstat)){stop('Please insert observed pvalues or copes images')}

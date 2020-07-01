@@ -4,22 +4,26 @@
 \alias{histP}
 \title{Histogram Pvalues}
 \usage{
-histP(copes, alternative, mask, zstat, path, name)
+histP(copes, alternative, mask, zstat, path, name, method, rand, B)
 }
 \arguments{
 \item{copes}{image copes instead of pvalues, default NULL}
 
-\item{alternative}{alternative}
+\item{alternative}{alternative, default is "two.sided"}
 
-\item{mask}{mask}
+\item{mask}{mask, default is NULL}
 
-\item{zstat}{zstat}
+\item{zstat}{zstat, default is NULL}
 
 \item{path}{path}
 
 \item{name}{name}
 
 \item{method}{method to compute the zstat}
+
+\item{rand}{logical. Should p values computed by permutation distribution?}
+
+\item{B}{number of permutations to perform, default is 1000, if matrix p-value is computed directly.}
 }
 \value{
 Returns hist

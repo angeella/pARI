@@ -4,7 +4,7 @@
 \alias{ARIpermCT}
 \title{ARI Permutation-based}
 \usage{
-ARIpermCT(copes, thr, mask, alpha, clusters,summary_stat,silent, family, delta, B, ct)
+ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, family, delta, B, ct, rand)
 }
 \arguments{
 \item{copes}{list of copes map}
@@ -17,6 +17,8 @@ ARIpermCT(copes, thr, mask, alpha, clusters,summary_stat,silent, family, delta, 
 
 \item{clusters}{clusters map as niftiImage class object or path, if NULL it is computed considering the threshold 3.2}
 
+\item{alternative}{character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"}
+
 \item{summary_stat}{Choose among "max", "center-of-mass"}
 
 \item{silent}{FALSE by default.}
@@ -28,6 +30,8 @@ ARIpermCT(copes, thr, mask, alpha, clusters,summary_stat,silent, family, delta, 
 \item{B}{number of permutation, default 1000}
 
 \item{ct}{set of thresholds}
+
+\item{rand}{logical. Should p values computed by permutation distribution?}
 }
 \value{
 Returns a list with the following objects: discoveries number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates

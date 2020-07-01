@@ -1,6 +1,6 @@
 #' @title ARI Permutation-based 
 #' @description Performs ARI using permutation local test
-#' @usage ARIpermCT(copes, thr, mask, alpha, clusters,summary_stat,silent, family, delta, B, ct)
+#' @usage ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, family, delta, B, ct, rand)
 #' @param copes list of copes map
 #' @param thr threshold to construct cluster map
 #' @param mask mask map, niftiImage class object or path
@@ -21,7 +21,8 @@
 #' @importFrom plyr laply
 
 ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alternative = "two.sided", 
-                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, B = 1000, ct = c(0,1), rand = FALSE){
+                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, 
+                      B = 1000, ct = c(0,1), rand = FALSE){
   
   "%ni%" <- Negate("%in%")
   #check alpha
