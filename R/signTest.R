@@ -16,7 +16,7 @@
 
 alternative_set <- c("two.sided", "greater", "lower")
 
-signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
+signTest <- function(X, B = 999, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
   
 
   if(!is.null(seed)){set.seed(seed)}else{set.seed(1234)}

@@ -1,7 +1,7 @@
 #' @title Critical value
 #' @description compute critical values curve 
 #' @usage cv(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL)
-#' @param pvalues pvalues raw
+#' @param pvalues pvalues matrix
 #' @param family family
 #' @param alpha alpha
 #' @param lambda lambda
@@ -17,7 +17,7 @@ cv <- function(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL){
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
-  w <- dim(pvalues)[1]
+  #w <- dim(pvalues)[1]
   m <- dim(pvalues)[2]
   if(is.null(delta) ){delta = 0}
   if(family=="simes"){

@@ -1,7 +1,7 @@
 #' @title Lambda calibration
 #' @description compute lambda parameter
 #' @usage lambdaOpt(pvalues,family,ct,alpha, delta = NULL)
-#' @param pvalues pvalues raw
+#' @param pvalues pvalues matrix
 #' @param family family
 #' @param alpha alpha
 #' @param ct set threshold
