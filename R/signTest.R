@@ -16,7 +16,7 @@
 
 alternative_set <- c("two.sided", "greater", "lower")
 
-signTest <- function(X, B = 999, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
+signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
   
 
   if(!is.null(seed)){set.seed(seed)}else{set.seed(1234)}
@@ -41,7 +41,7 @@ signTest <- function(X, B = 999, alternative = "two.sided", seed = NULL, mask = 
   
   ## Test statistics under H0
   
-  Test_H0 <- signFlip(X,B)
+  Test_H0 <- signFlip(X,B-1)
   #T0_m <- meanBySignFlipping(X,B)
   #T0_v <- varBySignFlipping(X,B)
   #T0_v <- ifelse(T0_v==0,.Machine$double.xmin, T0_v)
@@ -67,7 +67,7 @@ signTest <- function(X, B = 999, alternative = "two.sided", seed = NULL, mask = 
                  "lower" = rowRanks(Test_matrix) / (B+1))
     
     pv <- pv_matrix[, 1]
-    pv_H0 <- pv_matrix[, 2:(B+1)]
+    pv_H0 <- pv_matrix[, 2:(B)]
   }
   
   out <- list(Test = Test, Test_H0 = Test_H0, pv = pv, pv_H0 = pv_H0)
