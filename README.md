@@ -34,7 +34,7 @@ We expect that the lower bound of the number of true discoveries, considering th
 library(ARIpermutation)
 
 m <- 20 #number of tests
-n <- 10 $number of observations
+n <- 10 #number of observations
 X <- matrix(rnorm(0.5*m*n, 0, 0.05),ncol=n,nrow=0.5*m) #tests under the null
 Y <- matrix(rnorm(0.5*m*n, 10, 0.05),ncol=n,nrow=0.5*m) #tests under the alternative
 data <- cbind(X,Y) #full set of datasets
