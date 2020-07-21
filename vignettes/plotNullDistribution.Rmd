@@ -42,7 +42,6 @@ X <- t(X)
 res <- ARIpermutation::signTest(X,B)
 Test <- cbind(res$Test,res$Test_H0)
 P <- cbind(res$pv,res$pv_H0)
-P <- t(P)
 ```
 
 So, we plot the null distribution

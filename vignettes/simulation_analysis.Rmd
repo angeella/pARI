@@ -36,13 +36,11 @@ simEC <- function(m,rho,n,pi0,power,B, alpha){
   
   X <-simulateData(pi0,m,n, rho, power = power, alpha = alpha)
   X <- t(X)
-  res <- ARIpermutation::signTest(X,B)
+  res <- signTest(X,B)
   Test <- cbind(res$Test,res$Test_H0)
   P <- cbind(res$pv,res$pv_H0)
-  P <- t(P)
-  Psort <- t(apply(P,1,sort))
   lambdaSimes <- ARIpermutation::lambdaOpt(pvalues = P,family = family,ct = ct,alpha = alpha,delta = 0)
-  cvSimes <- ARIpermutation::cv(pvalues = Psort,family = family,alpha = alpha,lambda = lambdaSimes,ct = ct,delta = 0)
+  cvSimes <- ARIpermutation::cv(pvalues = P,family = family,alpha = alpha,lambda = lambdaSimes,ct = ct,delta = 0)
   out <- as.data.frame(cbind(cvSimes, res$pv, res$Test))
   colnames(out) <- c("CriticalValue", 
                      "Pvalues", "Test"

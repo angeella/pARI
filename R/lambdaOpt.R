@@ -1,7 +1,7 @@
 #' @title Lambda calibration
 #' @description compute lambda parameter
-#' @usage lambdaOpt(pvalues,family,ct,alpha, delta = NULL)
-#' @param pvalues pvalues matrix
+#' @usage lambdaOpt(pvalues,family,ct,alpha, delta = 0)
+#' @param pvalues pvalues matrix with dimensions variables times permutations
 #' @param family family
 #' @param alpha alpha
 #' @param ct set threshold
@@ -12,40 +12,45 @@
 #' @importFrom stats pbeta
 
 
-lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
+lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = 0){
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
-  if(is.unsorted(pvalues[1,])){pvalues = rowSortC(pvalues)}
-  l <- c()
-  w <- dim(pvalues)[1]
-  m <- dim(pvalues)[2]
-  if(is.null(delta) ){delta = 0}
-  for(j in 1:w){
-    minc <- sum(pvalues[j,] <=min(ct)) + 1
-    maxc <- sum(pvalues[j,] <=max(ct))
-    if(family =="simes"){
+  
+  #implement set of threshold
+  lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family)
+  
+  
+#  if(is.unsorted(pvalues[1,])){pvalues = rowSortC(pvalues)}
+#  l <- c()
+#  w <- dim(pvalues)[1]
+#  m <- dim(pvalues)[2]
+#  if(is.null(delta) ){delta = 0}
+#  for(j in 1:w){
+#    minc <- sum(pvalues[j,] <=min(ct)) + 1
+#    maxc <- sum(pvalues[j,] <=max(ct))
+#    if(family =="simes"){
       
-      minc = minc + delta
-      lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
+#      minc = minc + delta
+ #     lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
       #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
-    }
-    if(family == "beta"){
-      lambda <- pbeta(q =pvalues[j,c(minc:maxc)],shape1 = c(minc:maxc),shape2 =m+1-c(minc:maxc))
+#    }
+#    if(family == "beta"){
+#      lambda <- pbeta(q =pvalues[j,c(minc:maxc)],shape1 = c(minc:maxc),shape2 =m+1-c(minc:maxc))
       
-    }
+#    }
     
-    if(family == "finner"){
-      minc = minc + delta
+#    if(family == "finner"){
+#      minc = minc + delta
       #lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* (c(minc:maxc) - 1))))
-      lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
+ #     lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
       
-    }
+ #   }
     
     
-    if(family =="higher.criticism"){
+ #   if(family =="higher.criticism"){
       
-      lambda <- (sqrt(m)*((c(minc:maxc)/m) - pvalues[j,c(minc:maxc)]))/(sqrt(pvalues[j,c(minc:maxc)]*(1-pvalues[j,c(minc:maxc)])))
+ #     lambda <- (sqrt(m)*((c(minc:maxc)/m) - pvalues[j,c(minc:maxc)]))/(sqrt(pvalues[j,c(minc:maxc)]*(1-pvalues[j,c(minc:maxc)])))
       
       #HigherCriticism <- function(lambda,pvalue){
         
@@ -56,16 +61,13 @@ lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = NULL){
       #}
       #lambda <- sapply(c(minc:maxc), function(x) rootSolve::uniroot.all(HigherCriticism,pvalue = pvalues[j,x],lower=0, upper=1000))
       #lambda <- unlist(lambda)
-}
-    if(family=="beta"){
-      l[j] <- min(lambda[lambda>0])
-    }else{
-      l[j] <- min(lambda)
-    }
+#}
+#    l[j] <- min(lambda)
     
-  }
+    
+#  }
   
-  lambdaE <- sort(l)[floor(alpha*w)+1]
+#  lambdaE <- sort(l)[floor(alpha*w)+1]
 
   #nRej_Perm <- rejPerm(pvalues,min(ct))
   #quantRej_min <- sort(nRej_Perm)[ceiling((1-alpha)*w)]

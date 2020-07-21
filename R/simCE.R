@@ -15,6 +15,7 @@
 #' @export
 #' @importFrom sansSouci gaussianSamples
 
+#TO FINISH
 simCE <- function(m,n,pi0,B,rho,SNR,alpha,delta,ct,family){
   
   sim <- gaussianSamples(m, rho, n, pi0, SNR = SNR, prob = 1)

@@ -1,7 +1,7 @@
 #' @title Critical value
 #' @description compute critical values curve 
 #' @usage cv(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL)
-#' @param pvalues pvalues matrix
+#' @param pvalues pvalues matrix with dimensiona variables times permutations
 #' @param family family
 #' @param alpha alpha
 #' @param lambda lambda
@@ -18,7 +18,7 @@ cv <- function(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL){
   
   family <- match.arg(tolower(family), family_set)
   #w <- dim(pvalues)[1]
-  m <- dim(pvalues)[2]
+  m <- dim(pvalues)[1]
   if(is.null(delta) ){delta = 0}
   if(family=="simes"){
     

@@ -1,13 +1,13 @@
 #' @title Plot Permutation Pvalues
 #' @description create plot permutation pvalues with corresponding critical vectors
 #' @usage plotNullDistribution(P,family,alpha, ct, path, name, delta,copes,mask)
-#' @param P permutation matrix pvalues where rows correspond to the permutation, default NULL
-#' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL
+#' @param P permutation matrix pvalues where rows correspond to the variables, default NULL
+#' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL. Vectors accepted
 #' @param alpha type I error allowed to construct the critical family, default 0.1
 #' @param ct set of threshold to construct the critical family, default c(0,1)
 #' @param path selected the path where the plot will be saved, if NULL the current working directory is used
 #' @param name name plot pdf, if NULL plot is used
-#' @param delta for the family critical values, default NULL
+#' @param delta for the family critical values, default 0. Vectors accepted
 #' @param copes image copes instead of pvalues, default NULL
 #' @param mask mask
 #' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
@@ -22,7 +22,7 @@
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
 
-plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = NULL,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
+plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}
@@ -31,7 +31,6 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
   if(!is.null(family)){family <- unlist(lapply(family, fam_match))}
   if(is.null(copes) & is.null(P)){stop('Please insert pvalues matrix or copes images')}
   
-  if(!is.null(P) & is.unsorted(P[1,])){pvalues_ord <- rowSortC(P)}else{pvalues_ord <- P}
   if(!is.null(copes)){
     
     if(is.null(mask)){stop('please insert the mask as character path or Nifti image')}
@@ -50,32 +49,33 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     scores <- scores[which(mask==1),]
     res <- signTest(X=scores, B = B,alternative = alternative, rand = rand) #variables times number of permutation
     
-    pvalues <- cbind(res$pv,res$pv_H0)
-    pvalues = t(pvalues)
+    P <- cbind(res$pv,res$pv_H0)
     rm(res)
     rm(scores)
     rm(copes)
     rm(img)
-    
-    pvalues_ord <- rowSortC(pvalues)
-    
+  
     
   }
 
   if(is.null(family)){
+    if(is.unsorted(P[,1])){pvalues_ord <- colSortC(P)}else{pvalues_ord <- P}
+    
     png(paste0(path,"/", name, ".png")) 
-    plot(pvalues_ord[1,], type = 'l', col = ' red', xlab = expression(i), ylab = expression(p[(i)]))
-    for(i in 2:nrow(pvalues_ord)){
+    plot(pvalues_ord[,1], type = 'l', col = ' red', xlab = expression(i), ylab = expression(p[(i)]))
+    for(i in 2:ncol(pvalues_ord)){
       
-      lines(pvalues_ord[i,],col='black',type="l")
+      lines(pvalues_ord[,i],col='black',type="l")
       
     }
-    lines(pvalues_ord[1,], lwd =2, col= 'red')
+    lines(pvalues_ord[,1], lwd =2, col= 'red')
     dev.off()
   }else{
+    if(is.unsorted(P[,1])){pvalues_ord <- colSortC(P)}else{pvalues_ord <- P}
+    
     lcv <- function(family,delta=NULL, cols = "blue"){
-      lambdaO <- lambdaOpt(pvalues = pvalues_ord,family=family,ct=ct,alpha=alpha, delta = delta)
-      cvO<- cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
+      lambdaO <- lambdaOpt(pvalues = P,family=family,ct=ct,alpha=alpha, delta = delta)
+      cvO<- cv(pvalues = P, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
       lines(cvO, lwd =2, col= cols)
     }
     firstup <- function(x) {
@@ -85,13 +85,13 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     lcvV <- Vectorize(lcv,vectorize.args = c("family", "delta", "cols"))
     cols = rainbow(length(family))
     png(paste0(path,"/", name, ".png")) 
-    plot(pvalues_ord[1,], type = 'l', col = ' red', lty = "dashed", xlab = expression(i), ylab = expression(p[(i)]))
-    for(i in 2:nrow(pvalues_ord)){
+    plot(pvalues_ord[,1], type = 'l', col = ' red', lty = "dashed", xlab = expression(i), ylab = expression(p[(i)]))
+    for(i in 2:ncol(pvalues_ord)){
       
-      lines(pvalues_ord[i,],col='black',type="l")
+      lines(pvalues_ord[,i],col='black',type="l")
       
     }
-    lines(pvalues_ord[1,], lwd =2, col= 'red', lty = "dashed")
+    lines(pvalues_ord[,1], lwd =2, col= 'red', lty = "dashed")
     #lines(cvO, col= 'blue', lwd =2)
     mapply(lcv, family, delta, cols)
     family <- firstup(family)

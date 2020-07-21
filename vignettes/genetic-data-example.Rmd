@@ -32,7 +32,7 @@ So, we apply the method considering the full set of variables, i.e. genes:
 
 ```{r}
 ix <- c(1:m)
-out <- SingleStepCT(ix = ix, alpha = alpha, pvalues = pvalues)
+out <- SingleStepCT(ix = ix, alpha = alpha, pvalues = t(pvalues))
 
 out[[1]]
 ```
@@ -55,6 +55,7 @@ Then, we can see how this works considering different subset of hypothesis.
 p_sort = sort(praw)
 R = sapply(p_sort, function(t) sum(p_sort <=t)) 
 
+#TD_permutation_genetic.RData: takes a lot to compute
 #out3 <- sapply(R, function(x) discoveriesPerm(out,ix = c(1:x))[[1]])
 
 load(system.file("extdata/vignettes_data", "TD_permutation_genetic.RData", package = "ARIpermutation"))

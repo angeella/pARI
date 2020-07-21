@@ -6,6 +6,44 @@
 
 using namespace Rcpp;
 
+// colSortC
+arma::mat colSortC(arma::mat X);
+RcppExport SEXP _ARIpermutation_colSortC(SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(colSortC(X));
+    return rcpp_result_gen;
+END_RCPP
+}
+// lambdaCalibrate
+NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, int delta, std::string family);
+RcppExport SEXP _ARIpermutation_lambdaCalibrate(SEXP XSEXP, SEXP alphaSEXP, SEXP deltaSEXP, SEXP familySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< int >::type delta(deltaSEXP);
+    Rcpp::traits::input_parameter< std::string >::type family(familySEXP);
+    rcpp_result_gen = Rcpp::wrap(lambdaCalibrate(X, alpha, delta, family));
+    return rcpp_result_gen;
+END_RCPP
+}
+// permT
+arma::mat permT(arma::mat X, double B, arma::vec label);
+RcppExport SEXP _ARIpermutation_permT(SEXP XSEXP, SEXP BSEXP, SEXP labelSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    Rcpp::traits::input_parameter< double >::type B(BSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type label(labelSEXP);
+    rcpp_result_gen = Rcpp::wrap(permT(X, B, label));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rowSortC
 arma::mat rowSortC(arma::mat X);
 RcppExport SEXP _ARIpermutation_rowSortC(SEXP XSEXP) {
@@ -26,6 +64,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
     Rcpp::traits::input_parameter< double >::type B(BSEXP);
     rcpp_result_gen = Rcpp::wrap(signFlip(X, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// signFlip_Eklund
+arma::mat signFlip_Eklund(arma::mat X, double B);
+RcppExport SEXP _ARIpermutation_signFlip_Eklund(SEXP XSEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    Rcpp::traits::input_parameter< double >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(signFlip_Eklund(X, B));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -55,8 +105,12 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_ARIpermutation_colSortC", (DL_FUNC) &_ARIpermutation_colSortC, 1},
+    {"_ARIpermutation_lambdaCalibrate", (DL_FUNC) &_ARIpermutation_lambdaCalibrate, 4},
+    {"_ARIpermutation_permT", (DL_FUNC) &_ARIpermutation_permT, 3},
     {"_ARIpermutation_rowSortC", (DL_FUNC) &_ARIpermutation_rowSortC, 1},
     {"_ARIpermutation_signFlip", (DL_FUNC) &_ARIpermutation_signFlip, 2},
+    {"_ARIpermutation_signFlip_Eklund", (DL_FUNC) &_ARIpermutation_signFlip_Eklund, 2},
     {"_ARIpermutation_varBySignFlipping", (DL_FUNC) &_ARIpermutation_varBySignFlipping, 2},
     {"_ARIpermutation_meanBySignFlipping", (DL_FUNC) &_ARIpermutation_meanBySignFlipping, 2},
     {NULL, NULL, 0}

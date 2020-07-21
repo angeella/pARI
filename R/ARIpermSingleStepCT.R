@@ -21,7 +21,7 @@
 #' @importFrom plyr laply
 
 ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alternative = "two.sided", 
-                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = NULL, 
+                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = 0, 
                       B = 1000, ct = c(0,1), rand = FALSE){
   
   "%ni%" <- Negate("%in%")
@@ -53,7 +53,7 @@ ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alt
   res <- signTest(X=scores, B = B,alternative = alternative, rand = rand) #variables times number of permutation
   
   pvalues <- cbind(res$pv,res$pv_H0)
-  pvalues = t(pvalues)
+#  pvalues = t(pvalues)
   Statmap = array(data = resO$Test, dim = c(91,109,91))
   Statmap[!mask]=0
   rm(res)
@@ -87,13 +87,13 @@ ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alt
   #pvalues <- rbind(pv_id,pvalues)
   #pvalues_ord <- t(apply(pvalues, 1, sort))
     
-  pvalues_ord <- rowSortC(pvalues)
-  praw <- pvalues_ord[1,]
-  lambda <- lambdaOpt(pvalues = pvalues_ord, family = family, ct = ct, alpha = alpha, delta = delta) 
+#  pvalues_ord <- rowSortC(pvalues)
+#  praw <- pvalues_ord[1,]
+  lambda <- lambdaOpt(pvalues = pvalues, family = family, ct = ct, alpha = alpha, delta = delta) 
   #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
   #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
   #cv <- sapply(c(1:length(praw)), function(x) (((x-8) * alpha * lambda)/length(praw)))
-  cvOpt = cv(pvalues = pvalues_ord, family = family, alpha = alpha, lambda= lambda, delta = delta)
+  cvOpt = cv(pvalues = pvalues, family = family, alpha = alpha, lambda= lambda, delta = delta)
  
   # define number of clusters
   clstr_id=sort(unique(as.vector(clusters[mask])),decreasing = TRUE)
@@ -115,7 +115,7 @@ ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alt
       #Error if I put pvalues[,mask] instead of pvalues in SingleStepCT
       #perm <- SingleStepCT(pvalues = pvalues,ct =ct, ix =as.vector(which(ix[mask])), alpha = alpha, shift = shift, family = 'Simes', lambda = lambda)
       #perm <- discoveriesPerm(praw = praw, ix = ix[mask], cvh = cvh)
-      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues),
+      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues[,1]),
                summary_cluster(cluster_ids)[-1])
       )
     })
