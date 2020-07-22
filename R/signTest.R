@@ -62,9 +62,9 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
 
     Test_matrix <- cbind(Test, Test_H0)
     pv_matrix <- switch(alternative, 
-                 "two.sided" = rowRanks(-abs(Test_matrix)) / (B+1),
-                 "greater" = rowRanks(-Test_matrix) / (B+1),
-                 "lower" = rowRanks(Test_matrix) / (B+1))
+                 "two.sided" = rowRanks(-abs(Test_matrix)) / ncol(Test_matrix),
+                 "greater" = rowRanks(-Test_matrix) / ncol(Test_matrix),
+                 "lower" = rowRanks(Test_matrix) / ncol(Test_matrix))
     
     pv <- pv_matrix[, 1]
     pv_H0 <- pv_matrix[, 2:(B)]
