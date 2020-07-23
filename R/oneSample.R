@@ -20,9 +20,9 @@ oneSample<- function(X,alternative = "two.sided"){
   #Test = rowMeans(X)/(sqrt((rowV)/n))
   Test <- ifelse(rowV==0,0, rowMeans(X)/(sqrt((rowV)/n)))
   pv <- switch(alternative, 
-              "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
-              "greater" = pnorm(Test, lower.tail=FALSE),
-              "lower" = 1-pnorm(Test, lower.tail=FALSE))
+              "two.sided" = 2*(pt(abs(Test), n-1, lower.tail=FALSE)),
+              "greater" = pt(Test, n-1, lower.tail=FALSE),
+              "lower" = 1-pt(Test, n-1, lower.tail=FALSE))
   
   res <- list(Test = Test, pv = pv)
   
