@@ -16,7 +16,7 @@ lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = 0){
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
-  
+  #C++ rounds the value to 0. TO adjust
   if(family != "beta"){
     lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family)
     
