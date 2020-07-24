@@ -1,6 +1,6 @@
 #' @title ARI Permutation-based 
 #' @description Performs ARI using permutation local test
-#' @usage ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, family, delta, B, ct, rand)
+#' @usage ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, family, delta, B, rand)
 #' @param copes list of copes map
 #' @param thr threshold to construct cluster map
 #' @param mask mask map, niftiImage class object or path
@@ -12,7 +12,6 @@
 #' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is simes
 #' @param delta do you want to consider at least delta size set?
 #' @param B number of permutation, default 1000
-#' @param ct set of thresholds
 #' @param rand logical. Should p values computed by permutation distribution?
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: discoveries number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
@@ -21,8 +20,8 @@
 #' @importFrom plyr laply
 
 ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alternative = "two.sided", 
-                      summary_stat=c("max", "center-of-mass"),silent=FALSE, family = "simes", delta = 0, 
-                      B = 1000, ct = c(0,1), rand = FALSE){
+                      summary_stat=c("max", "center-of-mass"),silent=F, family = "simes", delta = 0, 
+                      B = 1000, rand = F){
   
   "%ni%" <- Negate("%in%")
   #check alpha
@@ -89,7 +88,7 @@ ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alt
     
 #  pvalues_ord <- rowSortC(pvalues)
 #  praw <- pvalues_ord[1,]
-  lambda <- lambdaOpt(pvalues = pvalues, family = family, ct = ct, alpha = alpha, delta = delta) 
+  lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta) 
   #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
   #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
   #cv <- sapply(c(1:length(praw)), function(x) (((x-8) * alpha * lambda)/length(praw)))

@@ -1,6 +1,6 @@
 #' @title Single Step Permutation-based method
 #' @description Performs single step method based on confidence envelope constructed by sign flipping 
-#' @usage SingleStepCT(X,ct, ix, alpha, family, delta, B, pvalues)
+#' @usage SingleStepCT(X,ix, alpha, alternative, family, delta, B, pvalues)
 #' @param X data matrix rows represent variables, columns observations, the first rows are the raw pvalues.
 #' @param ct set of thresholds of interest
 #' @param ix set of hypothesis of interest
@@ -14,7 +14,7 @@
 #' @return Returns a list with the following objects discoveries number of discoveries in the set selected, pvalues raw pvalues
 #' @export
 
-SingleStepCT <- function(X= NULL,ct = c(0,1), ix, alpha = 0.1, alternative = "two.sided", family = "simes", delta= 0, B = 1000, pvalues = NULL, ...){
+SingleStepCT <- function(X= NULL, ix, alpha = 0.1, alternative = "two.sided", family = "simes", delta= 0, B = 1000, pvalues = NULL, ...){
   if(is.null(pvalues)){
     out <- signTest(X, B = B, alternative = alternative)
     P <- cbind(out$pv, out$pv_H0)
@@ -24,8 +24,8 @@ SingleStepCT <- function(X= NULL,ct = c(0,1), ix, alpha = 0.1, alternative = "tw
 
   p <- P[,1]
 
-  lambda <- lambdaOpt(P, family = family, ct = ct, alpha = alpha, delta = delta)
-  cv <- cv(pvalues=P, family= family, alpha = alpha, delta = delta, lambda = lambda, ct = ct)
+  lambda <- lambdaOpt(P, family = family, alpha = alpha, delta = delta)
+  cv <- cv(pvalues=P, family= family, alpha = alpha, delta = delta, lambda = lambda)
   
   #Compute the largest size of a set of hyp not rejected by our local test
   #h <- hI(p, cv)

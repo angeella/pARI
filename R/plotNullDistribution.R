@@ -1,10 +1,9 @@
 #' @title Plot Permutation Pvalues
 #' @description create plot permutation pvalues with corresponding critical vectors
-#' @usage plotNullDistribution(P,family,alpha, ct, path, name, delta,copes,mask)
+#' @usage plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, rand, B)
 #' @param P permutation matrix pvalues where rows correspond to the variables, default NULL
 #' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL. Vectors accepted
 #' @param alpha type I error allowed to construct the critical family, default 0.1
-#' @param ct set of threshold to construct the critical family, default c(0,1)
 #' @param path selected the path where the plot will be saved, if NULL the current working directory is used
 #' @param name name plot pdf, if NULL plot is used
 #' @param delta for the family critical values, default 0. Vectors accepted
@@ -22,7 +21,7 @@
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
 
-plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1), path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
+plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
   
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}
@@ -74,7 +73,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, ct = c(0,1),
     if(is.unsorted(P[,1])){pvalues_ord <- colSortC(P)}else{pvalues_ord <- P}
     
     lcv <- function(family,delta=NULL, cols = "blue"){
-      lambdaO <- lambdaOpt(pvalues = P,family=family,ct=ct,alpha=alpha, delta = delta)
+      lambdaO <- lambdaOpt(pvalues = P,family=family,alpha=alpha, delta = delta)
       cvO<- cv(pvalues = P, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
       lines(cvO, lwd =2, col= cols)
     }

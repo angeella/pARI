@@ -1,6 +1,6 @@
 #' @title Sign-Flipping Test
 #' @description Performs sign-flipping, i.e. permutation, one-sample t-tests
-#' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL)
+#' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F)
 #' @param X data where rows represents the variables and columns the observations
 #' @param B number of permutations to perform, default is 1000.
 #' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"

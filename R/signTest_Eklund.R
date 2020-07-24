@@ -3,7 +3,7 @@ alternative_set <- c("two.sided", "greater", "lower")
 
 signTest_Eklund <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
   
-  library(matrixStats)
+  requireNamespace("matrixStats")
   if(!is.null(seed)){set.seed(seed)}else{set.seed(1234)}
   if(!is.null(mask)){
     if(is.character(mask)){mask = readNifti(mask)}

@@ -1,6 +1,6 @@
 #' @title simulate normal distributed data
 #' @description Simulate normal distributed data
-#' @usage simulateData(pi0,m,rho,SNR, set.seed = NULL)
+#' @usage simulateData(pi0,m,n,rho, set.seed = NULL, power, alpha)
 #' @param pi0 proportion of true null hypothesis
 #' @param m number of variables, i.e., hypothesis
 #' @param n number of observations

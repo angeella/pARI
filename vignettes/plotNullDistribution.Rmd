@@ -30,7 +30,6 @@ rho <- 0 #Level of equi correlation between pairs of variables
 alpha <- 0.05 #alpha level
 power <- 0.8
 delta <- 0
-ct = c(0,1)
 ```
 
 
@@ -47,17 +46,17 @@ P <- cbind(res$pv,res$pv_H0)
 So, we plot the null distribution
 
 ```{r}
-ARIpermutation::plotNullDistribution(family = NULL,alpha = alpha, ct = ct,P = P,B = B)
+ARIpermutation::plotNullDistribution(family = NULL,alpha = alpha, P = P,B = B)
 ```
 
 We add the Simes critical values:
 
 ```{r}
-ARIpermutation::plotNullDistribution(family = "simes", alpha = alpha, ct = ct,P = P,B = B, delta = delta)
+ARIpermutation::plotNullDistribution(family = "simes", alpha = alpha, P = P,B = B, delta = delta)
 ```
 
 ```{r}
-ARIpermutation::plotNullDistribution(family = "finner", alpha = alpha, ct = ct,P = P,B = B, delta = delta)
+ARIpermutation::plotNullDistribution(family = "finner", alpha = alpha, P = P,B = B, delta = delta)
 ```
 
 

@@ -28,7 +28,6 @@ alpha <- 0.05 #alpha level
 power <- 0.8
 delta <- 0
 family = "Simes"
-ct = c(0,1)
 ```
 
 ```{r}
@@ -39,8 +38,8 @@ simEC <- function(m,rho,n,pi0,power,B, alpha){
   res <- signTest(X,B)
   Test <- cbind(res$Test,res$Test_H0)
   P <- cbind(res$pv,res$pv_H0)
-  lambdaSimes <- ARIpermutation::lambdaOpt(pvalues = P,family = family,ct = ct,alpha = alpha,delta = 0)
-  cvSimes <- ARIpermutation::cv(pvalues = P,family = family,alpha = alpha,lambda = lambdaSimes,ct = ct,delta = 0)
+  lambdaSimes <- ARIpermutation::lambdaOpt(pvalues = P,family = family,alpha = alpha,delta = 0)
+  cvSimes <- ARIpermutation::cv(pvalues = P,family = family,alpha = alpha,lambda = lambdaSimes,delta = 0)
   out <- as.data.frame(cbind(cvSimes, res$pv, res$Test))
   colnames(out) <- c("CriticalValue", 
                      "Pvalues", "Test"

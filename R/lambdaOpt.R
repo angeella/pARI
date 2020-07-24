@@ -1,10 +1,9 @@
 #' @title Lambda calibration
 #' @description compute lambda parameter
-#' @usage lambdaOpt(pvalues,family,ct,alpha, delta = 0)
+#' @usage lambdaOpt(pvalues,family,alpha, delta = 0)
 #' @param pvalues pvalues matrix with dimensions variables times permutations
 #' @param family family
 #' @param alpha alpha
-#' @param ct set threshold
 #' @param delta delta
 #' @author Angela Andreella
 #' @return lambda
@@ -12,7 +11,7 @@
 #' @importFrom stats pbeta
 
 
-lambdaOpt <- function(pvalues, family, ct = c(0,1), alpha, delta = 0){
+lambdaOpt <- function(pvalues, family, alpha, delta = 0){
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
