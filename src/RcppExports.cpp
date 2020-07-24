@@ -31,6 +31,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// permDiscoveries
+int permDiscoveries(NumericVector ix, NumericVector cv, NumericVector praw);
+RcppExport SEXP _ARIpermutation_permDiscoveries(SEXP ixSEXP, SEXP cvSEXP, SEXP prawSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type ix(ixSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type cv(cvSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type praw(prawSEXP);
+    rcpp_result_gen = Rcpp::wrap(permDiscoveries(ix, cv, praw));
+    return rcpp_result_gen;
+END_RCPP
+}
 // permT
 arma::mat permT(arma::mat X, double B, arma::vec label);
 RcppExport SEXP _ARIpermutation_permT(SEXP XSEXP, SEXP BSEXP, SEXP labelSEXP) {
@@ -107,6 +120,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_ARIpermutation_colSortC", (DL_FUNC) &_ARIpermutation_colSortC, 1},
     {"_ARIpermutation_lambdaCalibrate", (DL_FUNC) &_ARIpermutation_lambdaCalibrate, 4},
+    {"_ARIpermutation_permDiscoveries", (DL_FUNC) &_ARIpermutation_permDiscoveries, 3},
     {"_ARIpermutation_permT", (DL_FUNC) &_ARIpermutation_permT, 3},
     {"_ARIpermutation_rowSortC", (DL_FUNC) &_ARIpermutation_rowSortC, 1},
     {"_ARIpermutation_signFlip", (DL_FUNC) &_ARIpermutation_signFlip, 2},

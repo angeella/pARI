@@ -25,7 +25,7 @@ signTest_Eklund <- function(X, B = 1000, alternative = "two.sided", seed = NULL,
     
   }
   rowV <- rowVars(scoresFlip) + rowMeans(scoresFlip)^2
-  Test <- ifelse(is.na(rowV) | rowV == 0,0, rowMeans(scoresFlip)/(sqrt((rowV))))
+  Test <- ifelse(is.na(rowV) | rowV == 0,0, rowMeans(scoresFlip)/(sqrt((rowV/n))))
   ## Test statistics under H0
   
   Test_H0 <- signFlip_Eklund(scoresFlip,B-1)
@@ -49,9 +49,9 @@ signTest_Eklund <- function(X, B = 1000, alternative = "two.sided", seed = NULL,
     
     Test_matrix <- cbind(Test, Test_H0)
     pv_matrix <- switch(alternative, 
-                        "two.sided" = rowRanks(-abs(Test_matrix)) / (B+1),
-                        "greater" = rowRanks(-Test_matrix) / (B+1),
-                        "lower" = rowRanks(Test_matrix) / (B+1))
+                        "two.sided" = rowRanks(-abs(Test_matrix)) / (B),
+                        "greater" = rowRanks(-Test_matrix) / (B),
+                        "lower" = rowRanks(Test_matrix) / (B))
     
     pv <- pv_matrix[, 1]
     pv_H0 <- pv_matrix[, 2:(B)]

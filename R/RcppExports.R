@@ -9,6 +9,10 @@ lambdaCalibrate <- function(X, alpha, delta, family) {
     .Call('_ARIpermutation_lambdaCalibrate', PACKAGE = 'ARIpermutation', X, alpha, delta, family)
 }
 
+permDiscoveries <- function(ix, cv, praw) {
+    .Call('_ARIpermutation_permDiscoveries', PACKAGE = 'ARIpermutation', ix, cv, praw)
+}
+
 permT <- function(X, B, label) {
     .Call('_ARIpermutation_permT', PACKAGE = 'ARIpermutation', X, B, label)
 }

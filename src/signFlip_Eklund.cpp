@@ -25,7 +25,7 @@ arma::mat signFlip_Eklund(arma::mat X, double B) {
     Tb2 = pow(Tb1,2)/pow(n,2); //E(X)^2
     Tb =  (Tb0-Tb2)*(n/(n-1)); //sample var
     Tb = Tb + Tb2;
-    T.col(bb) = Tb1/sqrt(Tb);
+    T.col(bb) = Tb1/sqrt(Tb/n);
     
   }
   return (T);

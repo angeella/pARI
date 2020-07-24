@@ -71,17 +71,17 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, int delta, std::stri
 
 
 /*** R
-#library(ARIpermutation)
-#m <- 1000
-#n <- 20
-#B <- 100
-#delta <- 1
-#alpha <- 0.05
-#X <- simulateData(0.9,m,n,0,power = 0.8,set.seed = rpois(1,1000))
-#PV <- signTest(X = t(X),B = 100,seed = rpois(1,1000))
-#X<- cbind(PV$pv,PV$pv_H0)
-#Test <- lambdaCalibrate(X, alpha = alpha, delta = 0, family = "beta")
-#Test
-#lambdaOpt(t(X), family = "beta", alpha = 0.05, delta =0)
+library(ARIpermutation)
+m <- 1000
+n <- 20
+B <- 100
+delta <- 1
+alpha <- 0.05
+X <- simulateData(0.9,m,n,0,power = 0.8,set.seed = rpois(1,1000))
+PV <- signTest(X = t(X),B = 100,seed = rpois(1,1000))
+X<- cbind(PV$pv,PV$pv_H0)
+Test <- lambdaCalibrate(X, alpha = alpha, delta = 0, family = "beta")
+Test
+lambdaOpt(t(X), family = "beta", alpha = 0.05, delta =0)
 */
 

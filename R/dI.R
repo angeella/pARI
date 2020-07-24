@@ -10,8 +10,9 @@
 
 dI <- function(ix,cv,praw){
   
-  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
-  d <- max(u)
+#  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
+#  d <- max(u)
+  d <- permDiscoveries(ix,cv,praw)
   return(d)
 }
 
