@@ -51,15 +51,12 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, int delta, std::stri
     }
     if(family == "beta"){
 
-      for (int i=1; i<m; i++) {
-      double q = arma::conv_to<double>::from(Y.col(bb).row(i));
-      double shape1 = i;
-      double shape2 = m+1-i;
-      long double beta = 1-exp(R::pbeta(q=q,shape1,shape2,0,1));
-      if (beta == 0){
-        beta = 1;
-      }
-      lambda[i-1] = beta;
+      for (int i=0; i<m; i++) {
+      long double q = arma::conv_to<double>::from(Y.col(bb).row(i));
+      double shape1 = i+1;
+      double shape2 = m-i;
+     // long double beta = 1-exp(R::pbeta(q=q,shape1,shape2,1,1));
+      lambda[i] = R::pbeta(q = q, shape1, shape2, 1, 0);
       }
     }
 //take minimum over hypotheses for each permutations
@@ -75,16 +72,16 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, int delta, std::stri
 
 /*** R
 library(ARIpermutation)
-#m <- 1000
-#n <- 20
-#B <- 100
-#delta <- 1
-#alpha <- 0.05
-#X <- simulateData(0.9,m,n,0,power = 0.8)
-#PV <- signTest(X = t(X),B = 100)
-#X<- cbind(PV$pv,PV$pv_H0)
-#Test <- lambdaCalibrate(X, alpha = alpha, delta = 0, family = "beta")
-#Test
-#lambdaOpt(t(X), family = "beta", alpha = 0.05, delta =0)
+m <- 1000
+n <- 20
+B <- 100
+delta <- 1
+alpha <- 0.05
+X <- simulateData(0.9,m,n,0,power = 0.8,set.seed = rpois(1,1000))
+PV <- signTest(X = t(X),B = 100,seed = rpois(1,1000))
+X<- cbind(PV$pv,PV$pv_H0)
+Test <- lambdaCalibrate(X, alpha = alpha, delta = 0, family = "beta")
+Test
+lambdaOpt(t(X), family = "beta", alpha = 0.05, delta =0)
 */
 
