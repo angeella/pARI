@@ -47,8 +47,10 @@ permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   rowV2 <-rowVariance(X[,label == id[2]])
   rowM1 <- rowMeans(X[,label == id[1]])
   rowM2 <-rowMeans(X[,label == id[2]])
-  pooled.var <- ((n1 - 1)* rowV1 + (n2 - 1)* rowV2)/ (n1 + n2 - 2)
-  Test <- (rowM1 - rowM2)/sqrt(pooled.var * (1/n1 + 1/n2))
+  #pooled.var <- ((n1 - 1)* rowV1 + (n2 - 1)* rowV2)/ (n1 + n2 - 2)
+  #Test <- (rowM1 - rowM2)/sqrt(pooled.var * (1/n1 + 1/n2))
+  pooled.var <- (rowV1/n1 + rowV2/n2)
+  Test <- (rowM1 - rowM2)/sqrt(pooled.var)
   
   ## Test statistics under H0
 
