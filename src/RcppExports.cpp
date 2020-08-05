@@ -80,42 +80,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// signFlip_Eklund
-arma::mat signFlip_Eklund(arma::mat X, double B);
-RcppExport SEXP _ARIpermutation_signFlip_Eklund(SEXP XSEXP, SEXP BSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
-    Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(signFlip_Eklund(X, B));
-    return rcpp_result_gen;
-END_RCPP
-}
-// varBySignFlipping
-arma::mat varBySignFlipping(arma::mat X, double B);
-RcppExport SEXP _ARIpermutation_varBySignFlipping(SEXP XSEXP, SEXP BSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
-    Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(varBySignFlipping(X, B));
-    return rcpp_result_gen;
-END_RCPP
-}
-// meanBySignFlipping
-arma::mat meanBySignFlipping(arma::mat X, double B);
-RcppExport SEXP _ARIpermutation_meanBySignFlipping(SEXP XSEXP, SEXP BSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
-    Rcpp::traits::input_parameter< double >::type B(BSEXP);
-    rcpp_result_gen = Rcpp::wrap(meanBySignFlipping(X, B));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ARIpermutation_colSortC", (DL_FUNC) &_ARIpermutation_colSortC, 1},
@@ -124,9 +88,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_ARIpermutation_permT", (DL_FUNC) &_ARIpermutation_permT, 3},
     {"_ARIpermutation_rowSortC", (DL_FUNC) &_ARIpermutation_rowSortC, 1},
     {"_ARIpermutation_signFlip", (DL_FUNC) &_ARIpermutation_signFlip, 2},
-    {"_ARIpermutation_signFlip_Eklund", (DL_FUNC) &_ARIpermutation_signFlip_Eklund, 2},
-    {"_ARIpermutation_varBySignFlipping", (DL_FUNC) &_ARIpermutation_varBySignFlipping, 2},
-    {"_ARIpermutation_meanBySignFlipping", (DL_FUNC) &_ARIpermutation_meanBySignFlipping, 2},
     {NULL, NULL, 0}
 };
 

@@ -4,7 +4,7 @@
 \alias{simulateData}
 \title{simulate normal distributed data}
 \usage{
-simulateData(pi0,m,rho,SNR, set.seed = NULL)
+simulateData(pi0,m,n,rho, set.seed = NULL, power, alpha)
 }
 \arguments{
 \item{pi0}{proportion of true null hypothesis}

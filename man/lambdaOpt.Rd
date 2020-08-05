@@ -4,14 +4,12 @@
 \alias{lambdaOpt}
 \title{Lambda calibration}
 \usage{
-lambdaOpt(pvalues,family,ct,alpha, delta = NULL)
+lambdaOpt(pvalues,family,alpha, delta = 0)
 }
 \arguments{
-\item{pvalues}{pvalues raw}
+\item{pvalues}{pvalues matrix with dimensions variables times permutations}
 
 \item{family}{family}
-
-\item{ct}{set threshold}
 
 \item{alpha}{alpha}
 

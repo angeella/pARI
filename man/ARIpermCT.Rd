@@ -4,7 +4,7 @@
 \alias{ARIpermCT}
 \title{ARI Permutation-based}
 \usage{
-ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, family, delta, B, ct, rand)
+ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, family, delta, B, rand)
 }
 \arguments{
 \item{copes}{list of copes map}
@@ -28,8 +28,6 @@ ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, 
 \item{delta}{do you want to consider at least delta size set?}
 
 \item{B}{number of permutation, default 1000}
-
-\item{ct}{set of thresholds}
 
 \item{rand}{logical. Should p values computed by permutation distribution?}
 }

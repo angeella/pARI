@@ -4,18 +4,16 @@
 \alias{cv}
 \title{Critical value}
 \usage{
-cv(pvalues, family, alpha, lambda, ct = c(0,1), delta = NULL)
+cv(pvalues, family, alpha, lambda, delta = NULL)
 }
 \arguments{
-\item{pvalues}{pvalues raw}
+\item{pvalues}{pvalues matrix with dimensiona variables times permutations}
 
 \item{family}{family}
 
 \item{alpha}{alpha}
 
 \item{lambda}{lambda}
-
-\item{ct}{set threshold}
 
 \item{delta}{delta}
 }

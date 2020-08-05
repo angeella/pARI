@@ -25,15 +25,3 @@ signFlip <- function(X, B) {
     .Call('_ARIpermutation_signFlip', PACKAGE = 'ARIpermutation', X, B)
 }
 
-signFlip_Eklund <- function(X, B) {
-    .Call('_ARIpermutation_signFlip_Eklund', PACKAGE = 'ARIpermutation', X, B)
-}
-
-varBySignFlipping <- function(X, B) {
-    .Call('_ARIpermutation_varBySignFlipping', PACKAGE = 'ARIpermutation', X, B)
-}
-
-meanBySignFlipping <- function(X, B) {
-    .Call('_ARIpermutation_meanBySignFlipping', PACKAGE = 'ARIpermutation', X, B)
-}
-

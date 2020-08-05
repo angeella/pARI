@@ -1,6 +1,6 @@
 #' @title Permutation Test
 #' @description Performs permutation tests, i.e. permutation, two-sample t-tests
-#' @usage permTest(X, B = 1000, alternative = "two.sided", seed = NULL)
+#' @usage permTest(X, B, alternative, seed, mask, rand, label)
 #' @param X data where rows represents the variables and columns the observations, the columns's name define the categories
 #' @param B number of permutations to perform, default is 1000.
 #' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
@@ -48,9 +48,9 @@ permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   rowM1 <- rowMeans(X[,label == id[1]])
   rowM2 <-rowMeans(X[,label == id[2]])
   #pooled.var <- ((n1 - 1)* rowV1 + (n2 - 1)* rowV2)/ (n1 + n2 - 2)
-  #Test <- (rowM1 - rowM2)/sqrt(pooled.var * (1/n1 + 1/n2))
   pooled.var <- (rowV1/n1 + rowV2/n2)
-  Test <- (rowM1 - rowM2)/sqrt(pooled.var)
+  #Test <- (rowM1 - rowM2)/sqrt(pooled.var)
+  Test <- (rowM1 - rowM2)/sqrt(pooled.var * (1/n1 + 1/n2))
   
   ## Test statistics under H0
 
@@ -58,15 +58,18 @@ permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   Test_H0 <- ifelse(is.na(Test_H0), 0 , Test_H0)
   
   if(!rand){
+    
+    gdl <- ((rowV1/n1 + rowV2/n2)^2)/((((rowV1/n1)^2)/(n1-1))+(((rowV2/n2)^2)/(n2-1)))
+  #  gdl <- n1 + n2 - 2
     pv <- switch(alternative, 
-                 "two.sided" = 2*(pt(abs(Test), df = n1 + n2 -2, lower.tail=FALSE)),
-                 "greater" = pt(Test, df = n1 + n2 -2, lower.tail=FALSE),
-                 "lower" = 1-pt(Test, df = n1 + n2 -2, lower.tail=FALSE))
+                 "two.sided" = 2*(pt(abs(Test), df = gdl, lower.tail=FALSE)),
+                 "greater" = pt(Test, df = gdl, lower.tail=FALSE),
+                 "lower" = 1-pt(Test, df = gdl, lower.tail=FALSE))
     
     pv_H0 <- switch(alternative, 
-                    "two.sided" = 2*(pt(abs(Test_H0), df = n1 + n2 -2, lower.tail=FALSE)),
-                    "greater" = pt(Test_H0, df = n1 + n2 -2, lower.tail=FALSE),
-                    "lower" = 1-pt(Test_H0, df = n1 + n2 -2, lower.tail=FALSE))
+                    "two.sided" = 2*(pt(abs(Test_H0), df = gdl, lower.tail=FALSE)),
+                    "greater" = pt(Test_H0, df = gdl, lower.tail=FALSE),
+                    "lower" = 1-pt(Test_H0, df = gdl, lower.tail=FALSE))
   }else{
     
     Test_matrix <- cbind(Test, Test_H0)

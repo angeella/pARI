@@ -4,16 +4,16 @@
 \alias{SingleStepCT}
 \title{Single Step Permutation-based method}
 \usage{
-SingleStepCT(X,ct, ix, alpha, family, delta, B, pvalues)
+SingleStepCT(X,ix, alpha, alternative, family, delta, B, pvalues)
 }
 \arguments{
 \item{X}{data matrix rows represent variables, columns observations, the first rows are the raw pvalues.}
 
-\item{ct}{set of thresholds of interest}
-
 \item{ix}{set of hypothesis of interest}
 
 \item{alpha}{alpha level, default 0.1}
+
+\item{alternative}{character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"}
 
 \item{family}{family of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta}
 
@@ -21,7 +21,9 @@ SingleStepCT(X,ct, ix, alpha, family, delta, B, pvalues)
 
 \item{B}{number of permutations}
 
-\item{pvalues}{matrix pvalues instead of data, default NULL}
+\item{pvalues}{matrix pvalues instead of data with dimensions hypotheses times permutations, default NULL}
+
+\item{ct}{set of thresholds of interest}
 }
 \value{
 Returns a list with the following objects discoveries number of discoveries in the set selected, pvalues raw pvalues

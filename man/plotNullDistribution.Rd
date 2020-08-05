@@ -4,22 +4,20 @@
 \alias{plotNullDistribution}
 \title{Plot Permutation Pvalues}
 \usage{
-plotNullDistribution(P,family,alpha, ct, path, name, delta,copes,mask)
+plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, rand, B)
 }
 \arguments{
-\item{P}{permutation matrix pvalues where rows correspond to the permutation, default NULL}
+\item{P}{permutation matrix pvalues where rows correspond to the variables, default NULL}
 
-\item{family}{which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL}
+\item{family}{which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL. Vectors accepted}
 
 \item{alpha}{type I error allowed to construct the critical family, default 0.1}
-
-\item{ct}{set of threshold to construct the critical family, default c(0,1)}
 
 \item{path}{selected the path where the plot will be saved, if NULL the current working directory is used}
 
 \item{name}{name plot pdf, if NULL plot is used}
 
-\item{delta}{for the family critical values, default NULL}
+\item{delta}{for the family critical values, default 0. Vectors accepted}
 
 \item{copes}{image copes instead of pvalues, default NULL}
 
