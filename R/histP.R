@@ -53,7 +53,8 @@ histP <- function(copes =NULL, alternative = "two.sided", mask = NULL, zstat = N
     
     
   }
-    if(!is.null(zstat) & is.character(zstat)){
+  if(!is.null(zstat)){
+    if(is.character(zstat)){
       zstat = readNifti(zstat)
       zstat = get_array(zstat)
       zstat = zstat[which(mask==1)]
@@ -69,7 +70,7 @@ histP <- function(copes =NULL, alternative = "two.sided", mask = NULL, zstat = N
                      "greater" = pnorm(zstat, lower.tail=FALSE),
                      "less" = 1-pnorm(zstat, lower.tail=FALSE))
     }
-  
+  }
     png(paste0(path,"/", name, ".png")) 
     hist(pvalues[1,], col = rgb(0, 1, 1, 0.5), xlab = "p-values", main = "P-values Histogram")
     for(i in 2:nrow(pvalues)){
@@ -78,7 +79,7 @@ histP <- function(copes =NULL, alternative = "two.sided", mask = NULL, zstat = N
       
     }
     hist(pvalues[1,], col = rgb(0, 1, 1, 0.5),add=TRUE)
-    if(!is.null(praw)){
+    if(!is.null(zstat)){
       hist(praw, col = rgb(1, 0, 0, 0.5),add=TRUE)
       legend('top',c("Observed", "Null", paste0(method)), col= c(rgb(0, 1, 1, 0.5),rgb(0, 0, 0, 0.15),rgb(1, 0, 0, 0.5)),lwd =4)
     }else{
