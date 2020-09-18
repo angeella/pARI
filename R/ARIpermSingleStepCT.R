@@ -19,7 +19,7 @@
 #' @importFrom RNifti readNifti
 #' @importFrom plyr laply
 
-ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.1, clusters = NULL, alternative = "two.sided", 
+ARIpermCT <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, alternative = "two.sided", 
                       summary_stat=c("max", "center-of-mass"),silent=F, family = "simes", delta = 0, 
                       B = 1000, rand = F){
   
