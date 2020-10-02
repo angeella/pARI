@@ -14,12 +14,12 @@
 #' @importFrom stats pnorm
 #' @importFrom RNifti readNifti
 #' @importFrom matrixStats rowRanks
+#' @importFrom stats pt
 
-alternative_set <- c("two.sided", "greater", "lower")
 
 permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F, label = NULL){
   
-  
+  alternative_set <- c("two.sided", "greater", "lower")
   if(!is.null(seed)){set.seed(seed)}else{set.seed(1234)}
   if(!is.null(mask)){
     if(is.character(mask)){mask = readNifti(mask)}

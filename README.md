@@ -3,7 +3,7 @@
 # ARIpermutation
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3935517.svg)](https://doi.org/10.5281/zenodo.3935517)
 
-**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method doesn't assume any distribution about the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
+**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method does not assume any distribution of the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
 
 As the parametric [ARI](https://www.sciencedirect.com/science/article/abs/pii/S105381191830675X?via%3Dihub), this method aims to compute simultaneous lower confidence bounds for the number of true discoveries, i.e., active voxels, in the fMRI framework. The function takes as input the list of copes, i.e., contrast maps, one for each subject, given by neuroimaging tools as FSL, SPM, etc. 
 
@@ -74,20 +74,22 @@ We have at least $10$ true discoveries considering the full set of hypotheses.
 
 ## fMRI data 
 
+You can find several data sets in the [fMRIdata](https://github.com/angeella/fMRIdata) package. So, first of all you need to install it:
+
+``` r
+devtools::install_github("angeella/fMRIdata")
+```
+
 This is a basic example using fMRI data from the [Auditory dataset](https://openneuro.org/datasets/ds000116/versions/00003). We need the following data:
 
 
  **1.** The **list of copes**, one for each subject, in nifti file format: 
 
 ``` r
-copes <- list()
-sub_ids <- sapply(c(21:40),function(x) paste0(0,x))
-for (sid in 1:length(sub_ids)) {  
-  copes[[sid]] <- RNifti::readNifti(system.file("extdata/AuditoryData", paste0("/sub-", sub_ids[sid] , ".nii.gz"), package = "ARIpermutation"))
-  
-}
-
+data(Auditory_copes)
+str(Auditory_copes)
 ```
+
 Alternatively, you can construct the list of copes using your data in this way:
   - Rename the nifti files as ```sub-x``` where ```x``` is the number identifying the subjects, e.g., ```sub-1```, ```sub-2``` and so on.
   - Write in ```max_sub``` the last ```x``` number of your set of subjects.
@@ -109,7 +111,8 @@ for (sid in 1:length(sub_ids)) {
  **2.** the **mask**, which is a 3D array of logicals (i.e. TRUE/FALSE means in/out of the brain). Alternatively, it may be a (character) nifti file name. If omitted, all voxels are considered.
 
 ``` r
-mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
+data(Auditory_mask)
+str(Auditory_mask)
 ```
 
  **3.** the $\alpha$ level value and the **threshold** in order to perform the cluster map using a supra-threshold statistic rule: 
@@ -171,9 +174,9 @@ map_TDP(out,path= getwd(), name = "tdp", mask)
 Then, you can compare it with the parametric method ARI using the [ARI](https://github.com/angeella/ARIbrain) package: 
 
 ``` r
-Statmap <- system.file("extdata/AuditoryData", "Statmap.nii", package = "ARIpermutation")
-mask <- system.file("extdata/AuditoryData", "mask.nii.gz", package = "ARIpermutation")
-Pmap <- system.file("extdata/AuditoryData", "Pvaluemap.nii", package = "ARIpermutation")
+data(Auditory_Pmap)
+data(Auditory_mask)
+data(Auditory_Statmap)
 
 #Create Clusters using a threshold equal to 3.2
 Statmap = get_array(Statmap)

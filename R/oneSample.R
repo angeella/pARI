@@ -4,13 +4,11 @@
 #' @param X data where rows represents the variables and columns the observations
 #' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "less". Default is "two.sided"
 #' @author Angela Andreella
-#' @return Returns a list with the following objects: \code{Test} test statistic, and \code{pv} corresponding raw pvalues.
+#' @return Returns a list with the following objects: Test test statistic, and pv corresponding raw pvalues.
 #' @export
 
-alternative_set <- c("two.sided", "greater", "lower")
-
 oneSample<- function(X,alternative = "two.sided"){
-  
+  alternative_set <- c("two.sided", "greater", "lower")
   n <- ncol(X)
   m <- nrow(X)
   

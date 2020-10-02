@@ -38,7 +38,7 @@ Create simulate data
 ```{r}
 X <-simulateData(pi0,m,n, rho, power = power, alpha = alpha, rho = rho)
 X <- t(X)
-res <- ARIpermutation::signTest(X,B)
+res <- signTest(X,B)
 Test <- cbind(res$Test,res$Test_H0)
 P <- cbind(res$pv,res$pv_H0)
 ```

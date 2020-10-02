@@ -4,7 +4,8 @@
 \alias{ARIpermCT}
 \title{ARI Permutation-based}
 \usage{
-ARIpermCT(copes, thr, mask, alpha, clusters, alternative, summary_stat, silent, family, delta, B, rand)
+ARIpermCT(copes, thr, mask, alpha, clusters, 
+alternative, summary_stat, silent, family, delta, B, rand)
 }
 \arguments{
 \item{copes}{list of copes map}

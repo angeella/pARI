@@ -14,11 +14,11 @@
 #' @importFrom RNifti readNifti
 #' @importFrom matrixStats rowRanks
 
-alternative_set <- c("two.sided", "greater", "lower")
 
 signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
   
-
+  alternative_set <- c("two.sided", "greater", "lower")
+  
   if(!is.null(seed)){set.seed(seed)}else{set.seed(1234)}
   if(!is.null(mask)){
     if(is.character(mask)){mask = readNifti(mask)}

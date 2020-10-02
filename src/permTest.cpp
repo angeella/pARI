@@ -20,11 +20,14 @@ arma::mat permT(arma::mat X, double B, arma::vec label) {
   arma::mat X2(m, n2, arma::fill::zeros);
   I1 = Rcpp::rbinom(n1, 1, 1)*2 - 1;
   I2 = Rcpp::rbinom(n2, 1, 1)*2 - 1;
-
   
   int bb;
   for (bb=0; bb<B; bb++) {
-    std::random_shuffle(label.begin(), label.end());
+    
+    std::random_device rd;
+    std::mt19937 g(rd());
+    
+    std::shuffle(label.begin(), label.end(), g);
     
     X1 = X.cols(find(label == 1));
     X2 = X.cols(find(label == 2)); 
@@ -46,6 +49,7 @@ arma::mat permT(arma::mat X, double B, arma::vec label) {
   return (T);
 }
 
+
 /*** R
 #library(multtest)
 #data(golub)
@@ -55,4 +59,3 @@ arma::mat permT(arma::mat X, double B, arma::vec label) {
 #Test<- permTest(X , B, label)
 #str(Test)
 */
-

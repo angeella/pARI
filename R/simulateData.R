@@ -11,8 +11,8 @@
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
 #' @export
-#' @importFrom mvtnorm rmvnorm
-#' @importFrom stats pwr.t.test
+#' @importFrom stats rnorm
+#' @importFrom stats power.t.test
 
 simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.05){
   #if(is.null(set.seed)){set.seed(sample.int(1e5, 1))}
