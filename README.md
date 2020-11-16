@@ -1,9 +1,9 @@
 <img src="sticker.png" align="right" alt="" width="200" />
 
-# ARIpermutation
+# pARI
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3935517.svg)](https://doi.org/10.5281/zenodo.3935517)
 
-**ARIpermutation** is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. Therefore, this method does not assume any distribution of the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
+**pARI** is the package developed to compute the permutation-based All-Resolution Inference (ARI) method. Therefore, this method does not assume any distribution of the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
 
 As the parametric [ARI](https://www.sciencedirect.com/science/article/abs/pii/S105381191830675X?via%3Dihub), this method aims to compute simultaneous lower confidence bounds for the number of true discoveries, i.e., active voxels, in the fMRI framework. The function takes as input the list of copes, i.e., contrast maps, one for each subject, given by neuroimaging tools as FSL, SPM, etc. 
 
@@ -18,10 +18,10 @@ You can insert these cluster maps as many times as you want, because the Permuta
 
 ## Installation
 
-You can install the released version of ARIpermutation with:
+You can install the released version of pARI with:
 
 ``` r
-devtools::install_github("angeella/ARIpermutation")
+devtools::install_github("angeella/pARI")
 ```
 
 ## Simulation
@@ -31,7 +31,7 @@ Here, you can perform a toy example, using simulated data where the tests under 
 We expect that the lower bound of the number of true discoveries, considering the full set of hypotheses, equals to $10$.
 
 ``` r
-library(ARIpermutation)
+library(pARI)
 
 m <- 20 #number of tests
 n <- 10 #number of observations
@@ -40,7 +40,7 @@ Y <- matrix(rnorm(0.5*m*n, 10, 0.05),ncol=n,nrow=0.5*m) #tests under the alterna
 data <- cbind(X,Y) #full set of datasets
 
 ```
-Then, we perform the sign-flipping test, using $2^n = 1024$ permutations, thanks to the function ```signTest```(type ```?ARIpermutation::signTest``` for more details):
+Then, we perform the sign-flipping test, using $2^n = 1024$ permutations, thanks to the function ```signTest```(type ```?pARI::signTest``` for more details):
 
 ``` r
 pvalues <- signTest(data, 2^n)
@@ -63,7 +63,7 @@ hom <- hommel(pv[1,], simes = TRUE)
 discoveries(hom,ix = c(1:10),alpha = 0.1)
 
 ```
-and the permutation-based one using the function ```SingleStepCT``` (type ```?ARIpermutation::SingleStepCT``` for more details)
+and the permutation-based one using the function ```SingleStepCT``` (type ```?pARI::SingleStepCT``` for more details)
 
 ``` r
 SingleStepCT(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
@@ -122,7 +122,7 @@ alpha = 0.1
 thr = 3.2
 ```
 
-then we can perform the Permutation-based ARI using the function ```ARIpermCT```(type ```?ARIpermutation::ARIpermCT``` for more details):
+then we can perform the Permutation-based ARI using the function ```ARIpermCT```(type ```?pARI::ARIpermCT``` for more details):
 
 ``` r
 out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha)
@@ -165,7 +165,7 @@ Then, the cluster.nii is the cluster map that you can use in ARI.
 
 For help about this FSL code, see [the FSL book code](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Cluster). 
 
-Finally, you can produce also the True Discovey Proportion brain map (type ```?ARIpermutation::map_TDP``` for more details):
+Finally, you can produce also the True Discovey Proportion brain map (type ```?pARI::map_TDP``` for more details):
 
 ``` r
 map_TDP(out,path= getwd(), name = "tdp", mask)
@@ -197,5 +197,5 @@ Eklund, A., Nichols, E. T., and Knutsson, H. (2016). Cluster failure: Why fmri i
 
 # Did you find some bugs?
 
-Please write to angela.andreella[\at]stat[\dot]unipd[\dot]it or insert a reproducible example using [reprex](https://github.com/tidyverse/reprex) on my [issue github page](https://github.com/angeella/ARIpermutation/issues).
+Please write to angela.andreella[\at]stat[\dot]unipd[\dot]it or insert a reproducible example using [reprex](https://github.com/tidyverse/reprex) on my [issue github page](https://github.com/angeella/pARI/issues).
 
