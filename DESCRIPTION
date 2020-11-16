@@ -1,11 +1,11 @@
-Package: ARIpermutation
+Package: pARI
 Type: Package
 Title: Permutation-based ARI (All-Resolutions Inference) method
 Version: 1.0
 Date: 2020-02-10
 Author: Angela Andreella
 Maintainer: Angela Andreella <angela.andreella@phd.unipd.it>
-Description: ARIpermutation is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. 
+Description: pARI is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. 
 License: GPL (>= 2)
 Imports: 
     Rcpp (>= 1.0.3), 

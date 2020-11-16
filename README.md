@@ -9,7 +9,7 @@ As the parametric [ARI](https://www.sciencedirect.com/science/article/abs/pii/S1
 
 Having these data, you can insert a cluster map that can be the high-level output from some neuroimaging software, a region of interests (ROI), etc. If you want to construct these cluster maps using a supra-threshold statistic rule, you can specify the threshold into the argument ```thr``` of the function.
 
-Therefore, the function ```ARIpermCT``` returns the lower bounds of true discoveries, i.e., active voxels, for each cluster coming from the cluster map inserted.
+Therefore, the function ```pARIbrain``` returns the lower bounds of true discoveries, i.e., active voxels, for each cluster coming from the cluster map inserted.
 
 You can insert these cluster maps as many times as you want, because the Permutation-based ARI, as the parametric version, allows for **circular analysis**, still controlling for the multiplicity of inferences.
 
@@ -63,10 +63,10 @@ hom <- hommel(pv[1,], simes = TRUE)
 discoveries(hom,ix = c(1:10),alpha = 0.1)
 
 ```
-and the permutation-based one using the function ```SingleStepCT``` (type ```?pARI::SingleStepCT``` for more details)
+and the permutation-based one using the function ```pARI``` (type ```?pARI::pARI``` for more details)
 
 ``` r
-SingleStepCT(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
+pARI(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
 
 ```
 
@@ -122,10 +122,10 @@ alpha = 0.1
 thr = 3.2
 ```
 
-then we can perform the Permutation-based ARI using the function ```ARIpermCT```(type ```?pARI::ARIpermCT``` for more details):
+then we can perform the Permutation-based ARI using the function ```pARIbrain```(type ```?pARI::pARIbrain``` for more details):
 
 ``` r
-out <- ARIpermCT(copes,thr=thr,mask=mask,alpha = alpha)
+out <- pARIbrain(copes,thr=thr,mask=mask,alpha = alpha)
 ```
 if you prefer to insert some cluster map, you can just add the argument ```cluster``` instead of ```thr```. The argument ```cluster``` accepts the map as nifti file or as character name (path where the cluster map is). You can create the Random Field Theory based cluster map using FSL. Let the Statmap, that you can compute using 
 

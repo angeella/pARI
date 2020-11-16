@@ -1,6 +1,6 @@
-#' @title Single Step Permutation-based method
+#' @title Single Step permutation-based method
 #' @description Performs single step method based on confidence envelope constructed by sign flipping 
-#' @usage SingleStepCT(X,ix, alpha, alternative, family, delta, B, pvalues)
+#' @usage pARI(X,ix, alpha, alternative, family, delta, B, pvalues)
 #' @param X data matrix rows represent variables, columns observations, the first rows are the raw pvalues.
 #' @param ix set of hypothesis of interest
 #' @param alpha alpha level, default 0.1
@@ -13,7 +13,7 @@
 #' @return Returns a list with the following objects discoveries number of discoveries in the set selected, pvalues raw pvalues
 #' @export
 
-SingleStepCT <- function(X= NULL, ix, alpha = 0.1, alternative = "two.sided", family = "simes", delta= 0, B = 1000, pvalues = NULL){
+pARI <- function(X= NULL, ix, alpha = 0.1, alternative = "two.sided", family = "simes", delta= 0, B = 1000, pvalues = NULL){
   if(is.null(pvalues)){
     out <- signTest(X, B = B, alternative = alternative)
     P <- cbind(out$pv, out$pv_H0)

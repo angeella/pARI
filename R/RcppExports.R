@@ -2,26 +2,26 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 colSortC <- function(X) {
-    .Call(`_ARIpermutation_colSortC`, X)
+    .Call(`_pARI_colSortC`, X)
 }
 
 lambdaCalibrate <- function(X, alpha, delta, family) {
-    .Call(`_ARIpermutation_lambdaCalibrate`, X, alpha, delta, family)
+    .Call(`_pARI_lambdaCalibrate`, X, alpha, delta, family)
 }
 
 permDiscoveries <- function(ix, cv, praw) {
-    .Call(`_ARIpermutation_permDiscoveries`, ix, cv, praw)
+    .Call(`_pARI_permDiscoveries`, ix, cv, praw)
 }
 
 permT <- function(X, B, label) {
-    .Call(`_ARIpermutation_permT`, X, B, label)
+    .Call(`_pARI_permT`, X, B, label)
 }
 
 rowSortC <- function(X) {
-    .Call(`_ARIpermutation_rowSortC`, X)
+    .Call(`_pARI_rowSortC`, X)
 }
 
 signFlip <- function(X, B) {
-    .Call(`_ARIpermutation_signFlip`, X, B)
+    .Call(`_pARI_signFlip`, X, B)
 }
 

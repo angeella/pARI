@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // colSortC
 arma::mat colSortC(arma::mat X);
-RcppExport SEXP _ARIpermutation_colSortC(SEXP XSEXP) {
+RcppExport SEXP _pARI_colSortC(SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // lambdaCalibrate
 NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, int delta, std::string family);
-RcppExport SEXP _ARIpermutation_lambdaCalibrate(SEXP XSEXP, SEXP alphaSEXP, SEXP deltaSEXP, SEXP familySEXP) {
+RcppExport SEXP _pARI_lambdaCalibrate(SEXP XSEXP, SEXP alphaSEXP, SEXP deltaSEXP, SEXP familySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -33,7 +33,7 @@ END_RCPP
 }
 // permDiscoveries
 int permDiscoveries(NumericVector ix, NumericVector cv, NumericVector praw);
-RcppExport SEXP _ARIpermutation_permDiscoveries(SEXP ixSEXP, SEXP cvSEXP, SEXP prawSEXP) {
+RcppExport SEXP _pARI_permDiscoveries(SEXP ixSEXP, SEXP cvSEXP, SEXP prawSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -46,7 +46,7 @@ END_RCPP
 }
 // permT
 arma::mat permT(arma::mat X, double B, arma::vec label);
-RcppExport SEXP _ARIpermutation_permT(SEXP XSEXP, SEXP BSEXP, SEXP labelSEXP) {
+RcppExport SEXP _pARI_permT(SEXP XSEXP, SEXP BSEXP, SEXP labelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -59,7 +59,7 @@ END_RCPP
 }
 // rowSortC
 arma::mat rowSortC(arma::mat X);
-RcppExport SEXP _ARIpermutation_rowSortC(SEXP XSEXP) {
+RcppExport SEXP _pARI_rowSortC(SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -70,7 +70,7 @@ END_RCPP
 }
 // signFlip
 arma::mat signFlip(arma::mat X, double B);
-RcppExport SEXP _ARIpermutation_signFlip(SEXP XSEXP, SEXP BSEXP) {
+RcppExport SEXP _pARI_signFlip(SEXP XSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -82,16 +82,16 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_ARIpermutation_colSortC", (DL_FUNC) &_ARIpermutation_colSortC, 1},
-    {"_ARIpermutation_lambdaCalibrate", (DL_FUNC) &_ARIpermutation_lambdaCalibrate, 4},
-    {"_ARIpermutation_permDiscoveries", (DL_FUNC) &_ARIpermutation_permDiscoveries, 3},
-    {"_ARIpermutation_permT", (DL_FUNC) &_ARIpermutation_permT, 3},
-    {"_ARIpermutation_rowSortC", (DL_FUNC) &_ARIpermutation_rowSortC, 1},
-    {"_ARIpermutation_signFlip", (DL_FUNC) &_ARIpermutation_signFlip, 2},
+    {"_pARI_colSortC", (DL_FUNC) &_pARI_colSortC, 1},
+    {"_pARI_lambdaCalibrate", (DL_FUNC) &_pARI_lambdaCalibrate, 4},
+    {"_pARI_permDiscoveries", (DL_FUNC) &_pARI_permDiscoveries, 3},
+    {"_pARI_permT", (DL_FUNC) &_pARI_permT, 3},
+    {"_pARI_rowSortC", (DL_FUNC) &_pARI_rowSortC, 1},
+    {"_pARI_signFlip", (DL_FUNC) &_pARI_signFlip, 2},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_ARIpermutation(DllInfo *dll) {
+RcppExport void R_init_pARI(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

@@ -5,7 +5,7 @@
 #----    use_rcpp and rcppArmadillo    ----
 
 ## usethis namespace: start
-#' @useDynLib ARIpermutation, .registration = TRUE
+#' @useDynLib pARI, .registration = TRUE
 ## usethis namespace: end
 NULL
 
