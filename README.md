@@ -1,7 +1,7 @@
 <img src="sticker.png" align="right" alt="" width="200" />
 
 # pARI
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3935517.svg)](https://doi.org/10.5281/zenodo.3935517)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4275924.svg)](https://doi.org/10.5281/zenodo.4275924)
 
 **pARI** is the package developed to compute the permutation-based All-Resolution Inference (ARI) method. Therefore, this method does not assume any distribution of the null distribution of the p-values. It needs to satisfy the exchangeability assumption as all permutation-based methods. For further details, please refers to (TODO).
 
