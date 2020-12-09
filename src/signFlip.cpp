@@ -22,7 +22,7 @@ arma::mat signFlip(arma::mat X, double B) {
     Tb = X * eps;
     Tb1 = Tb / n; //mean
     Tb0 = (pow(X, 2) * eps1)/n; //E(x^2)
-    Tb2 = pow(Tb1,2)/pow(n,2); //E(X)^2
+    Tb2 = pow(Tb1,2); //E(X)^2
     Tb =  (Tb0-Tb2)*(n/(n-1)); //sample var
     T.col(bb) = Tb1/sqrt(Tb/n);
     
@@ -33,8 +33,9 @@ arma::mat signFlip(arma::mat X, double B) {
 
 /*** R
 #m <- 100
-#n <- 10
-#B <- 200
+#n <- 100
+#B <- 1000
+#set.seed(123)
 #X <- matrix(rnorm(m*n), ncol=n)
 #set.seed(123)
 #T <- signFlip(X, B)
