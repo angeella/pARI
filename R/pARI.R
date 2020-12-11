@@ -1,21 +1,31 @@
 #' @title Single Step permutation-based method
 #' @description Performs single step method based on confidence envelope constructed by sign flipping 
-#' @usage pARI(X,ix, alpha, alternative, family, delta, B, pvalues)
+#' @usage pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 #' @param X data matrix rows represent variables, columns observations, the first rows are the raw pvalues.
-#' @param ix set of hypothesis of interest
+#' @param ix set of hypothesis of interest. It can be a vector having same lenght of the variables or the indices if one set is considered.
 #' @param alpha alpha level, default 0.1
-#' @param alternative character referring to the alternative hypothesis, \code{"two.sided"}, \code{"greater"} or \code{"lower"}. Default is \code{"two.sided"}
 #' @param family family of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta
 #' @param delta do you want to consider at least delta size set?
 #' @param B number of permutations
 #' @param pvalues matrix pvalues instead of data with dimensions hypotheses times permutations, default NULL
+#' @param test.type one sample, i.e., one_sample, or two sample t-tests, i.e., two_sample?
+#' @param complete default FALSE. If TRUE the sets of critical vectors and raw pvalues are returned.
+#' @param ... Futher arguments, see details.
+#' @seealso \code{\link{signTest}} \code{\link{permTest}}
 #' @author Angela Andreella
 #' @return Returns a list with the following objects discoveries number of discoveries in the set selected, pvalues raw pvalues
 #' @export
 
-pARI <- function(X= NULL, ix, alpha = 0.1, alternative = "two.sided", family = "simes", delta= 0, B = 1000, pvalues = NULL){
-  if(is.null(pvalues)){
-    out <- signTest(X, B = B, alternative = alternative)
+pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, test.type = "one_sample", complete = FALSE, ...){
+ 
+  #Add different design then two and one
+  #Check for error
+   if(is.null(pvalues)){
+     if(test.type == "one_sample"){
+       out <- signTest(X, B = B, ...)
+     }else{
+       out <- permTest(X, B = B, ...)
+     }
     P <- cbind(out$pv, out$pv_H0)
   }else{
     P <- pvalues
@@ -31,10 +41,37 @@ pARI <- function(X= NULL, ix, alpha = 0.1, alternative = "two.sided", family = "
   
   #cvh <- sapply(c(1:length(p)), function(x) ((x * alpha * lambda)/h)- shift)
   
-  discoveries <- dI(ix,cv,p)
-  TDP <- discoveries/length(ix)
+  if(length(ix) == nrow(X)){
+  levels_ix <- unique(ix)  
+  discoveries <- c()
+  ixX <- list()
+  TDP <- c()
+    for(i in 1:length(levels_ix)){
+      ixX[[i]] <- which(ix == levels_ix[i])
+      discoveries[i] <- dI(ixX[[i]],cv,p)
+      TDP[i] <- discoveries[i]/length(ixX[[i]])
+      if(!is.null(rownames(X))){
+      ixX[[i]] <- rownames(X)[ixX[[i]]]
+        }
+    }
+
+  }else{
+    discoveries <- dI(ix,cv,p)
+    TDP <- discoveries/length(ix)
+    if(!is.null(rownames(X))){
+      ixX <- rownames(X)[ix]
+    }else{
+      ixX <- ix
+    }
+  }
   
-  return(list(discoveries = discoveries, TDP = TDP, pvalues = p, cv = cv))
+
+  if(complete){
+    return(list(discoveries = discoveries, TDP = TDP, ix = ixX, pvalues = p, cv = cv))
+  }else{
+    return(list(discoveries = discoveries, TDP = TDP, ix = ixX))
+    
+  }
   
 }
 

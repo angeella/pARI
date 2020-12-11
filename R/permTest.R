@@ -40,7 +40,7 @@ permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   m <- nrow(X)
   
   ## Observed test statistics
-  id <- c(0,1)
+  id <- levels(label)
   n1 <- sum(label==id[1])
   n2 <- sum(label==id[2])
   rowV1 <- rowVariance(X[,label == id[1]])
