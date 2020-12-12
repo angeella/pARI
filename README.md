@@ -1,4 +1,4 @@
-<img src="sticker.png" align="right" alt="" width="200" />
+<img src="s4.png" align="right" alt="" width="200" />
 
 # pARI
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4275924.svg)](https://doi.org/10.5281/zenodo.4275924)
