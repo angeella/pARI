@@ -1,19 +1,19 @@
-#' @title Single Step permutation-based method
-#' @description Performs single step method based on confidence envelope constructed by sign flipping 
+#' @title permutation-based All-Resolutions Inference
+#' @description Performs single step ARI method based on critical vectors constructed by permutations
 #' @usage pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
-#' @param X data matrix rows represent variables, columns observations, the first rows are the raw pvalues.
+#' @param X data matrix rows represent variables, columns observations
 #' @param ix set of hypothesis of interest. It can be a vector having same lenght of the variables or the indices if one set is considered.
-#' @param alpha alpha level, default 0.1
+#' @param alpha alpha level, default 0.05
 #' @param family family of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta
 #' @param delta do you want to consider at least delta size set?
-#' @param B number of permutations
+#' @param B number of permutations, default 1000
 #' @param pvalues matrix pvalues instead of data with dimensions hypotheses times permutations, default NULL
 #' @param test.type "one_sample", i.e., one sample, or "two_samples", i.e., two samples  t-tests?
 #' @param complete default FALSE. If TRUE the sets of critical vectors and raw pvalues are returned.
 #' @param ... Futher arguments, see details.
 #' @seealso \code{\link{signTest}} \code{\link{permTest}}
 #' @author Angela Andreella
-#' @return Returns a list with the following objects discoveries number of discoveries in the set selected, pvalues raw pvalues
+#' @return Returns a list with the following objects \code{discoveries}, i.e., number of discoveries in the set selected, \code{ix}, selected variables if \code{complete = FALSE}. If \code{complete = TRUE} the raw \code{pvalues} and \code{cv} critical vector are returned.
 #' @export
 
 pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, test.type = "one_sample", complete = FALSE, ...){

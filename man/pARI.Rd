@@ -2,22 +2,22 @@
 % Please edit documentation in R/pARI.R
 \name{pARI}
 \alias{pARI}
-\title{Single Step permutation-based method}
+\title{permutation-based All-Resolutions Inference}
 \usage{
 pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 }
 \arguments{
-\item{X}{data matrix rows represent variables, columns observations, the first rows are the raw pvalues.}
+\item{X}{data matrix rows represent variables, columns observations}
 
 \item{ix}{set of hypothesis of interest. It can be a vector having same lenght of the variables or the indices if one set is considered.}
 
-\item{alpha}{alpha level, default 0.1}
+\item{alpha}{alpha level, default 0.05}
 
 \item{family}{family of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta}
 
 \item{delta}{do you want to consider at least delta size set?}
 
-\item{B}{number of permutations}
+\item{B}{number of permutations, default 1000}
 
 \item{pvalues}{matrix pvalues instead of data with dimensions hypotheses times permutations, default NULL}
 
@@ -28,10 +28,10 @@ pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 \item{...}{Futher arguments, see details.}
 }
 \value{
-Returns a list with the following objects discoveries number of discoveries in the set selected, pvalues raw pvalues
+Returns a list with the following objects \code{discoveries}, i.e., number of discoveries in the set selected, \code{ix}, selected variables if \code{complete = FALSE}. If \code{complete = TRUE} the raw \code{pvalues} and \code{cv} critical vector are returned.
 }
 \description{
-Performs single step method based on confidence envelope constructed by sign flipping
+Performs single step ARI method based on critical vectors constructed by permutations
 }
 \seealso{
 \code{\link{signTest}} \code{\link{permTest}}
