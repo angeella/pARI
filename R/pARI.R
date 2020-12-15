@@ -8,7 +8,7 @@
 #' @param delta do you want to consider at least delta size set?
 #' @param B number of permutations
 #' @param pvalues matrix pvalues instead of data with dimensions hypotheses times permutations, default NULL
-#' @param test.type one sample, i.e., one_sample, or two sample t-tests, i.e., two_sample?
+#' @param test.type "one_sample", i.e., one sample, or "two_samples", i.e., two samples  t-tests?
 #' @param complete default FALSE. If TRUE the sets of critical vectors and raw pvalues are returned.
 #' @param ... Futher arguments, see details.
 #' @seealso \code{\link{signTest}} \code{\link{permTest}}
