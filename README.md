@@ -66,7 +66,7 @@ discoveries(hom,ix = c(1:10),alpha = 0.1)
 and the permutation-based one using the function ```pARI``` (type ```?pARI::pARI``` for more details)
 
 ``` r
-pARI(data,ct = c(0,1),ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
+pARI(data,ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
 
 ```
 
