@@ -96,12 +96,12 @@ Alternatively, you can construct the list of copes using your data in this way:
   - Write in ```path``` the path where your set of nifti files is
 
 ``` r
-copes <- list()
+Auditory_copes <- list()
 path <- #write here your path where your set of nifti files is. Don't put the last /
 max_sub <- #write here you last x id subjects
 sub_ids <- sapply(c(1:max_sub),function(x) paste0(x))
 for (sid in 1:length(sub_ids)) {  
-  copes[[sid]] <- RNifti::readNifti(paste0(path,"/sub-", sub_ids[sid] , ".nii.gz"))
+  Auditory_copes[[sid]] <- RNifti::readNifti(paste0(path,"/sub-", sub_ids[sid] , ".nii.gz"))
   
 }
 
@@ -125,7 +125,7 @@ thr = 3.2
 then we can perform the Permutation-based ARI using the function ```pARIbrain```(type ```?pARI::pARIbrain``` for more details):
 
 ``` r
-out <- pARIbrain(copes,thr=thr,mask=mask,alpha = alpha)
+out <- pARIbrain(Auditory_copes,thr=thr,mask=mask,alpha = alpha)
 ```
 if you prefer to insert some cluster map, you can just add the argument ```cluster``` instead of ```thr```. The argument ```cluster``` accepts the map as nifti file or as character name (path where the cluster map is). You can create the Random Field Theory based cluster map using FSL. Let the Statmap, that you can compute using 
 
