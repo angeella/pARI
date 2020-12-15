@@ -21,7 +21,7 @@ pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 
 \item{pvalues}{matrix pvalues instead of data with dimensions hypotheses times permutations, default NULL}
 
-\item{test.type}{one sample, i.e., one_sample, or two sample t-tests, i.e., two_sample?}
+\item{test.type}{"one_sample", i.e., one sample, or "two_samples", i.e., two samples  t-tests?}
 
 \item{complete}{default FALSE. If TRUE the sets of critical vectors and raw pvalues are returned.}
 
