@@ -41,7 +41,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
   
   #cvh <- sapply(c(1:length(p)), function(x) ((x * alpha * lambda)/h)- shift)
   
-  if(length(ix) == nrow(X)){
+  if(length(ix) == nrow(P)){
   levels_ix <- unique(ix)  
   discoveries <- c()
   ixX <- list()
@@ -56,7 +56,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
     }
 
   }else{
-    discoveries <- dI(ix,cv,p)
+    discoveries <- dI(ix = ix,cv = cv,praw = p)
     TDP <- discoveries/length(ix)
     if(!is.null(rownames(X))){
       ixX <- rownames(X)[ix]

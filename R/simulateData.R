@@ -9,7 +9,7 @@
 #' @param power power
 #' @param alpha alpha value for power analysis
 #' @author Angela Andreella
-#' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
+#' @return Returns the simulated data matrix.
 #' @export
 #' @importFrom stats rnorm
 #' @importFrom stats power.t.test
@@ -28,7 +28,7 @@ simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.
   mu <- c(rep(diff_mean,m1), rep(0, m0))
   X <- matrix(rep(mu, each=n), ncol=m) + eps
   
-  return(X)
+  return(t(X))
 }
 
 

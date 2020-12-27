@@ -1,0 +1,183 @@
+---
+title: "pARI package"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{pARI package}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+# Permutation-based All-Resolutions Inference
+
+## Overview of the method
+
+*pARI* is an _R_ package developed to perform permutation-based closed testing method. It computes a simultaneous lower bound for the true discovery proportions of all possible subsets of a hypothesis testing problem.
+
+*pARI* find the percentage of true discoveries for each set of statistical tests while controlling the familywise error rate for multiple testing and taking into account that the set was chosen in a data-driven way.
+
+Permutation theory adapts to the correlation structure, as a simultaneous method, it allows the decision of which hypotheses sets to analyze to be entirely _flexible_ and _post-hoc_, that is, the user can choose it after seeing the data and revise the choice as often as he/she wants. 
+
+*pARI* is entirely mild, flexible, and post-hoc. The required input is the permutation p-values matrix, i.e., null p-values distribution, that describes the p-values associated with each feature's statistical tests and permutation. *pARI* is valid if the exchangeability assumption under the null hypothesis is satisfied for the permutation procedure's validity. If the permutation matrix is not available, the user can directly insert the data specifying the type of test to perform for each feature.
+
+*pARI* for each set of features, i.e., clusters, returns the simultaneous lower confidence bound to the actual proportion of significant features. The analysis can be carried out as many times as the researcher wants; also, he/she can drill down into the cluster as often as the user wants without making any selection error and ensuring the family-wise error rate (FWER).
+
+
+## Usage
+
+The *pARI* package can be installed by
+
+```{r setup}
+#devtools::install_github("angeella/pARI")
+library(pARI)
+```
+
+There are two main functions in the *pARI* package. 
+
+The function `pARIbrain` was developed for the fMRI cluster analysis framework, while the function `pARI` was developed for every multiple-testing framework.
+
+
+### Simulations
+
+We perform a simple simulation using `simulateData`. $1000$ features are generated $30$ times as normally distributed with mean $0$ under the null hypothesis and mean under the alternative is computed considering the difference in means having the power of the one-sample t-test equals $0.8$. The proportion of true null hypothesis equals $\pi = 0.8$.
+
+```{r}
+datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0,set.seed = 123)
+```
+
+*pARI* then computes the lower bound for the number of true discoveries inside the set containing the first $200$ features. The user must specify the cluster in the `ix` set. We apply the one-sample t-test for each feature.
+
+```{r}
+out <- pARI(X = datas, ix = c(1:200),test.type = "one_sample")
+out$TDP
+```
+
+Therefore, we can say that at least $19\%$ of features are truly significant inside the `ix` cluster.
+
+However, the `pARI` function can analyzed directly the matrix of permuted p-values. We can compute it by `signTest` function:
+
+```{r}
+out <- signTest(X = datas)
+P <- cbind(out$pv, out$pv_H0)
+pARI(pvalues = P, ix = c(1:200),test.type = "one_sample")$TDP
+```
+
+The set of features can also be expressed as a vector with length equals the number of features where different values indicate the different sets. For example, we can construct four random clusters as
+
+```{r}
+ix <- sample(c(1:4), size = 1000, replace = T)
+pARI(pvalues = P, ix = ix,test.type = "one_sample")$TDP
+```
+
+*pARI* returns the lower bound for the true discovery proportion for each set of features. We can say that we have at least $1.53\%$ of truly active features in the first cluster.
+
+### Gene cluster analysis
+
+Let consider a simple example using Bottomly et al. (2011) data, i.e., a comparative RNA-seq analysis of different mouse strains. The data comprises $1046$ genes and $21$ samples, where $10$ are C57BL/6J strain and $11$ DBA/2J strain. After pre-processing steps, we perform a two-sample t-test for each gene, and we define the sets of interest the ones computed by the `hclust` function.
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+if (!requireNamespace("dynamicTreeCut", quietly = TRUE))
+    install.packages("dynamicTreeCut")
+
+BiocManager::install(c("Biobase","limma","genefilter"))
+
+library(Biobase)
+library(limma)
+library(genefilter)
+library(dynamicTreeCut)
+```
+
+
+```{r}
+load(file=url("http://bowtie-bio.sourceforge.net/recount/ExpressionSets/bottomly_eset.RData"))
+
+pdata<- pData(bottomly.eset)
+edata <- as.matrix(exprs(bottomly.eset))
+fdata <- fData(bottomly.eset)
+
+edata <- log2(as.matrix(edata) + 1)
+edata <- edata[rowMeans(edata) > 10, ]
+
+my.dist <- dist(edata)
+my.tree <- hclust(my.dist, method="ward.D2")
+
+my.clusters <- unname(cutreeDynamic(my.tree, distM=as.matrix(my.dist),
+                                    minClusterSize=10, verbose=0))
+```
+
+Having the data `edata` with labels referring to the type of strain, we use `pARI` considering as `ix` the hierarchical cluster analysis output.
+
+```{r}
+out <-pARI(X = edata,alpha = 0.05, test.type = "two_sample", 
+           label = as.factor(pdata$strain), ix = my.clusters,
+           family = "simes", complete = TRUE)
+out$TDP
+```
+
+For each cluster computed by `hclust`, `pARI` returns the lower bound for the true discoveries proportion.
+
+### fMRI cluster analysis
+
+*pARI* is particularly useful in functional Magnetic Resonance Imaging cluster analysis, where it is of interest to select a cluster of voxels and to provide a confidence statement on the percentage of truly activated voxels within that cluster, avoiding the well-known spatial specificity paradox.
+
+We analyzed the Auditory data collected by Pernet et al. (2015), i.e., people listening vocal and non-vocal sounds.
+
+Group analysis on 140 subjects of the Vocal A Non-vocal contrast by the one-sample t-test flipping the sign of 140 voxel-wise contrasts maps.
+
+First, let download the data from the *fMRIdata* package:
+
+```{r}
+#devtools::install_github(angeella/fMRIdata)
+library(fMRIdata)
+data(Auditory_clusterTH3_2)
+data(Auditory_copes)
+data(Auditory_mask)
+```
+
+We have three ingredients:
+
+ 1. The set of copes `Auditory_copes` as a list of `niftiImage` objects, one for each subject. The copes represent the $3$ dimensional ($91 \times 109 \times 91$) contrast map. Each element of the array describes the estimated parameter used in the hypotheses.
+ In this case, the copes represent the statistics maps regarding the contrast that describes the difference of neural activation during vocal and non-vocal stimuli for each participant, computed by FSL.
+ The one-sample t-test is computed for each voxel to analyze the hypothesis of zero mean across the subjects, i.e.,
+
+$$
+H_0 : \mu_i = 0
+$$
+
+where $\mu_i = \sum_{j = 1}^{J} copes_{ji}/J$, where $J$ is the total number of subjects. 
+
+ 2. The cluster map `Auditory_clusterTH3_2` is used as a set of features in `pARIbrain`. While our method allows any method for forming clusters, we started from a map computed using Random Field Theory (RFT) with a cluster-forming-threshold equalling $3.2$.
+ 
+ 3. The brain mask `Auditory_mask`. In this case, we extract it from the group-level analysis by FSL.
+
+Finally, `pARIbrain` can be used. We select $50$ subject randomly to speed up the computation.
+
+```{r}
+Auditory_copes_subset <- sample(Auditory_copes, 50)
+auditory_out <- pARIbrain(copes = Auditory_copes_subset, cluster = Auditory_clusterTH3_2, mask = Auditory_mask, alpha = 0.05, silent = TRUE)
+auditory_out$out
+```
+
+For each cluster, `pARIbrain` returns the lower bounds of the proportion of active voxels, the cluster's size, the coordinates, and the maximum statistical test value inside the cluster.
+
+Finally, you can also produce the True Discovey Proportion brain map using the `map_TDP` function.
+
+## Citing pARI
+
+If you use the *pARI* package, please cite the following paper:
+
+- Andreella, A., Hemerik, J., Weeda, W., Finos, L., and Goeman, J. (2020). Permutation-based true discovery proportions for fMRI cluster analysis, https://arxiv.org/abs/2008.04631
