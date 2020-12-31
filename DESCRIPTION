@@ -21,7 +21,8 @@ Imports:
     hommel, 
     ggplot2,
     tools,
-    mvtnorm
+    mvtnorm,
+    ARIbrain
 LinkingTo: 
     Rcpp, RcppArmadillo
 Suggests: 
