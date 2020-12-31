@@ -11,16 +11,16 @@ signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand 
 
 \item{B}{number of permutations to perform, default is 1000.}
 
-\item{alternative}{character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"}
+\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{seed}{specify seed, default is 1234.}
+\item{seed}{by default \code{seed=1234}. Integer value specifying the seed.}
 
-\item{mask}{mask to apply, it can be nii format or path}
+\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 
 \item{rand}{logical. Should p values computed by permutation distribution?}
 }
 \value{
-Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
+Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0.
 }
 \description{
 Performs sign-flipping, i.e. permutation, one-sample t-tests

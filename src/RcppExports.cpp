@@ -18,14 +18,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // lambdaCalibrate
-NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, int delta, std::string family);
+NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::string family);
 RcppExport SEXP _pARI_lambdaCalibrate(SEXP XSEXP, SEXP alphaSEXP, SEXP deltaSEXP, SEXP familySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< int >::type delta(deltaSEXP);
+    Rcpp::traits::input_parameter< double >::type delta(deltaSEXP);
     Rcpp::traits::input_parameter< std::string >::type family(familySEXP);
     rcpp_result_gen = Rcpp::wrap(lambdaCalibrate(X, alpha, delta, family));
     return rcpp_result_gen;

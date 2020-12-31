@@ -3,12 +3,12 @@
 #' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F)
 #' @param X data where rows represents the variables and columns the observations
 #' @param B number of permutations to perform, default is 1000.
-#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
-#' @param seed specify seed, default is 1234.
-#' @param mask mask to apply, it can be nii format or path
+#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param seed by default \code{seed=1234}. Integer value specifying the seed.
+#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
 #' @param rand logical. Should p values computed by permutation distribution?
 #' @author Angela Andreella
-#' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
+#' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0.
 #' @export
 #' @importFrom stats pnorm
 #' @importFrom RNifti readNifti
@@ -35,29 +35,24 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   
   ## Observed test statistics
   rowV <- rowVariance(X)
-  #rowV <- ifelse(rowV==0,.Machine$double.xmin, rowV)
-  #Test <- rowMeans(X)/(sqrt((rowV)/n))
   Test <- ifelse(rowV==0,0, rowMeans(X)/(sqrt((rowV)/n)))
   
   ## Test statistics under H0
   
   Test_H0 <- signFlip(X,B-1)
-  #T0_m <- meanBySignFlipping(X,B)
-  #T0_v <- varBySignFlipping(X,B)
-  #T0_v <- ifelse(T0_v==0,.Machine$double.xmin, T0_v)
-  #Test_H0 <- T0_m/ sqrt((T0_v)/n)
+  
   Test_H0 <- ifelse(is.na(Test_H0), 0 , Test_H0)
   
   if(!rand){
     pv <- switch(alternative, 
-                 "two.sided" = 2*(pnorm(abs(Test),  lower.tail=FALSE)),
-                 "greater" = pnorm(Test, lower.tail=FALSE),
-                 "lower" = 1-pnorm(Test, lower.tail=FALSE))
+                 "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
+                 "greater" = pnorm(Test,  lower.tail=FALSE),
+                 "lower" = 1-pnorm(Test,  lower.tail=FALSE))
     
     pv_H0 <- switch(alternative, 
-                    "two.sided" = 2*(pnorm(abs(Test_H0), lower.tail=FALSE)),
-                    "greater" = pnorm(Test_H0, lower.tail=FALSE),
-                    "lower" = 1-pnorm(Test_H0, lower.tail=FALSE))
+                    "two.sided" = 2*(pnorm(abs(Test_H0),  lower.tail=FALSE)),
+                    "greater" = pnorm(Test_H0,  lower.tail=FALSE),
+                    "lower" = 1-pnorm(Test_H0,  lower.tail=FALSE)) 
   }else{
 
     Test_matrix <- cbind(Test, Test_H0)

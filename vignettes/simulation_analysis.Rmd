@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 
 ```{r}
-library(ARIpermutation)
+library(pARI)
 library(hommel)
 library(ggplot2)
 m <- 2e3 #number of variables
@@ -34,12 +34,11 @@ family = "Simes"
 simEC <- function(m,rho,n,pi0,power,B, alpha){
   
   X <-simulateData(pi0,m,n, rho, power = power, alpha = alpha)
-  X <- t(X)
-  res <- signTest(X,B)
+  res <- signTest(X,B, rand = F, B = 1000,alternative = "two.sided")
   Test <- cbind(res$Test,res$Test_H0)
   P <- cbind(res$pv,res$pv_H0)
-  lambdaSimes <- ARIpermutation::lambdaOpt(pvalues = P,family = family,alpha = alpha,delta = 0)
-  cvSimes <- ARIpermutation::cv(pvalues = P,family = family,alpha = alpha,lambda = lambdaSimes,delta = 0)
+  lambdaSimes <- pARI::lambdaOpt(pvalues = P,family = family,alpha = alpha,delta = 0)
+  cvSimes <- pARI::cv(pvalues = P,family = family,alpha = alpha,lambda = lambdaSimes,delta = 0)
   out <- as.data.frame(cbind(cvSimes, res$pv, res$Test))
   colnames(out) <- c("CriticalValue", 
                      "Pvalues", "Test"
@@ -58,7 +57,7 @@ m0 <- round(m * pi0)
 m1 <- m - m0
 H <- rep(c(0, 1), times = c(m0, m1))
 
-discoveriesPerm <- sapply(c(1:length(rhos)), function(x) ARIpermutation::dI(ix = c(1:m),cv = cv[,x],praw = Pvalues[,x]))
+discoveriesPerm <- sapply(c(1:length(rhos)), function(x) pARI::dI(ix = c(1:m),cv = cv[,x],praw = Pvalues[,x]))
 
 discoveriesHommel <- sapply(c(1:length(rhos)), function(x) hommel::discoveries(hommel(Pvalues[,x]),ix = c(1:m),alpha = alpha))
 

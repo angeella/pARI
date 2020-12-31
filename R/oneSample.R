@@ -1,11 +1,12 @@
-#' @title One Sample t test
-#' @description Performs One Sample t test
+#' @title One-Sample t-test
+#' @description performs the One-Sample t-test for each feature.
 #' @usage oneSample(X,alternative= "two.sided")
-#' @param X data where rows represents the variables and columns the observations
-#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "less". Default is "two.sided"
+#' @param X data matrix where rows represents the variables and columns the observations.
+#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: Test test statistic, and pv corresponding raw pvalues.
 #' @export
+
 
 oneSample<- function(X,alternative = "two.sided"){
   alternative_set <- c("two.sided", "greater", "lower")
@@ -18,9 +19,9 @@ oneSample<- function(X,alternative = "two.sided"){
   #Test = rowMeans(X)/(sqrt((rowV)/n))
   Test <- ifelse(rowV==0,0, rowMeans(X)/(sqrt((rowV)/n)))
   pv <- switch(alternative, 
-              "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
-              "greater" = pnorm(Test, lower.tail=FALSE),
-              "lower" = 1-pnorm(Test, lower.tail=FALSE))
+              "two.sided" = 2*(pt(abs(Test), df = n-1, lower.tail=FALSE)),
+              "greater" = pt(Test, df = n-1, lower.tail=FALSE),
+              "lower" = 1-pt(Test, df = n-1, lower.tail=FALSE))
   
   res <- list(Test = Test, pv = pv)
   

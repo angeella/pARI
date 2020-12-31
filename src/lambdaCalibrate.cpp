@@ -9,8 +9,8 @@ using namespace Rcpp;
 // [[Rcpp::export]] 
 
 
-NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, int delta, std::string family) {
-  int m = X.n_rows;
+NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::string family) {
+  double m = X.n_rows;
   int B = X.n_cols;
   NumericVector T(B);
   NumericVector lambda(m-delta);

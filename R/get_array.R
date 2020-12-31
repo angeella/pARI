@@ -1,12 +1,3 @@
-#' @title get_array
-#' @description get the array from a map parameter. and make compatibility checks
-#' @usage get_array(map,map_dims=NULL)
-#' @param map array, character giving the nii file (address and) name.
-#' @param map_dims vector with the 3 dimension the map must agree. if \code{NULL} (default) no checks are made
-#' @author Angela Andreella
-#' @return array
-#' @export
-
 get_array <- function(map,map_dims=NULL){
   if(is.null(map)){
     if(is.null(map_dims)) {

@@ -7,19 +7,19 @@
 lambdaOpt(pvalues,family,alpha, delta = 0)
 }
 \arguments{
-\item{pvalues}{pvalues matrix with dimensions variables times permutations}
+\item{pvalues}{pvalues matrix with dimensions equal to the number of variables times the number of permutations.}
 
-\item{family}{family}
+\item{family}{choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.}
 
-\item{alpha}{alpha}
+\item{alpha}{alpha level.}
 
-\item{delta}{delta}
+\item{delta}{Do you want to consider sets with at least delta size?}
 }
 \value{
-lambda
+lambda parameter
 }
 \description{
-compute lambda parameter
+\code{lambdaOpt} provides the optimal lambda calibration parameter used in the critical vector.
 }
 \author{
 Angela Andreella

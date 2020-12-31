@@ -2,20 +2,20 @@
 % Please edit documentation in R/oneSample.R
 \name{oneSample}
 \alias{oneSample}
-\title{One Sample t test}
+\title{One-Sample t-test}
 \usage{
 oneSample(X,alternative= "two.sided")
 }
 \arguments{
-\item{X}{data where rows represents the variables and columns the observations}
+\item{X}{data matrix where rows represents the variables and columns the observations.}
 
-\item{alternative}{character referring to the alternative hypothesis, "two.sided", "greater" or "less". Default is "two.sided"}
+\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 }
 \value{
 Returns a list with the following objects: Test test statistic, and pv corresponding raw pvalues.
 }
 \description{
-Performs One Sample t test
+performs the One-Sample t-test for each feature.
 }
 \author{
 Angela Andreella

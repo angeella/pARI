@@ -2,29 +2,37 @@
 % Please edit documentation in R/Statmap.R
 \name{Statmap}
 \alias{Statmap}
-\title{Statmap}
+\title{Create Statistical Parametric Mapping (SPM)}
 \usage{
 Statmap(copes,alternative,path,name, Pmap, mask)
 }
 \arguments{
-\item{copes}{list of copes}
+\item{copes}{The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
 
-\item{alternative}{which alternative hypothesis perform, default is two.sided}
+\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{path}{path to save the nifti file, the path doesn' t must end with /}
+\item{path}{path used to save the NIfTI file, the path does not must end with \code{/}.}
 
-\item{name}{choose the name of your nifti file}
+\item{name}{choose the name of your NIfTI file}
 
-\item{Pmap}{if you want also the Pvalue map insert TRUE, default is FALSE}
+\item{Pmap}{by default \code{Pmap=FALSE}. If \code{TRUE} the SPM of the pvalues is returned.}
 
-\item{mask}{mask map}
+\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 }
 \value{
-lambda
+the statistical parametric mapping in NIfTI format is saved in the path specified, if \code{path = NULL} the current working directory of the \code{R} process is used.
 }
 \description{
-create Statmap nifti image
+\code{Statmap} is used to create the statistical parametric mapping in NIfTI format.
+}
+\examples{
+library(fMRIdata)
+data(Auditory_copes)
+data(Auditory_mask)
+Statmap(copes = Auditory_copes, mask = Auditory_mask)
 }
 \author{
+Angela Andreella
+
 Angela Andreella
 }

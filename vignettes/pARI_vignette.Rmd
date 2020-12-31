@@ -53,7 +53,7 @@ The function `pARIbrain` was developed for the fMRI cluster analysis framework, 
 We perform a simple simulation using `simulateData`. $1000$ features are generated $30$ times as normally distributed with mean $0$ under the null hypothesis and mean under the alternative is computed considering the difference in means having the power of the one-sample t-test equals $0.8$. The proportion of true null hypothesis equals $\pi = 0.8$.
 
 ```{r}
-datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0,set.seed = 123)
+datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0.5,set.seed = 123)
 ```
 
 *pARI* then computes the lower bound for the number of true discoveries inside the set containing the first $200$ features. The user must specify the cluster in the `ix` set. We apply the one-sample t-test for each feature.
@@ -68,7 +68,7 @@ Therefore, we can say that at least $19\%$ of features are truly significant ins
 However, the `pARI` function can analyzed directly the matrix of permuted p-values. We can compute it by `signTest` function:
 
 ```{r}
-out <- signTest(X = datas)
+out <- signTest(X = datas, B = 2000, rand = F)
 P <- cbind(out$pv, out$pv_H0)
 pARI(pvalues = P, ix = c(1:200),test.type = "one_sample")$TDP
 ```
@@ -80,7 +80,7 @@ ix <- sample(c(1:4), size = 1000, replace = T)
 pARI(pvalues = P, ix = ix,test.type = "one_sample")$TDP
 ```
 
-*pARI* returns the lower bound for the true discovery proportion for each set of features. We can say that we have at least $1.53\%$ of truly active features in the first cluster.
+*pARI* returns the lower bound for the true discovery proportion for each set of features. We can say that we have at least $1.73\%$ of truly active features in the first cluster.
 
 ### Gene cluster analysis
 

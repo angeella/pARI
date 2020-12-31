@@ -1,13 +1,5 @@
-#' @title tdp
-#' @description compute tdp
-#' @usage tdp(hommel, ix, alpha) 
-#' @param hommel hommel
-#' @param ix ix
-#' @param alpha alpha
-#' @author hommel package
-#' @return tdp
-#' @importFrom hommel discoveries
-
+# @description compute the true discovery proportion
+#
 
 tdp <- function(hommel, ix, alpha) 
 {

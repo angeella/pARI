@@ -22,7 +22,7 @@ simulateData(pi0,m,n,rho, set.seed = NULL, power, alpha)
 \item{alpha}{alpha value for power analysis}
 }
 \value{
-Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
+Returns the simulated data matrix.
 }
 \description{
 Simulate normal distributed data

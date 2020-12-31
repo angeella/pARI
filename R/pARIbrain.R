@@ -1,24 +1,52 @@
-#' @title permutation-based ARI
-#' @description Performs ARI using permutation local test
+#' @title Permutation-based All-Resolutions Inference for brain imaging
+#' @description The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations for fMRI cluster analysis. 
 #' @usage pARIbrain(copes, thr, mask, alpha, clusters, 
 #' alternative, summary_stat, silent, family, delta, B, rand)
-#' @param copes list of copes map
-#' @param thr threshold to construct cluster map
-#' @param mask mask map, niftiImage class object or path
+#' @param copes The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
+#' @param thr threshold used to construct the cluster map.
+#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
 #' @param alpha alpha level
-#' @param clusters clusters map as niftiImage class object or path, if NULL it is computed considering the threshold 3.2
-#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
-#' @param summary_stat Choose among "max", "center-of-mass"
-#' @param silent FALSE by default.
-#' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is simes
-#' @param delta do you want to consider at least delta size set?
-#' @param B number of permutation, default 1000
-#' @param rand logical. Should p values computed by permutation distribution?
+#' @param clusters 3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) nifti file name. 
+#' If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals 3.2.
+#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param summary_stat Choose among \code{=c("max", "center-of-mass")}. 
+#' @param silent \code{FALSE} by default.
+#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
+#' @param B by default \code{B = 1000}. Number of permutations.
+#' @param rand by default \code{rand = FALSE}. 
+#' A logical value, if \code{rand = TRUE}, the pvalues are computed by \code{\link{rowRanks}}.
 #' @author Angela Andreella
-#' @return Returns a list with the following objects: discoveries number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
+#' @return Returns a matrix with the following objects: 
+#' Size, FalseNull, TrueNull, ActiveProp and other statistics for each cluster.
 #' @export
 #' @importFrom RNifti readNifti
 #' @importFrom plyr laply
+#' @importFrom ARIbrain cluster_threshold
+#' @references For the general framework of All-Resolutions Inference see:
+#' 
+#' Goeman, Jelle J., and Aldo Solari. "Multiple testing for exploratory research." Statistical Science 26.4 (2011): 584-597.
+#'
+#' For All-Resolutions Inference for functional Magnetic Resonance Imaging data see: 
+#' 
+#' Rosenblatt, Jonathan D., et al. "All-resolutions inference for brain imaging." Neuroimage 181 (2018): 786-796.
+#' 
+#'
+#' For permutation-based All-Resolutions Inference see:
+#' 
+#' Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
+#' 
+#' @examples
+#' library(fMRIdata)
+#' data(Auditory_clusterTH3_2)
+#' data(Auditory_copes)
+#' data(Auditory_mask)
+#' auditory_out <- pARIbrain(copes = Auditory_copes, 
+#' cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
+#' alpha = 0.05, silent = TRUE)
+#' auditory_out$out
+
 
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
                       alternative = "two.sided", summary_stat=c("max", "center-of-mass"),

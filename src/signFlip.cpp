@@ -6,25 +6,24 @@ using namespace Rcpp;
 // [[Rcpp::plugins(cpp11)]] 
 // [[Rcpp::export]] 
 arma::mat signFlip(arma::mat X, double B) {
-  int m = X.n_rows;
-  int n = X.n_cols;
+  double m = X.n_rows;
+  double n = X.n_cols;
   
   
   arma::mat T(m, B, arma::fill::zeros);
-  arma::vec eps, Tb, Tb0, Tb1, Tb2, eps1;
+  arma::vec eps, M, Var, X2, M2, id;
   
   //X = X / sqrt(n);    // scaling
   
   int bb;
   for (bb=0; bb<B; bb++) {
-    eps = Rcpp::rbinom(n, 1, 0.5)*2 - 1;  // signs 
-    eps1 = Rcpp::rbinom(n, 1, 1)*2 - 1;  // identity    
-    Tb = X * eps;
-    Tb1 = Tb / n; //mean
-    Tb0 = (pow(X, 2) * eps1)/n; //E(x^2)
-    Tb2 = pow(Tb1,2); //E(X)^2
-    Tb =  (Tb0-Tb2)*(n/(n-1)); //sample var
-    T.col(bb) = Tb1/sqrt(Tb/n);
+    eps = Rcpp::rbinom(n, 1, 0.5)*2 - 1;  
+    id = Rcpp::rbinom(n, 1, 1)*2 - 1;   
+    M = (X * eps) / n; 
+    X2 = (pow(X, 2) * id)/n; 
+    M2 = pow(M,2)/pow(n,2); 
+    Var = (X2 - M2)*(n/(n-1));
+    T.col(bb) = M / sqrt(Var/n);
     
   }
   return (T);

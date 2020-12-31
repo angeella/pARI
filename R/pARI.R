@@ -1,20 +1,32 @@
-#' @title permutation-based All-Resolutions Inference
-#' @description Performs single step ARI method based on critical vectors constructed by permutations
+#' @title Permutation-based All-Resolutions Inference
+#' @description The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations. 
 #' @usage pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
-#' @param X data matrix rows represent variables, columns observations
-#' @param ix set of hypothesis of interest. It can be a vector having same lenght of the variables or the indices if one set is considered.
-#' @param alpha alpha level, default 0.05
-#' @param family family of confidence envelopes considered in order to find the critical values. Now, we implement the Simes ones and the Beta
-#' @param delta do you want to consider at least delta size set?
-#' @param B number of permutations, default 1000
-#' @param pvalues matrix pvalues instead of data with dimensions hypotheses times permutations, default NULL
-#' @param test.type "one_sample", i.e., one sample, or "two_samples", i.e., two samples  t-tests?
-#' @param complete default FALSE. If TRUE the sets of critical vectors and raw pvalues are returned.
-#' @param ... Futher arguments, see details.
-#' @seealso \code{\link{signTest}} \code{\link{permTest}}
+#' @param X data matrix where rows represent variables, and columns the observations.
+#' @param ix set of hypotheses of interest. It can be a vector having the same length as the variables or the indices of the variables of interest if only one set is considered.
+#' @param alpha alpha level, default 0.05.
+#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
+#' @param B by default \code{B = 1000}. Number of permutations.
+#' @param pvalues by default \code{pvalues = NULL}.  Matrix of pvalues used instead of the data matrix having dimensions equal to the number of hypotheses times the number of permutations.
+#' @param test.type by default \code{test.type = "one_sample"}. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests.
+#' @param complete by default \code{complete = FALSE}. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned.
+#' @param ... Futher parameters.
+#' @seealso The type of tests implemented: \code{\link{signTest}} \code{\link{permTest}}.
 #' @author Angela Andreella
-#' @return Returns a list with the following objects \code{discoveries}, i.e., number of discoveries in the set selected, \code{ix}, selected variables if \code{complete = FALSE}. If \code{complete = TRUE} the raw \code{pvalues} and \code{cv} critical vector are returned.
+#' @return by default returns a list with the following objects: \code{discoveries}: lower bound for the number of true discoveries in the set selected, \code{ix}: selected variables. If \code{complete = TRUE} the raw \code{pvalues} and \code{cv} critical vector are returned.
 #' @export
+#' @references For the general framework of All-Resolutions Inference see:
+#' 
+#' Goeman, Jelle J., and Aldo Solari. "Multiple testing for exploratory research." Statistical Science 26.4 (2011): 584-597.
+#'
+#' For permutation-based All-Resolutions Inference see:
+#' 
+#' Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
+#' 
+#' @examples
+#' datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0,set.seed = 123)
+#' out <- pARI(X = datas, ix = c(1:200),test.type = "one_sample")
+#' out
 
 pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, test.type = "one_sample", complete = FALSE, ...){
  

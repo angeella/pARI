@@ -56,17 +56,17 @@ We create the p-values matrix where the rows represent the permutations and the 
 pv <- t(cbind(pvalues$pv,pvalues$pv_H0))
 ```
 
-Then, we use the parametric approach considering the full set of hypotheses, i.e., ```ix``` equals ```c(1:10)```, using the function ```hommel``` and ```discoveries``` from the hommel package (type ```?hommel::hommel``` and ```hommel::discoveries``` for more details):
+Then, we use the parametric approach considering the full set of hypotheses, i.e., ```ix``` equals ```c(1:5)```, using the function ```hommel``` and ```discoveries``` from the hommel package (type ```?hommel::hommel``` and ```hommel::discoveries``` for more details):
 
 ``` r
 hom <- hommel(pv[1,], simes = TRUE)
-discoveries(hom,ix = c(1:10),alpha = 0.1)
+discoveries(hom,ix = c(1:8),alpha = 0.1)
 
 ```
 and the permutation-based one using the function ```pARI``` (type ```?pARI::pARI``` for more details)
 
 ``` r
-pARI(data,ix = c(1:10),alpha = 0.1,family = "Simes", B= 1000)[1]
+pARI(data,ix = c(1:8),alpha = 0.1,family = "Simes", B= 1000)[1]
 
 ```
 

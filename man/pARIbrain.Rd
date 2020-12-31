@@ -2,41 +2,69 @@
 % Please edit documentation in R/pARIbrain.R
 \name{pARIbrain}
 \alias{pARIbrain}
-\title{permutation-based ARI}
+\title{Permutation-based All-Resolutions Inference for brain imaging}
 \usage{
 pARIbrain(copes, thr, mask, alpha, clusters, 
 alternative, summary_stat, silent, family, delta, B, rand)
 }
 \arguments{
-\item{copes}{list of copes map}
+\item{copes}{The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
 
-\item{thr}{threshold to construct cluster map}
+\item{thr}{threshold used to construct the cluster map.}
 
-\item{mask}{mask map, niftiImage class object or path}
+\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 
 \item{alpha}{alpha level}
 
-\item{clusters}{clusters map as niftiImage class object or path, if NULL it is computed considering the threshold 3.2}
+\item{clusters}{3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) nifti file name. 
+If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals 3.2.}
 
-\item{alternative}{character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"}
+\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{summary_stat}{Choose among "max", "center-of-mass"}
+\item{summary_stat}{Choose among \code{=c("max", "center-of-mass")}.}
 
-\item{silent}{FALSE by default.}
+\item{silent}{\code{FALSE} by default.}
 
-\item{family}{which family for the confidence envelope? simes, finner, beta or higher.criticism. default is simes}
+\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.}
 
-\item{delta}{do you want to consider at least delta size set?}
+\item{delta}{by default \code{delta = 0}. Do you want to consider sets with at least delta size?}
 
-\item{B}{number of permutation, default 1000}
+\item{B}{by default \code{B = 1000}. Number of permutations.}
 
-\item{rand}{logical. Should p values computed by permutation distribution?}
+\item{rand}{by default \code{rand = FALSE}. 
+A logical value, if \code{rand = TRUE}, the pvalues are computed by \code{\link{rowRanks}}.}
 }
 \value{
-Returns a list with the following objects: discoveries number of discoveries in the set selected, cluster id, maximum test statistic and relative coordinates
+Returns a matrix with the following objects: 
+Size, FalseNull, TrueNull, ActiveProp and other statistics for each cluster.
 }
 \description{
-Performs ARI using permutation local test
+The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations for fMRI cluster analysis.
+}
+\examples{
+library(fMRIdata)
+data(Auditory_clusterTH3_2)
+data(Auditory_copes)
+data(Auditory_mask)
+auditory_out <- pARIbrain(copes = Auditory_copes, 
+cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
+alpha = 0.05, silent = TRUE)
+auditory_out$out
+}
+\references{
+For the general framework of All-Resolutions Inference see:
+
+Goeman, Jelle J., and Aldo Solari. "Multiple testing for exploratory research." Statistical Science 26.4 (2011): 584-597.
+
+For All-Resolutions Inference for functional Magnetic Resonance Imaging data see: 
+
+Rosenblatt, Jonathan D., et al. "All-resolutions inference for brain imaging." Neuroimage 181 (2018): 786-796.
+
+
+For permutation-based All-Resolutions Inference see:
+
+Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
 }
 \author{
 Angela Andreella

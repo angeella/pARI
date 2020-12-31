@@ -16,7 +16,7 @@ vignette: >
 ```
 
 ```{r setup}
-library(ARIpermutation)
+library(pARI)
 library(hommel)
 library(ggplot2)
 ```
@@ -25,8 +25,8 @@ library(ggplot2)
 m <- 1e3 #number of variables
 n <- 20 #number of observations
 pi0 <- 0.9 #Proportion of true null hypotheses
-B <- 999 #number of permutation
-rho <- 0 #Level of equi correlation between pairs of variables
+B <- 1000 #number of permutation
+rho <- 0.2 #Level of equi correlation between pairs of variables
 alpha <- 0.05 #alpha level
 power <- 0.8
 delta <- 0
@@ -37,8 +37,7 @@ Create simulate data
 
 ```{r}
 X <-simulateData(pi0,m,n, rho, power = power, alpha = alpha, rho = rho)
-X <- t(X)
-res <- signTest(X,B)
+res <- signTest(X,B, rand = F)
 Test <- cbind(res$Test,res$Test_H0)
 P <- cbind(res$pv,res$pv_H0)
 ```
@@ -46,17 +45,17 @@ P <- cbind(res$pv,res$pv_H0)
 So, we plot the null distribution
 
 ```{r}
-ARIpermutation::plotNullDistribution(family = NULL,alpha = alpha, P = P,B = B)
+pARI::plotNullDistribution(family = NULL,alpha = alpha, P = P,B = B)
 ```
 
 We add the Simes critical values:
 
 ```{r}
-ARIpermutation::plotNullDistribution(family = "simes", alpha = alpha, P = P,B = B, delta = delta)
+pARI::plotNullDistribution(family = "simes", alpha = alpha, P = P,B = B, delta = delta)
 ```
 
 ```{r}
-ARIpermutation::plotNullDistribution(family = "finner", alpha = alpha, P = P,B = B, delta = delta)
+pARI::plotNullDistribution(family = "finner", alpha = alpha, P = P,B = B, delta = delta)
 ```
 
 
