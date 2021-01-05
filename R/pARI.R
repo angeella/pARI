@@ -46,7 +46,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
   p <- P[,1]
 
   lambda <- lambdaOpt(P, family = family, alpha = alpha, delta = delta)
-  cv <- cv(pvalues=P, family= family, alpha = alpha, delta = delta, lambda = lambda)
+  cv <- criticalVector(pvalues=P, family= family, alpha = alpha, delta = delta, lambda = lambda)
   
   #Compute the largest size of a set of hyp not rejected by our local test
   #h <- hI(p, cv)

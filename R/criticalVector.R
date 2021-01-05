@@ -1,6 +1,6 @@
 #' @title Critical value
 #' @description compute critical values curve 
-#' @usage cv(pvalues, family, alpha, lambda, delta = NULL)
+#' @usage criticalVector(pvalues, family, alpha, lambda, delta = NULL)
 #' @param pvalues pvalues matrix with dimensiona variables times permutations
 #' @param family family
 #' @param alpha alpha
@@ -12,7 +12,7 @@
 #' @importFrom stats qbeta
 
 
-cv <- function(pvalues, family, alpha, lambda, delta = NULL){
+criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL){
   family_set <- c("simes", "finner", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)

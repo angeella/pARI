@@ -6,6 +6,7 @@ Date: 2020-02-10
 Author: Angela Andreella
 Maintainer: Angela Andreella <angela.andreella@phd.unipd.it>
 Description: pARI is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. 
+Depends: R (>= 3.5.0)
 License: GPL (>= 2)
 Imports: 
     Rcpp (>= 1.0.3), 
@@ -22,15 +23,24 @@ Imports:
     ggplot2,
     tools,
     mvtnorm,
-    ARIbrain
+    ARIbrain,
+    Biobase,
+    BiocManager,
+    dynamicTreeCut,
+    genefilter,
+    fMRIdata
 LinkingTo: 
     Rcpp, RcppArmadillo
 Suggests: 
     knitr,
     rmarkdown,
     cherry,
-    gridExtra   
+    gridExtra 
+Remotes: 
+    github::angeella/fMRIdata
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 LazyData: true
+env:
+  - _R_CHECK_SYSTEM_CLOCK_=0

@@ -2,16 +2,17 @@
 #' @description create plot permutation pvalues with corresponding critical vectors
 #' @usage plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, rand, B)
 #' @param P permutation matrix pvalues where rows correspond to the variables, default NULL
-#' @param family which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL. Vectors accepted
-#' @param alpha type I error allowed to construct the critical family, default 0.1
-#' @param path selected the path where the plot will be saved, if NULL the current working directory is used
-#' @param name name plot pdf, if NULL plot is used
+#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param alpha alpha level
+#' @param path path used to save the NIfTI file, the path does not must end with \code{/}.
+#' @param name choose the name of the NIfTI file
 #' @param delta for the family critical values, default 0. Vectors accepted
 #' @param copes image copes instead of pvalues, default NULL
-#' @param mask mask
-#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
-#' @param rand logical. Should p values computed by permutation distribution?
-#' @param B number of permutations to perform, default is 1000, if matrix p-value is computed directly.
+#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
+#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param rand by default \code{rand = FALSE}. 
+#' @param B by default \code{B = 1000}. Number of permutations.
 #' @return Returns plot null distribution with critical value curve and observed pvalues in red
 #' @export
 #' @importFrom grDevices png
@@ -74,7 +75,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, path = getwd
     
     lcv <- function(family,delta=NULL, cols = "blue"){
       lambdaO <- lambdaOpt(pvalues = P,family=family,alpha=alpha, delta = delta)
-      cvO<- cv(pvalues = P, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
+      cvO<- criticalVector(pvalues = P, family = family, alpha = alpha, lambda = lambdaO, delta = delta)
       lines(cvO, lwd =2, col= cols)
     }
     firstup <- function(x) {

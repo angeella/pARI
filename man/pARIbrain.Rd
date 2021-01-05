@@ -43,6 +43,7 @@ Size, FalseNull, TrueNull, ActiveProp and other statistics for each cluster.
 The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations for fMRI cluster analysis.
 }
 \examples{
+\dontrun{
 library(fMRIdata)
 data(Auditory_clusterTH3_2)
 data(Auditory_copes)
@@ -51,6 +52,7 @@ auditory_out <- pARIbrain(copes = Auditory_copes,
 cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
 alpha = 0.05, silent = TRUE)
 auditory_out$out
+}
 }
 \references{
 For the general framework of All-Resolutions Inference see:

@@ -1,10 +1,10 @@
 #' @title Lambda calibration
 #' @description \code{lambdaOpt} provides the optimal lambda calibration parameter used in the critical vector.
-#' @usage lambdaOpt(pvalues,family,alpha, delta = 0)
+#' @usage lambdaOpt(pvalues,family,alpha, delta)
 #' @param pvalues pvalues matrix with dimensions equal to the number of variables times the number of permutations.
-#' @param family choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param alpha alpha level.
-#' @param delta Do you want to consider sets with at least delta size?
+#' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
 #' @author Angela Andreella
 #' @return lambda parameter
 #' @export
@@ -17,7 +17,8 @@ lambdaOpt <- function(pvalues, family, alpha, delta){
   family <- match.arg(tolower(family), family_set)
 
   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family)
-    
+  #lambdaE <- lambdaOpt1(pvalues= t(pvalues), alpha = alpha, delta = delta, family = family)
+  
 
   
  # if(is.unsorted(pvalues[,1])){pvalues = rowSortC(pvalues)}

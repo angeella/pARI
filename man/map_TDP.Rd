@@ -2,24 +2,25 @@
 % Please edit documentation in R/map_TDP.R
 \name{map_TDP}
 \alias{map_TDP}
-\title{map True Discovery Proportion}
+\title{True Discovery Proportion brain map}
 \usage{
 map_TDP(ARIout,path,name,mask)
 }
 \arguments{
-\item{ARIout}{output object ARI permutation}
+\item{ARIout}{output object by \code{pARIbrain}.}
 
-\item{path}{path}
+\item{path}{path used to save the NIfTI file, the path does not must end with \code{/}.}
 
-\item{name}{name}
+\item{name}{choose the name of the NIfTI file.}
 
-\item{mask}{mask map, niftiImage class object or path}
+\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 }
 \value{
 Returns a TDP map
 }
 \description{
-Performs brain map True Discovery Proportion
+Performs True Discovery Proportion brain map.
 }
 \author{
 Angela Andreella

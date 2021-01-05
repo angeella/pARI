@@ -38,6 +38,7 @@
 #' Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
 #' 
 #' @examples
+#' \dontrun{
 #' library(fMRIdata)
 #' data(Auditory_clusterTH3_2)
 #' data(Auditory_copes)
@@ -46,6 +47,7 @@
 #' cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
 #' alpha = 0.05, silent = TRUE)
 #' auditory_out$out
+#' }
 
 
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
@@ -121,7 +123,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
   #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
   #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
   #cv <- sapply(c(1:length(praw)), function(x) (((x-8) * alpha * lambda)/length(praw)))
-  cvOpt = cv(pvalues = pvalues, family = family, alpha = alpha, lambda= lambda, delta = delta)
+  cvOpt = criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda= lambda, delta = delta)
  
   # define number of clusters
   clstr_id=sort(unique(as.vector(clusters[mask])),decreasing = TRUE)

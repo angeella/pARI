@@ -1,8 +1,8 @@
 #' @title Rows Variance
-#' @description Performs the variance for each row in a matrix
+#' @description performs the variance for each row in a matrix.
 #' @usage rowVariance(X,na.rm = TRUE) 
-#' @param X data where rows represents the variables and columns the observations
-#' @param na.rm remove na? 
+#' @param X data matrix where rows represents the variables and columns the observations.
+#' @param na.rm by default \code{na.rm=TRUE}. 
 #' @author Angela Andreella
 #' @return rows variance
 #' @export

@@ -2,12 +2,12 @@
 #' @description Performs permutation tests, i.e. permutation, two-sample t-tests
 #' @usage permTest(X, B, alternative, seed, mask, rand, label)
 #' @param X data where rows represents the variables and columns the observations, the columns's name define the categories
-#' @param B number of permutations to perform, default is 1000.
-#' @param alternative character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"
-#' @param seed specify seed, default is 1234.
-#' @param mask mask to apply, it can be nii format or path
-#' @param rand logical. Should p values computed by permutation distribution?
-#' @param label labels of the observations, if NULL the columns's name are considered, default NULL
+#' @param B by default \code{B = 1000}. Number of permutations.
+#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param seed by default \code{seed=1234}. Integer value specifying the seed.
+#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
+#' @param rand by default \code{rand = FALSE}. 
+#' @param label by default \code{label = NULL}. Labels of the observations, if \code{NULL} the columns's name are considered.
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
 #' @export

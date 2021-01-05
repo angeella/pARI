@@ -1,10 +1,11 @@
-#' @title map True Discovery Proportion
-#' @description Performs brain map True Discovery Proportion
+#' @title True Discovery Proportion brain map
+#' @description Performs True Discovery Proportion brain map. 
 #' @usage map_TDP(ARIout,path,name,mask)
-#' @param ARIout output object ARI permutation
-#' @param path path
-#' @param name name
-#' @param mask mask map, niftiImage class object or path
+#' @param ARIout output object by \code{pARIbrain}.
+#' @param path path used to save the NIfTI file, the path does not must end with \code{/}.
+#' @param name choose the name of the NIfTI file.
+#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
 #' @author Angela Andreella
 #' @return Returns a TDP map
 #' @export

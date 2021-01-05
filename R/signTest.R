@@ -2,11 +2,11 @@
 #' @description Performs sign-flipping, i.e. permutation, one-sample t-tests
 #' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F)
 #' @param X data where rows represents the variables and columns the observations
-#' @param B number of permutations to perform, default is 1000.
+#' @param B by default \code{B = 1000}. Number of permutations.
 #' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
 #' @param seed by default \code{seed=1234}. Integer value specifying the seed.
 #' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
-#' @param rand logical. Should p values computed by permutation distribution?
+#' @param rand by default \code{rand = FALSE}. 
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0.
 #' @export
@@ -45,14 +45,14 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   
   if(!rand){
     pv <- switch(alternative, 
-                 "two.sided" = 2*(pnorm(abs(Test), lower.tail=FALSE)),
-                 "greater" = pnorm(Test,  lower.tail=FALSE),
-                 "lower" = 1-pnorm(Test,  lower.tail=FALSE))
+                 "two.sided" = 2*(pt(abs(Test), df = n-1, lower.tail=FALSE)),
+                 "greater" = pt(Test,  lower.tail=FALSE),
+                 "lower" = 1-pt(Test,  lower.tail=FALSE))
     
     pv_H0 <- switch(alternative, 
-                    "two.sided" = 2*(pnorm(abs(Test_H0),  lower.tail=FALSE)),
-                    "greater" = pnorm(Test_H0,  lower.tail=FALSE),
-                    "lower" = 1-pnorm(Test_H0,  lower.tail=FALSE)) 
+                    "two.sided" = 2*(pt(abs(Test_H0), df = n-1,  lower.tail=FALSE)),
+                    "greater" = pt(Test_H0, df = n-1,  lower.tail=FALSE),
+                    "lower" = 1-pt(Test_H0, df = n-1,  lower.tail=FALSE)) 
   }else{
 
     Test_matrix <- cbind(Test, Test_H0)

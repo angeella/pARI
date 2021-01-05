@@ -14,10 +14,12 @@
 #' @importFrom RNifti writeNifti
 #' @importFrom RNifti readNifti
 #' @examples
+#' \dontrun{
 #' library(fMRIdata)
 #' data(Auditory_copes)
 #' data(Auditory_mask)
 #' Statmap(copes = Auditory_copes, mask = Auditory_mask)
+#' }
 
 Statmap <- function(copes, alternative = "two.sided", path = getwd(), name = "map", Pmap = FALSE, mask = NULL){
   

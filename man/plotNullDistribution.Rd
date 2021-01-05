@@ -9,25 +9,26 @@ plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, 
 \arguments{
 \item{P}{permutation matrix pvalues where rows correspond to the variables, default NULL}
 
-\item{family}{which family for the confidence envelope? simes, finner, beta or higher.criticism. default is NULL. Vectors accepted}
+\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.}
 
-\item{alpha}{type I error allowed to construct the critical family, default 0.1}
+\item{alpha}{alpha level}
 
-\item{path}{selected the path where the plot will be saved, if NULL the current working directory is used}
+\item{path}{path used to save the NIfTI file, the path does not must end with \code{/}.}
 
-\item{name}{name plot pdf, if NULL plot is used}
+\item{name}{choose the name of the NIfTI file}
 
 \item{delta}{for the family critical values, default 0. Vectors accepted}
 
 \item{copes}{image copes instead of pvalues, default NULL}
 
-\item{mask}{mask}
+\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 
-\item{alternative}{character referring to the alternative hypothesis, "two.sided", "greater" or "lower". Default is "two.sided"}
+\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{rand}{logical. Should p values computed by permutation distribution?}
+\item{rand}{by default \code{rand = FALSE}.}
 
-\item{B}{number of permutations to perform, default is 1000, if matrix p-value is computed directly.}
+\item{B}{by default \code{B = 1000}. Number of permutations.}
 }
 \value{
 Returns plot null distribution with critical value curve and observed pvalues in red

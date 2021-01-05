@@ -7,15 +7,15 @@
 rowVariance(X,na.rm = TRUE)
 }
 \arguments{
-\item{X}{data where rows represents the variables and columns the observations}
+\item{X}{data matrix where rows represents the variables and columns the observations.}
 
-\item{na.rm}{remove na?}
+\item{na.rm}{by default \code{na.rm=TRUE}.}
 }
 \value{
 rows variance
 }
 \description{
-Performs the variance for each row in a matrix
+performs the variance for each row in a matrix.
 }
 \author{
 Angela Andreella

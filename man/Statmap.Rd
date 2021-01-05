@@ -26,10 +26,12 @@ the statistical parametric mapping in NIfTI format is saved in the path specifie
 \code{Statmap} is used to create the statistical parametric mapping in NIfTI format.
 }
 \examples{
+\dontrun{
 library(fMRIdata)
 data(Auditory_copes)
 data(Auditory_mask)
 Statmap(copes = Auditory_copes, mask = Auditory_mask)
+}
 }
 \author{
 Angela Andreella

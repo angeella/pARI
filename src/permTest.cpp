@@ -34,12 +34,12 @@ arma::mat permT(arma::mat X, double B, arma::vec label) {
     M1 = (X1 * I1)/n1;
     M2 = (X2 * I2)/n2;
     Tb01 = (pow(X1, 2) * I1)/n1; //E(x^2)
-    Tb21 = pow(M1,2)/pow(n1,2); //E(X)^2
+    Tb21 = pow(M1,2); //E(X)^2
     Tb1 =  (Tb01-Tb21)*(n1/(n1-1)); //sample var
     Tb02 = (pow(X2, 2) * I2)/n2; //E(x^2)
-    Tb22 = pow(M2,2)/pow(n2,2); //E(X)^2
+    Tb22 = pow(M2,2); //E(X)^2
     Tb2 =  (Tb02-Tb22)*(n2/(n2-1)); //sample var
- //   pV =  ((n1 - 1)* Tb1 + (n2 - 1)* Tb2)/ (n1 + n2 - 2);
+    //   pV =  ((n1 - 1)* Tb1 + (n2 - 1)* Tb2)/ (n1 + n2 - 2);
     pV = Tb1/n1 + Tb2/n2;
     T.col(bb) = (M1 - M2)/sqrt(pV * (1/n1 + 1/n2));
    // T.col(bb) = (M1 - M2)/sqrt(pV);
