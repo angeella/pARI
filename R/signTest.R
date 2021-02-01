@@ -46,8 +46,8 @@ signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   if(!rand){
     pv <- switch(alternative, 
                  "two.sided" = 2*(pt(abs(Test), df = n-1, lower.tail=FALSE)),
-                 "greater" = pt(Test,  lower.tail=FALSE),
-                 "lower" = 1-pt(Test,  lower.tail=FALSE))
+                 "greater" = pt(Test, df = n-1, lower.tail=FALSE),
+                 "lower" = 1-pt(Test, df = n-1, lower.tail=FALSE))
     
     pv_H0 <- switch(alternative, 
                     "two.sided" = 2*(pt(abs(Test_H0), df = n-1,  lower.tail=FALSE)),

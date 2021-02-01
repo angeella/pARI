@@ -2,7 +2,7 @@
 #' @description compute critical values curve 
 #' @usage criticalVector(pvalues, family, alpha, lambda, delta = NULL)
 #' @param pvalues pvalues matrix with dimensiona variables times permutations
-#' @param family family
+#' @param family Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param alpha alpha
 #' @param lambda lambda
 #' @param delta delta
@@ -13,7 +13,7 @@
 
 
 criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL){
-  family_set <- c("simes", "finner", "beta", "higher.criticism")
+  family_set <- c("simes", "aorc", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
   #w <- dim(pvalues)[1]
@@ -26,7 +26,7 @@ criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL){
   if(family=="beta"){
     cv <- qbeta(lambda, c(1:m),m+1-c(1:m))
   }
-  if(family=="finner"){
+  if(family=="aorc"){
     
     cv <- sapply(c(1:m), function(x) (((x-delta) * lambda * alpha)/((m) - (x-delta) *(1 - lambda* alpha))))
     

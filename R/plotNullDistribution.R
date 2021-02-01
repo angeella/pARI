@@ -2,7 +2,7 @@
 #' @description create plot permutation pvalues with corresponding critical vectors
 #' @usage plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, rand, B)
 #' @param P permutation matrix pvalues where rows correspond to the variables, default NULL
-#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param alpha alpha level
 #' @param path path used to save the NIfTI file, the path does not must end with \code{/}.
 #' @param name choose the name of the NIfTI file
@@ -24,7 +24,7 @@
 
 plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
   
-  family_set <- c("simes", "finner", "beta", "higher.criticism")
+  family_set <- c("simes", "aorc", "beta", "higher.criticism")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}
   alternative_set <- c("two.sided", "greater", "lower")
   alternative <- match.arg(tolower(alternative), alternative_set)
@@ -95,6 +95,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, path = getwd
     #lines(cvO, col= 'blue', lwd =2)
     mapply(lcv, family, delta, cols)
     family <- firstup(family)
+    family <- ifelse(family == "Aorc", "AORC", family)
     legend('top',legend=c(sapply(c(1:length(family)), 
                                  function(x) as.expression(bquote(~ .(family[x]) ~ delta == .(delta[x]) ))), 
                           " Observed Pvalues"), col= c(cols, "red"),lwd =2, lty =c(rep("solid", length(family)), "dashed"))

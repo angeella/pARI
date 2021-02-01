@@ -68,7 +68,7 @@ Therefore, we can say that at least $19\%$ of features are truly significant ins
 However, the `pARI` function can analyzed directly the matrix of permuted p-values. We can compute it by `signTest` function:
 
 ```{r}
-out <- signTest(X = datas, B = 2000, rand = F)
+out <- signTest(X = datas, B = 1000, rand = F)
 P <- cbind(out$pv, out$pv_H0)
 pARI(pvalues = P, ix = c(1:200),test.type = "one_sample")$TDP
 ```
@@ -123,7 +123,7 @@ Having the data `edata` with labels referring to the type of strain, we use `pAR
 ```{r}
 out <-pARI(X = edata,alpha = 0.05, test.type = "two_sample", 
            label = as.factor(pdata$strain), ix = my.clusters,
-           family = "simes", complete = TRUE)
+           family = "higher.criticism", complete = TRUE)
 out$TDP
 ```
 

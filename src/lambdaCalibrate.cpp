@@ -40,7 +40,7 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
      lambda = (mV-deltaV)%(Y.rows(delta, m-1).col(bb))/((idV-deltaV)*alpha);
 
     }
-    if(family == "finner"){
+    if(family == "aorc"){
 
      lambda = ((mV - 1)%Y.rows(delta, m-1).col(bb))/((1-Y.rows(delta, m-1).col(bb))%((idV-deltaV)*alpha));
     }

@@ -13,6 +13,7 @@
 
 map_TDP <- function(ARIout,path= getwd(), name = "tdp", mask){
   
+  
   if(is.character(mask)){mask = RNifti::readNifti(mask)}
   
   cl = as.numeric(gsub("cl", "",names(ARIout$out[,4])))
@@ -21,6 +22,8 @@ map_TDP <- function(ARIout,path= getwd(), name = "tdp", mask){
   
   map = ARIout$clusters
   
+  if(!is.array(map)){ map <- array(map,dim(map))}
+    
   for(i in 1:length(cl)){
     
     map[map==cl[i]]=tdp[i]

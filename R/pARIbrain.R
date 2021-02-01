@@ -12,7 +12,7 @@
 #' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
 #' @param summary_stat Choose among \code{=c("max", "center-of-mass")}. 
 #' @param silent \code{FALSE} by default.
-#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
 #' @param B by default \code{B = 1000}. Number of permutations.
 #' @param rand by default \code{rand = FALSE}. 
@@ -59,7 +59,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
   val_alpha = sapply(c(1:B), function(x) (B-x)/B)
   if(!(alpha %in% val_alpha)){stop('please insert valid values for alpha and B')}
   
-  family_set <- c("simes", "finner", "beta", "higher.criticism")
+  family_set <- c("simes", "aorc", "beta", "higher.criticism")
   alternative_set <- c("two.sided", "greater", "lower")
   family <- match.arg(tolower(family), family_set)
   alternative <- match.arg(tolower(alternative), alternative_set)
