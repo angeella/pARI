@@ -26,8 +26,7 @@ Imports:
     ARIbrain,
     Biobase,
     BiocManager,
-    dynamicTreeCut,
-    fMRIdata
+    dynamicTreeCut
 LinkingTo: 
     Rcpp, RcppArmadillo
 Suggests: 
@@ -35,8 +34,6 @@ Suggests:
     rmarkdown,
     cherry,
     gridExtra 
-Remotes: 
-    github::angeella/fMRIdata
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
