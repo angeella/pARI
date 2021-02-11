@@ -27,7 +27,6 @@ Imports:
     Biobase,
     BiocManager,
     dynamicTreeCut,
-    genefilter,
     fMRIdata
 LinkingTo: 
     Rcpp, RcppArmadillo
