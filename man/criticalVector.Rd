@@ -9,7 +9,7 @@ criticalVector(pvalues, family, alpha, lambda, delta = NULL)
 \arguments{
 \item{pvalues}{pvalues matrix with dimensiona variables times permutations}
 
-\item{family}{family}
+\item{family}{Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
 
 \item{alpha}{alpha}
 

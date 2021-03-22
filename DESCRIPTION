@@ -26,7 +26,9 @@ Imports:
     ARIbrain,
     Biobase,
     BiocManager,
-    dynamicTreeCut
+    dynamicTreeCut,
+    genefilter,
+    fMRIdata
 LinkingTo: 
     Rcpp, RcppArmadillo
 Suggests: 
@@ -34,9 +36,10 @@ Suggests:
     rmarkdown,
     cherry,
     gridExtra 
+Remotes:
+    angeella/fMRIdata
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 LazyData: true
-env:
-  - _R_CHECK_SYSTEM_CLOCK_=0
+env: _R_CHECK_SYSTEM_CLOCK_=0

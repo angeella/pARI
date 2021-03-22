@@ -9,7 +9,7 @@ plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, 
 \arguments{
 \item{P}{permutation matrix pvalues where rows correspond to the variables, default NULL}
 
-\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
 
 \item{alpha}{alpha level}
 

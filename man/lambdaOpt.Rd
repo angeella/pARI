@@ -9,7 +9,7 @@ lambdaOpt(pvalues,family,alpha, delta)
 \arguments{
 \item{pvalues}{pvalues matrix with dimensions equal to the number of variables times the number of permutations.}
 
-\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"AORC"}, \code{"beta"} and \code{"higher.criticism"}.}
 
 \item{alpha}{alpha level.}
 

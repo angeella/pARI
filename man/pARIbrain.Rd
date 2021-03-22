@@ -26,7 +26,7 @@ If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_th
 
 \item{silent}{\code{FALSE} by default.}
 
-\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
 
 \item{delta}{by default \code{delta = 0}. Do you want to consider sets with at least delta size?}
 

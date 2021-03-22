@@ -10,11 +10,12 @@
 #' @return Returns a TDP map
 #' @export
 #' @importFrom RNifti writeNifti
+#' @importFrom RNifti readNifti
 
 map_TDP <- function(ARIout,path= getwd(), name = "tdp", mask){
   
   
-  if(is.character(mask)){mask = RNifti::readNifti(mask)}
+  if(is.character(mask)){mask = readNifti(mask)}
   
   cl = as.numeric(gsub("cl", "",names(ARIout$out[,4])))
   tdp = as.numeric(ARIout$out[,4])
