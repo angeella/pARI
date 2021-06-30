@@ -23,8 +23,7 @@ Imports:
     ggplot2,
     tools,
     mvtnorm,
-    ARIbrain,
-    fMRIdata
+    ARIbrain
 LinkingTo: 
     Rcpp, RcppArmadillo
 Suggests: 
