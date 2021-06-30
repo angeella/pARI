@@ -24,10 +24,6 @@ Imports:
     tools,
     mvtnorm,
     ARIbrain,
-    Biobase,
-    BiocManager,
-    dynamicTreeCut,
-    genefilter,
     fMRIdata
 LinkingTo: 
     Rcpp, RcppArmadillo

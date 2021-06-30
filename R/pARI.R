@@ -2,7 +2,7 @@
 #' @description The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations. 
 #' @usage pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 #' @param X data matrix where rows represent variables, and columns the observations.
-#' @param ix set of hypotheses of interest. It can be a vector having the same length as the variables or the indices of the variables of interest if only one set is considered.
+#' @param ix set of hypotheses of interest. It can be a vector having the same length as the variables indicating the respective cluster or the indices of the variables of interest if only one set/cluster is considered.
 #' @param alpha alpha level, default 0.05.
 #' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
@@ -10,6 +10,7 @@
 #' @param pvalues by default \code{pvalues = NULL}.  Matrix of pvalues used instead of the data matrix having dimensions equal to the number of hypotheses times the number of permutations.
 #' @param test.type by default \code{test.type = "one_sample"}. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests.
 #' @param complete by default \code{complete = FALSE}. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned.
+#' @param clusters if \code{ix} indicates the clusters/sets must be \code{TRUE}
 #' @param ... Futher parameters.
 #' @seealso The type of tests implemented: \code{\link{signTest}} \code{\link{permTest}}.
 #' @author Angela Andreella
@@ -28,7 +29,7 @@
 #' out <- pARI(X = datas, ix = c(1:200),test.type = "one_sample")
 #' out
 
-pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, test.type = "one_sample", complete = FALSE, ...){
+pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, test.type = "one_sample", complete = FALSE, clusters = FALSE,...){
  
   #Add different design then two and one
   #Check for error
@@ -53,7 +54,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
   
   #cvh <- sapply(c(1:length(p)), function(x) ((x * alpha * lambda)/h)- shift)
   
-  if(length(ix) == nrow(P)){
+  if(length(ix) == nrow(P) & clusters == TRUE){
   levels_ix <- unique(ix)  
   discoveries <- c()
   ixX <- list()

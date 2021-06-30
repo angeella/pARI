@@ -34,6 +34,12 @@ If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_th
 
 \item{rand}{by default \code{rand = FALSE}. 
 A logical value, if \code{rand = TRUE}, the pvalues are computed by \code{\link{rowRanks}}.}
+
+\item{iterative}{if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.}
+
+\item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+
+\item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
 }
 \value{
 Returns a matrix with the following objects: 

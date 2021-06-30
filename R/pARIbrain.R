@@ -17,6 +17,9 @@
 #' @param B by default \code{B = 1000}. Number of permutations.
 #' @param rand by default \code{rand = FALSE}. 
 #' A logical value, if \code{rand = TRUE}, the pvalues are computed by \code{\link{rowRanks}}.
+#' @param iterative if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.
+#' @param approx if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
+#' @param ncomb if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.
 #' @author Angela Andreella
 #' @return Returns a matrix with the following objects: 
 #' Size, FalseNull, TrueNull, ActiveProp and other statistics for each cluster.
@@ -52,7 +55,8 @@
 
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
                       alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
-                      silent=F, family = "simes", delta = 0, B = 1000, rand = F){
+                      silent=F, family = "simes", delta = 0, B = 1000, rand = F, 
+                      iterative = FALSE, approx = TRUE, ncomb = 100){
   
   "%ni%" <- Negate("%in%")
   #check alpha
@@ -134,9 +138,10 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
     #Statmap= get_array(Statmap,map_dims=dim(Pmap))
     StatFun <- function(ix) Statmap[ix]
   }
-  
+  clstr_id <- clstr_id[clstr_id!=0]
   #apply summaries to each cluster (and all the rest in an extra cluster)
     out=laply(clstr_id,function(i){
+      print(i)
       ix=clusters==i
       ix[-mask]=FALSE
       
@@ -145,7 +150,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
       #Error if I put pvalues[,mask] instead of pvalues in SingleStepCT
       #perm <- SingleStepCT(pvalues = pvalues,ct =ct, ix =as.vector(which(ix[mask])), alpha = alpha, shift = shift, family = 'Simes', lambda = lambda)
       #perm <- discoveriesPerm(praw = praw, ix = ix[mask], cvh = cvh)
-      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues[,1]),
+      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues[,1], iterative, approx, ncomb),
                summary_cluster(cluster_ids)[-1])
       )
     })

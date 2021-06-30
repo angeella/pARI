@@ -19,7 +19,7 @@ int permDiscoveries(NumericVector ix, NumericVector cv, NumericVector praw) {
 }
 
 /*** R
-library(ARIpermutation)
+library(pARI)
 #m <- 1000
 #n <- 20
 #B <- 100

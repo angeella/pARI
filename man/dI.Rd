@@ -12,6 +12,12 @@ dI(ix,cv,praw)
 \item{cv}{vector of critical values}
 
 \item{praw}{raw pvalues}
+
+\item{iterative}{if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied.}
+
+\item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+
+\item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
 }
 \value{
 Returns the lower confidence bound

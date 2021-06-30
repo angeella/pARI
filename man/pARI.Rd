@@ -9,7 +9,7 @@ pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 \arguments{
 \item{X}{data matrix where rows represent variables, and columns the observations.}
 
-\item{ix}{set of hypotheses of interest. It can be a vector having the same length as the variables or the indices of the variables of interest if only one set is considered.}
+\item{ix}{set of hypotheses of interest. It can be a vector having the same length as the variables indicating the respective cluster or the indices of the variables of interest if only one set/cluster is considered.}
 
 \item{alpha}{alpha level, default 0.05.}
 
@@ -24,6 +24,8 @@ pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 \item{test.type}{by default \code{test.type = "one_sample"}. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests.}
 
 \item{complete}{by default \code{complete = FALSE}. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned.}
+
+\item{clusters}{if \code{ix} indicates the clusters/sets must be \code{TRUE}}
 
 \item{...}{Futher parameters.}
 }

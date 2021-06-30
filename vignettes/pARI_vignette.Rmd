@@ -123,7 +123,7 @@ Having the data `edata` with labels referring to the type of strain, we use `pAR
 ```{r}
 out <-pARI(X = edata,alpha = 0.05, test.type = "two_sample", 
            label = as.factor(pdata$strain), ix = my.clusters,
-           family = "higher.criticism", complete = TRUE)
+           family = "higher.criticism", complete = TRUE, clusters = TRUE)
 out$TDP
 ```
 
