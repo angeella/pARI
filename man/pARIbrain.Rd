@@ -5,7 +5,8 @@
 \title{Permutation-based All-Resolutions Inference for brain imaging}
 \usage{
 pARIbrain(copes, thr, mask, alpha, clusters, 
-alternative, summary_stat, silent, family, delta, B, rand)
+alternative, summary_stat, silent, family, delta, B, rand,
+step.down, max.step)
 }
 \arguments{
 \item{copes}{The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
@@ -40,6 +41,10 @@ A logical value, if \code{rand = TRUE}, the pvalues are computed by \code{\link{
 \item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
 
 \item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
+
+\item{step.down}{by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.}
+
+\item{max.step}{by default \code{max.step = 10}. Maximum number of steps for the step down approach}
 }
 \value{
 Returns a matrix with the following objects: 

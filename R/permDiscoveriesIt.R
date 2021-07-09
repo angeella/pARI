@@ -1,6 +1,7 @@
 
 permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
   
+  set.seed(NULL)
   
   Bt <- c()
   Bt[1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = praw)
@@ -19,6 +20,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
           Kcomb <- combn(ix, length(ix) - Bt[it-1]) 
           
         }
+        if(it == 2) {print(Kcomb)}
         B_kc <- sapply(c(1:ncol(Kcomb)), function(x) 
           length(ix[(!(ix %in% Kcomb[,x]))]) - permDiscoveries(ix = ix[(!(ix %in% Kcomb[,x]))],cv = cv,praw = praw)
         )
@@ -27,7 +29,6 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
         
         
         Bt[it] <- max(B_kc)
-        print(Bt)
         if(it!=2 & Bt[it] == Bt[it-1]){
           converge <- TRUE
         }

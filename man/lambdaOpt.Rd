@@ -4,7 +4,7 @@
 \alias{lambdaOpt}
 \title{Lambda calibration}
 \usage{
-lambdaOpt(pvalues,family,alpha, delta)
+lambdaOpt(pvalues,family,alpha, delta, step.down, max.step)
 }
 \arguments{
 \item{pvalues}{pvalues matrix with dimensions equal to the number of variables times the number of permutations.}
@@ -14,6 +14,10 @@ lambdaOpt(pvalues,family,alpha, delta)
 \item{alpha}{alpha level.}
 
 \item{delta}{by default \code{delta = 0}. Do you want to consider sets with at least delta size?}
+
+\item{step.down}{by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.}
+
+\item{max.step}{by default \code{max.step = 10}. Maximum number of steps for the step down approach}
 }
 \value{
 lambda parameter

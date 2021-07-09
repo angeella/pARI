@@ -1,16 +1,18 @@
 #' @title Lambda calibration
 #' @description \code{lambdaOpt} provides the optimal lambda calibration parameter used in the critical vector.
-#' @usage lambdaOpt(pvalues,family,alpha, delta)
+#' @usage lambdaOpt(pvalues,family,alpha, delta, step.down, max.step)
 #' @param pvalues pvalues matrix with dimensions equal to the number of variables times the number of permutations.
 #' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"AORC"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param alpha alpha level.
 #' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
+#' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.
+#' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach
 #' @author Angela Andreella
 #' @return lambda parameter
 #' @export
 #' @importFrom stats pbeta
 
-lambdaOpt <- function(pvalues, family, alpha, delta){
+lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10){
   #pvalues matrix with dimensions variables times permutations
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   
@@ -19,7 +21,24 @@ lambdaOpt <- function(pvalues, family, alpha, delta){
   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family)
   #lambdaE <- lambdaOpt1(pvalues= t(pvalues), alpha = alpha, delta = delta, family = family)
   
-
+  if(step.down){
+    convergence <- FALSE
+    cv0 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
+    rej0 <- which(pvalues[,1] <= cv0)
+    it <- 1
+    while(convergence | it > max.step){
+      P1 <- pvalues[-rej0,]
+      lambdaE <- lambdaCalibrate(X = P1, alpha = alpha, delta = delta, family = family)
+      cv1 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
+      rej1 <- which(pvalues[,1] <= cv1)
+      
+      if(all(R1_new %in% R1)){
+        convergence <- TRUE
+      }else{
+        it <- it + 1
+      }
+    }
+  }
   
  # if(is.unsorted(pvalues[,1])){pvalues = rowSortC(pvalues)}
   #implement set of threshold

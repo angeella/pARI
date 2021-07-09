@@ -1,7 +1,8 @@
 #' @title Permutation-based All-Resolutions Inference for brain imaging
 #' @description The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations for fMRI cluster analysis. 
 #' @usage pARIbrain(copes, thr, mask, alpha, clusters, 
-#' alternative, summary_stat, silent, family, delta, B, rand)
+#' alternative, summary_stat, silent, family, delta, B, rand,
+#' step.down, max.step)
 #' @param copes The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
 #' @param thr threshold used to construct the cluster map.
 #' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
@@ -20,6 +21,8 @@
 #' @param iterative if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.
 #' @param approx if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
 #' @param ncomb if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.
+#' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.
+#' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach
 #' @author Angela Andreella
 #' @return Returns a matrix with the following objects: 
 #' Size, FalseNull, TrueNull, ActiveProp and other statistics for each cluster.
@@ -56,7 +59,7 @@
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
                       alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
                       silent=F, family = "simes", delta = 0, B = 1000, rand = F, 
-                      iterative = FALSE, approx = TRUE, ncomb = 100){
+                      iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10){
   
   "%ni%" <- Negate("%in%")
   #check alpha
@@ -123,7 +126,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
     
 #  pvalues_ord <- rowSortC(pvalues)
 #  praw <- pvalues_ord[1,]
-  lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta) 
+  lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step) 
   #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
   #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
   #cv <- sapply(c(1:length(praw)), function(x) (((x-8) * alpha * lambda)/length(praw)))
