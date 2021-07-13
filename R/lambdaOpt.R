@@ -17,22 +17,23 @@ lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
-
   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family)
   #lambdaE <- lambdaOpt1(pvalues= t(pvalues), alpha = alpha, delta = delta, family = family)
   
   if(step.down){
     convergence <- FALSE
     cv0 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
-    rej0 <- which(pvalues[,1] <= cv0)
+    rej1 <- list()
+    rej1[[1]] <- which(pvalues[,1] <= cv0)
     it <- 1
-    while(convergence | it > max.step){
-      P1 <- pvalues[-rej0,]
+    
+    while(!(convergence | it > max.step)){
+      P1 <- pvalues[-rej1[[it]],]
       lambdaE <- lambdaCalibrate(X = P1, alpha = alpha, delta = delta, family = family)
       cv1 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
-      rej1 <- which(pvalues[,1] <= cv1)
+      rej1[[it + 1]] <- which(pvalues[,1] <= cv1)
       
-      if(all(R1_new %in% R1)){
+      if(all(rej1[[it+1]] %in% rej1[[it]])){
         convergence <- TRUE
       }else{
         it <- it + 1
