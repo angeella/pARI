@@ -23,20 +23,18 @@ lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step
   if(step.down){
     convergence <- FALSE
     cv0 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
-    rej1 <- list()
-    rej1[[1]] <- which(pvalues[,1] <= cv0)
+    no_rej <- which(pvalues[,1] >= cv0[1])
     it <- 1
     
-    while(!(convergence | it > max.step)){
-      P1 <- pvalues[-rej1[[it]],]
-      lambdaE <- lambdaCalibrate(X = P1, alpha = alpha, delta = delta, family = family)
+    while(!convergence && it < max.step){
+      lambdaE <- lambdaCalibrate(X = pvalues[no_rej,], alpha = alpha, delta = delta, family = family)
       cv1 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
-      rej1[[it + 1]] <- which(pvalues[,1] <= cv1)
+      no_rej_new <- which(pvalues[,1] > cv1[1])
       
-      if(all(rej1[[it+1]] %in% rej1[[it]])){
+      if(all(no_rej_new %in% no_rej)){
         convergence <- TRUE
       }else{
-        it <- it + 1
+        no_rej_new <- no_rej
       }
     }
   }
