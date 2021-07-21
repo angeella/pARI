@@ -28,7 +28,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
          # Kc <- ix[!((ix %in% Kcomb[,x]))]
           Kc <- Kcomb[,x]
           SetC <- c(Rc, Kc)
-          length(Kc) - permDiscoveries(ix = Kc,cv = cv,praw = praw)})
+          length(SetC) - permDiscoveries(ix = SetC,cv = cv,praw = praw)})
         
         
         Bt[it] <- max(B_kc)
