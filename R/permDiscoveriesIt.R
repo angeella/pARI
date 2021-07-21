@@ -4,7 +4,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
   set.seed(NULL)
   
   Bt <- c()
-  Bt[1] <- permDiscoveries(ix = ix,cv = cv,praw = praw)
+  Bt[1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = praw)
   if(Bt[1] == 0){
     discoveries <- length(ix)
   }else{
@@ -29,10 +29,10 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
             Kc <- Kcomb[,x]
           }else{Kc <- Kcomb[x]}
           SetC <- c(Rc, Kc)
-          permDiscoveries(ix = SetC,cv = cv,praw = praw)})
+          length(Kc) - permDiscoveries(ix = Kc,cv = cv,praw = praw)})
         
         
-        Bt[it] <- min(B_kc)
+        Bt[it] <- max(B_kc)
         if(it!=2 & Bt[it] == Bt[it-1]){
           converge <- TRUE
         }
