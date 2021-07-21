@@ -32,7 +32,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
           permDiscoveries(ix = SetC,cv = cv,praw = praw)})
         
         
-        Bt[it] <- max(B_kc)
+        Bt[it] <- min(B_kc)
         if(it!=2 & Bt[it] == Bt[it-1]){
           converge <- TRUE
         }
