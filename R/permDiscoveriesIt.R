@@ -31,7 +31,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
           permDiscoveries(ix = SetC,cv = cv,praw = praw)})
         
         
-        Bt[it] <- min(B_kc)
+        Bt[it] <- max(B_kc)
         if(it!=2 & Bt[it] == Bt[it-1]){
           converge <- TRUE
         }
@@ -42,7 +42,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
     
     
     
-    B_est <- max(Bt)
+    B_est <- min(Bt)
     
     discoveries <- length(ix) - B_est
   }
