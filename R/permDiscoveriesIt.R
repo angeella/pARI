@@ -25,11 +25,12 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
         Bt_kc <- sapply(c(1:nK), function(x) {
           if(is.matrix(Kcomb)){
             Kc <- which(!(ix %in% Kcomb[,x]))
-          }else{Kc <- which(!(c(1:length(praw)) %in% Kcomb[x]))}
+          }else{Kc <- which(!(ix %in% Kcomb[x]))}
           length(Kc) - permDiscoveries(ix = Kc,cv = cv,praw = praw)})
         
         
         Bt[it] <- max(Bt_kc)
+        print(Bt[it])
         if(it!=2 & Bt[it] == Bt[it-1]){
           converge <- FALSE
         }
