@@ -42,7 +42,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
     
     B_est <- min(Bt)
     
-    discoveries <- length(ix) - B_est
+    discoveries <- B_est
   }
   
   return(discoveries)
