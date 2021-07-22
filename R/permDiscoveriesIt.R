@@ -15,7 +15,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
       while (converge == FALSE) {
         
         if(approx == TRUE){
-          Kcomb <- replicate(ncomb, sample(ix,size =  Bt[it-1], replace=FALSE), simplify="matrix")
+          Kcomb <- replicate(ncomb, sample(ix,size =  length(ix) - Bt[it-1], replace=FALSE), simplify="matrix")
         }else{
           Kcomb <- combn(ix, Bt[it-1]) 
         }
@@ -24,11 +24,11 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
         Rc <- which(!(c(1:length(praw)) %in% ix))
         nK <- ifelse(is.matrix(Kcomb), ncol(Kcomb), length(Kcomb))
         B_kc <- sapply(c(1:nK), function(x) {
-         # Kc <- ix[!((ix %in% Kcomb[,x]))]
-          if(is.matrix(Kcomb)){
-            Kc <- Kcomb[,x]
-          }else{Kc <- Kcomb[x]}
-          SetC <- c(Rc, Kc)
+          Kc <- ix[!((ix %in% Kcomb[,x]))]
+         # if(is.matrix(Kcomb)){
+        #    Kc <- Kcomb[,x]
+         # }else{Kc <- Kcomb[x]}
+          #SetC <- c(Rc, Kc)
           length(Kc) - permDiscoveries(ix = Kc,cv = cv,praw = praw)})
         
         
@@ -43,7 +43,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
     
     
     
-    B_est <- max(Bt)
+    B_est <- min(Bt)
     
     discoveries <- B_est
   }
