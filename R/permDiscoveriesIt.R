@@ -2,39 +2,36 @@
 permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
   
   set.seed(NULL)
-  
   Bt <- c()
-  Bt[1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = praw)
+  Bt[1] <- permDiscoveries(ix = ix,cv = cv,praw = praw)
+  
   if(Bt[1] == 0){
     discoveries <- length(ix)
   }else{
     if(length(ix) - Bt[1] !=0){
       
-      converge <- FALSE
+      converge <- TRUE
       it <- 2
-      while (converge == FALSE) {
+      while(converge) {
         
         if(approx == TRUE){
-          Kcomb <- replicate(ncomb, sample(ix,size =  Bt[it-1], replace=FALSE), simplify="matrix")
+          Kcomb <- replicate(ncomb, sample(ix,size =  length(ix) - Bt[it-1], replace=FALSE), simplify="matrix")
         }else{
-          Kcomb <- combn(ix, Bt[it-1]) 
+          Kcomb <- combn(ix, as[it-1]) 
         }
         # if(it == 2) {print(Kcomb)}
-        
-        Rc <- which(!(c(1:length(praw)) %in% ix))
+    
         nK <- ifelse(is.matrix(Kcomb), ncol(Kcomb), length(Kcomb))
-        B_kc <- sapply(c(1:nK), function(x) {
-          Kc <- ix[!((ix %in% Kcomb[,x]))]
+        Bt_kc <- sapply(c(1:nK), function(x) {
           if(is.matrix(Kcomb)){
-            Kc <- Kcomb[,x]
-          }else{Kc <- Kcomb[x]}
-          SetC <- c(Rc, Kc)
+            Kc <- which(!(ix %in% Kcomb[,x]))
+          }else{Kc <- which(!(c(1:length(praw)) %in% Kcomb[x]))}
           length(Kc) - permDiscoveries(ix = Kc,cv = cv,praw = praw)})
         
         
-        Bt[it] <- max(B_kc)
+        Bt[it] <- max(Bt_kc)
         if(it!=2 & Bt[it] == Bt[it-1]){
-          converge <- TRUE
+          converge <- FALSE
         }
         it <- it+ 1
         #print(it)
