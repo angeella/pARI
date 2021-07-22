@@ -3,7 +3,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
   
   set.seed(NULL)
   Bt <- c()
-  Bt[1] <- permDiscoveries(ix = ix,cv = cv,praw = praw)
+  Bt[1] <- length(ix) -permDiscoveries(ix = ix,cv = cv,praw = praw)
   
   if(Bt[1] == 0){
     discoveries <- length(ix)
@@ -17,7 +17,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
         if(approx == TRUE){
           Kcomb <- replicate(ncomb, sample(ix,size =  length(ix) - Bt[it-1], replace=FALSE), simplify="matrix")
         }else{
-          Kcomb <- combn(ix, Bt[it-1]) 
+          Kcomb <- combn(ix, length(ix) - Bt[it-1]) 
         }
         # if(it == 2) {print(Kcomb)}
     
@@ -42,7 +42,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
     
     B_est <- min(Bt)
     
-    discoveries <- B_est
+    discoveries <- length(ix) - B_est
   }
   
   return(discoveries)
