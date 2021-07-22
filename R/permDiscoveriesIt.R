@@ -17,7 +17,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
         if(approx == TRUE){
           Kcomb <- replicate(ncomb, sample(ix,size =  length(ix) - Bt[it-1], replace=FALSE), simplify="matrix")
         }else{
-          Kcomb <- combn(ix, as[it-1]) 
+          Kcomb <- combn(ix, Bt[it-1]) 
         }
         # if(it == 2) {print(Kcomb)}
     
