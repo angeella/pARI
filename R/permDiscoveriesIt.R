@@ -31,7 +31,7 @@ permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
         
         Bt[it] <- max(Bt_kc)
         print(Bt[it])
-        if(it == 3){
+        if(it == 2){
           converge <- FALSE
         }
         it <- it+ 1
