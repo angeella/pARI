@@ -8,6 +8,7 @@ permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alp
   #Single-step
   Bt <- c()
   m <- dim(pvalues)[1]
+  print(dim(pvalues))
  lambda <- lambdaCalibrate(X = pvalues, family = family, alpha = alpha, delta = delta)
   #lambda <- lambdaOptR(pvalues = pvalues, family = family, alpha = alpha, delta = delta)
   cv <- criticalVector(pvalues = pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
