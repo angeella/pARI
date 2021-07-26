@@ -11,6 +11,7 @@ permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alp
  # lambda <- lambdaCalibrate(X = pvalues, family = family, alpha = alpha, delta = delta)
  # lambda <- lambdaOptR(pvalues = pvalues, family = family, alpha = alpha, delta = delta)
 #  cv <- criticalVector(pvalues=pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
+  print("1")
   Bt[1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = pvalues[,1])
   
   if(Bt[1] == 0){
@@ -28,7 +29,7 @@ permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alp
         #Create complementry set: combinations + all not in ix
         
         R <- which(!(c(1:m) %in% ix))
-        
+        print("2")
         lambda_kc <- sapply(c(1:ncomb), function(x) {
           if(is.matrix(Kcomb)){
             Kc <- Kcomb[,x]
@@ -37,7 +38,7 @@ permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alp
           P_Kc <- matrix(pvalues[Kc,], nrow= length(Kc), ncol = dim(pvalues)[2])
           lambdaOptR(pvalues = P_Kc, family = family, alpha = alpha, delta = delta)
         })
-        
+        print("3")
         lambda <- max(lambda_kc)
         cv <- criticalVector(pvalues= pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
         Bt[it +1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = pvalues[,1])
@@ -46,7 +47,7 @@ permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alp
         it <- it + 1
         
       }
-    
+      print("4")
     print(Bt)
     B_est <- min(Bt)
     
