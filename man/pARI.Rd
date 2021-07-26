@@ -27,6 +27,16 @@ pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
 
 \item{clusters}{if \code{ix} indicates the clusters/sets must be \code{TRUE}}
 
+\item{iterative}{if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.}
+
+\item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+
+\item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
+
+\item{step.down}{by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.}
+
+\item{max.step}{by default \code{max.step = 10}. Maximum number of steps for the step down approach}
+
 \item{...}{Futher parameters.}
 }
 \value{

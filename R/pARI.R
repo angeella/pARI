@@ -11,6 +11,11 @@
 #' @param test.type by default \code{test.type = "one_sample"}. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests.
 #' @param complete by default \code{complete = FALSE}. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned.
 #' @param clusters if \code{ix} indicates the clusters/sets must be \code{TRUE}
+#' @param iterative if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.
+#' @param approx if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
+#' @param ncomb if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.
+#' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.
+#' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach
 #' @param ... Futher parameters.
 #' @seealso The type of tests implemented: \code{\link{signTest}} \code{\link{permTest}}.
 #' @author Angela Andreella
@@ -29,7 +34,8 @@
 #' out <- pARI(X = datas, ix = c(1:200),test.type = "one_sample")
 #' out
 
-pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, test.type = "one_sample", complete = FALSE, clusters = FALSE,...){
+pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, test.type = "one_sample", complete = FALSE, clusters = FALSE, 
+                 iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10,...){
  
   #Add different design then two and one
   #Check for error
@@ -46,7 +52,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
 
   p <- P[,1]
 
-  lambda <- lambdaOpt(P, family = family, alpha = alpha, delta = delta)
+  lambda <- lambdaOpt(P, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step)
   cv <- criticalVector(pvalues=P, family= family, alpha = alpha, delta = delta, lambda = lambda)
   
   #Compute the largest size of a set of hyp not rejected by our local test
@@ -61,7 +67,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
   TDP <- c()
     for(i in 1:length(levels_ix)){
       ixX[[i]] <- which(ix == levels_ix[i])
-      discoveries[i] <- dI(ixX[[i]],cv,p)
+      discoveries[i] <- dI(ixX[[i]],cv,P, iterative, approx, ncomb, family, alpha, delta)
       TDP[i] <- discoveries[i]/length(ixX[[i]])
       if(!is.null(rownames(X))){
       ixX[[i]] <- rownames(X)[ixX[[i]]]
@@ -69,7 +75,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
     }
 
   }else{
-    discoveries <- dI(ix = ix,cv = cv,praw = p)
+    discoveries <- dI(ix = ix,cv = cv,pvalues = P, iterative, approx, ncomb, family, alpha, delta)
     TDP <- discoveries/length(ix)
     if(!is.null(rownames(X))){
       ixX <- rownames(X)[ix]

@@ -4,20 +4,26 @@
 \alias{dI}
 \title{Lower bound true discoveries}
 \usage{
-dI(ix,cv,praw)
+dI(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta)
 }
 \arguments{
 \item{ix}{set-wise of hypotheses considered}
 
 \item{cv}{vector of critical values}
 
-\item{praw}{raw pvalues}
+\item{pvalues}{pvalues matrix with dimensions variables times permutations}
 
 \item{iterative}{if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied.}
 
 \item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
 
 \item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
+
+\item{family}{if \code{iterative = TRUE} specify the family of confidence envelopes.}
+
+\item{alpha}{if \code{iterative = TRUE} specify the alpha level.}
+
+\item{delta}{if \code{iterative = TRUE} specify the delta level.}
 }
 \value{
 Returns the lower confidence bound

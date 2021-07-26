@@ -1,22 +1,25 @@
 #' @title Lower bound true discoveries
 #' @description Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses
-#' @usage dI(ix,cv,praw)
+#' @usage dI(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta)
 #' @param ix set-wise of hypotheses considered
 #' @param cv vector of critical values
-#' @param praw raw pvalues
+#' @param pvalues pvalues matrix with dimensions variables times permutations
 #' @param iterative if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. 
 #' @param approx if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
 #' @param ncomb if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.
+#' @param family if \code{iterative = TRUE} specify the family of confidence envelopes.
+#' @param alpha if \code{iterative = TRUE} specify the alpha level.
+#' @param delta if \code{iterative = TRUE} specify the delta level.
+#' @export
 #' @author Angela Andreella
 #' @return Returns the lower confidence bound
-#' @export
 
-dI <- function(ix,cv,praw, iterative, approx, ncomb){
-  
+dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
+  praw <- pvalues[,1]
 #  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
 #  d <- max(u)
   if(iterative){
-  d <- permDiscoveriesIt(ix, cv, praw, approx, ncomb)
+  d <- permDiscoveriesIt(ix, pvalues, approx, ncomb, family, alpha, delta)
   }else{
   d <- permDiscoveries(ix,cv,praw)
   }

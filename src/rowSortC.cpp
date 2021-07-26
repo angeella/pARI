@@ -3,10 +3,10 @@
 using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]]
 
-// Sorting of the rows of a matrix by ascending order
+// Sorting of the colums of a matrix by ascending order
 //
 // @param X A numeric matrix.
-// @return A numeric matrix whose rows are sorted by ascending order.
+// @return A numeric matrix whose columns are sorted by ascending order.
 //
 // @export
 // [[Rcpp::export]]

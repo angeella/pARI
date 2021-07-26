@@ -12,11 +12,10 @@
 
 lambdaOptR <- function(pvalues, family, alpha, delta){
   #pvalues matrix with dimensions variables times permutations
-  family_set <- c("simes", "finner", "beta", "higher.criticism")
+  family_set <- c("simes", "aorc", "beta", "higher.criticism")
+  #sourceCpp("src/rowSortC.cpp")
   
   family <- match.arg(tolower(family), family_set)
-  library(Rcpp)
-  source("src/rowSortC.cpp")
   if(is.unsorted(pvalues[1,])){pvalues = rowSortC(pvalues)}
   #implement set of threshold
   

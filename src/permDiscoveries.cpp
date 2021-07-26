@@ -1,6 +1,7 @@
 #include <RcppArmadillo.h>
 #include <cmath> /* pow */
 #include <algorithm> /* random_shuffle*/
+#include <Rcpp.h>
 using namespace Rcpp;
 
 // [[Rcpp::depends(RcppArmadillo)]]
@@ -8,8 +9,8 @@ using namespace Rcpp;
 // [[Rcpp::export]] 
 
 int permDiscoveries(NumericVector ix, NumericVector cv, NumericVector praw) {
-  int m = ix.size();
-  NumericVector u(m);
+  int m = ix.length();
+  NumericVector u (m);
   for(int i = 1; i<=m; i++){
     NumericVector PV = praw[ix -1];
     u[i-1] = 1 - i + sum(PV <= cv[i-1]);
@@ -19,7 +20,7 @@ int permDiscoveries(NumericVector ix, NumericVector cv, NumericVector praw) {
 }
 
 /*** R
-library(pARI)
+#library(pARI)
 #m <- 1000
 #n <- 20
 #B <- 100

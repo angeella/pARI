@@ -1,46 +1,53 @@
 
-permDiscoveriesIt <- function(ix, cv, praw, approx = TRUE, ncomb){
+permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alpha, delta){
   
+ # family_set <- c("simes", "aorc", "beta", "higher.criticism")
+  #family <- match.arg(tolower(family), family_set)
   set.seed(NULL)
+  
+  #Single-step
   Bt <- c()
-  Bt[1] <- length(ix) -permDiscoveries(ix = ix,cv = cv,praw = praw)
+  m <- dim(pvalues)[1]
+ # lambda <- lambdaCalibrate(X = pvalues, family = family, alpha = alpha, delta = delta)
+ # lambda <- lambdaOptR(pvalues = pvalues, family = family, alpha = alpha, delta = delta)
+#  cv <- criticalVector(pvalues=pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
+  Bt[1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = pvalues[,1])
   
   if(Bt[1] == 0){
+    #If I don t have False discoveries
     discoveries <- length(ix)
   }else{
-    if(length(ix) - Bt[1] !=0){
-      
-      converge <- TRUE
-      it <- 2
-      while(converge) {
-        
+      it <- 1
+      dist <- Inf
+      while(dist !=0) {
         if(approx == TRUE){
-          Kcomb <- replicate(ncomb, sample(ix,size =  length(ix) - Bt[it-1], replace=FALSE), simplify="matrix")
+          Kcomb <- replicate(ncomb, sample(ix,size =Bt[it], replace=FALSE), simplify="matrix")
         }else{
-          Kcomb <- combn(ix, length(ix) - Bt[it-1]) 
+          Kcomb <- combn(ix, Bt[it]) 
         }
-        # if(it == 2) {print(Kcomb)}
-    
-        nK <- ifelse(is.matrix(Kcomb), ncol(Kcomb), length(Kcomb))
-        Bt_kc <- sapply(c(1:nK), function(x) {
+        #Create complementry set: combinations + all not in ix
+        
+        R <- which(!(c(1:m) %in% ix))
+        
+        lambda_kc <- sapply(c(1:ncomb), function(x) {
           if(is.matrix(Kcomb)){
-            Kc <- which(!(ix %in% Kcomb[,x]))
-          }else{Kc <- which(!(ix %in% Kcomb[x]))}
-          length(Kc) - permDiscoveries(ix = Kc,cv = cv,praw = praw)})
+            Kc <- Kcomb[,x]
+          }else{Kc <- Kcomb[x]}
+          Kc <- unique(c(Kc, R))
+          P_Kc <- matrix(pvalues[Kc,], nrow= length(Kc), ncol = dim(pvalues)[2])
+          lambdaOptR(pvalues = P_Kc, family = family, alpha = alpha, delta = delta)
+        })
         
+        lambda <- max(lambda_kc)
+        cv <- criticalVector(pvalues= pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
+        Bt[it +1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = pvalues[,1])
         
-        Bt[it] <- max(Bt_kc)
-        print(Bt[it])
-        if(Bt[it] == Bt[it -1]){
-          converge <- FALSE
-        }
-        it <- it+ 1
-        #print(it)
+        dist <- Bt[it] - Bt[it+1]
+        it <- it + 1
+        
       }
-    }
     
-    
-    
+    print(Bt)
     B_est <- min(Bt)
     
     discoveries <- length(ix) - B_est

@@ -126,6 +126,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
     
 #  pvalues_ord <- rowSortC(pvalues)
 #  praw <- pvalues_ord[1,]
+
   lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step) 
   #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
   #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
@@ -153,7 +154,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
       #Error if I put pvalues[,mask] instead of pvalues in SingleStepCT
       #perm <- SingleStepCT(pvalues = pvalues,ct =ct, ix =as.vector(which(ix[mask])), alpha = alpha, shift = shift, family = 'Simes', lambda = lambda)
       #perm <- discoveriesPerm(praw = praw, ix = ix[mask], cvh = cvh)
-      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues[,1], iterative, approx, ncomb),
+      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues, iterative, approx, ncomb, family, delta, alpha),
                summary_cluster(cluster_ids)[-1])
       )
     })
