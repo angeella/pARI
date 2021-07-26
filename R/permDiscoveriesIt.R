@@ -12,6 +12,7 @@ permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alp
  # lambda <- lambdaOptR(pvalues = pvalues, family = family, alpha = alpha, delta = delta)
 #  cv <- criticalVector(pvalues=pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
   print("1")
+  print(dim(pvalues))
   Bt[1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = pvalues[,1])
   
   if(Bt[1] == 0){
