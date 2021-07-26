@@ -58,7 +58,7 @@
 
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
                       alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
-                      silent=F, family = "simes", delta = 0, B = 1000, rand = F, 
+                      silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
                       iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10){
   
   "%ni%" <- Negate("%in%")
@@ -155,7 +155,9 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
       #perm <- SingleStepCT(pvalues = pvalues,ct =ct, ix =as.vector(which(ix[mask])), alpha = alpha, shift = shift, family = 'Simes', lambda = lambda)
       #perm <- discoveriesPerm(praw = praw, ix = ix[mask], cvh = cvh)
       #print(dim(pvalues))
-      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues, iterative, approx, ncomb, family, delta, alpha),
+      unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues, 
+                                iterative = iterative, approx = approx, ncomb = ncomb, 
+                                family = family, delta = delta, alpha = alpha),
                summary_cluster(cluster_ids)[-1])
       )
     })

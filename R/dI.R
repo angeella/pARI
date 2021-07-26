@@ -22,7 +22,7 @@ dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
   if(iterative){
   d <- permDiscoveriesIt(ix = ix, pvalues = pvalues, approx = approx, ncomb = ncomb, family = family, alpha = alpha, delta = delta)
   }else{
-  d <- permDiscoveries(ix = ix,cv = cv,praw = pvalues[,1])
+  d <- permDiscoveries(ix = ix, cv = cv, praw = pvalues[,1])
   }
   return(d)
 }
