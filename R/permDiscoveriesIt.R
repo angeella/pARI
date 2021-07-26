@@ -8,9 +8,9 @@ permDiscoveriesIt <- function(ix, cv, pvalues, approx = TRUE, ncomb, family, alp
   #Single-step
   Bt <- c()
   m <- dim(pvalues)[1]
- # lambda <- lambdaCalibrate(X = pvalues, family = family, alpha = alpha, delta = delta)
-  lambda <- lambdaOptR(pvalues = pvalues, family = family, alpha = alpha, delta = delta)
-  cv <- criticalVector(pvalues=pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
+ lambda <- lambdaCalibrate(X = pvalues, family = family, alpha = alpha, delta = delta)
+  #lambda <- lambdaOptR(pvalues = pvalues, family = family, alpha = alpha, delta = delta)
+  cv <- criticalVector(pvalues = pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
  # print("1")
  # print(dim(pvalues))
   Bt[1] <- length(ix) - permDiscoveries(ix = ix,cv = cv,praw = pvalues[,1])
