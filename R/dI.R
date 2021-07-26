@@ -15,13 +15,12 @@
 #' @return Returns the lower confidence bound
 
 dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
-  praw <- pvalues[,1]
 #  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
 #  d <- max(u)
   if(iterative){
   d <- permDiscoveriesIt(ix, pvalues, approx, ncomb, family, alpha, delta)
   }else{
-  d <- permDiscoveries(ix,cv,praw)
+  d <- permDiscoveries(ix,cv,praw = pvalues[,1])
   }
   return(d)
 }
