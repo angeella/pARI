@@ -154,6 +154,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
       #Error if I put pvalues[,mask] instead of pvalues in SingleStepCT
       #perm <- SingleStepCT(pvalues = pvalues,ct =ct, ix =as.vector(which(ix[mask])), alpha = alpha, shift = shift, family = 'Simes', lambda = lambda)
       #perm <- discoveriesPerm(praw = praw, ix = ix[mask], cvh = cvh)
+      print(dim(pvalues))
       unlist(c(summary_perm_roi(cv = cvOpt,ix=ix[mask],pvalues = pvalues, iterative, approx, ncomb, family, delta, alpha),
                summary_cluster(cluster_ids)[-1])
       )

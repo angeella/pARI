@@ -17,6 +17,7 @@
 dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
 #  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
 #  d <- max(u)
+  print(dim(pvalues))
   if(iterative){
   d <- permDiscoveriesIt(ix, pvalues, approx, ncomb, family, alpha, delta)
   }else{
