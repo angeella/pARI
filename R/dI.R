@@ -17,13 +17,55 @@
 dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
 #  u <- sapply(c(1:length(ix)), function(x) 1 - x + sum(praw[ix] <= cv[x]))
 #  d <- max(u)
-  #print(dim(pvalues))
-  print(dim(pvalues))
-  if(iterative){
-  d <- permDiscoveriesIt(ix = ix, pvalues = pvalues, approx = approx, ncomb = ncomb, family = family, alpha = alpha, delta = delta)
-  }else{
+
   d <- permDiscoveries(ix = ix, cv = cv, praw = pvalues[,1])
+  print(d)
+  if(iterative){
+    d_seq <- c()
+    d_seq[1] <- d
+    print(d_seq)
+    it <- 1
+    dist <- Inf
+    while(dist !=0) {
+      if(approx == TRUE){
+        Kcomb <- replicate(ncomb, sample(ix,size =length(ix) - d_seq[it], replace=FALSE), 
+                           simplify="matrix")
+      }else{
+        Kcomb <- combn(ix, length(ix) - d_seq[it]) 
+      }
+      #Create complementry set: combinations + all not in ix
+      
+      R <- which(!(c(1:m) %in% ix))
+      print("2")
+      lambda_kc <- sapply(c(1:ncomb), function(x) {
+        if(is.matrix(Kcomb)){
+          Kc <- Kcomb[,x]
+        }else{Kc <- Kcomb[x]}
+        Kc <- unique(c(Kc, R))
+        P_Kc <- matrix(pvalues[Kc,], nrow= length(Kc), ncol = dim(pvalues)[2])
+        lambdaCalibrate(X = P_Kc, family = family, alpha = alpha, delta = delta)
+      })
+      print("3")
+      print(lambda_kc)
+      lambda <- max(lambda_kc,lambda)
+      print(lambda)
+      cv <- criticalVector(pvalues= pvalues, family= family, 
+                           alpha = alpha, delta = delta, lambda = lambda)
+      
+      d_seq[it +1] <- permDiscoveries(ix = ix,cv = cv, praw = pvalues[,1])
+      
+      dist <- d_seq[it] - d_seq[it+1]
+      it <- it + 1
+      
+    }
+    print("4")
+    print(d_seq)
+    # B_est <- min(Bt)
+    
+    d <- max(d_seq)
+    
   }
+  
   return(d)
 }
 
