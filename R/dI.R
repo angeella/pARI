@@ -47,7 +47,7 @@ dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
       })
       print("3")
       print(lambda_kc)
-      lambda <- max(lambda_kc,lambda)
+      lambda <- max(lambda_kc)
       print(lambda)
       cv <- criticalVector(pvalues= pvalues, family= family, 
                            alpha = alpha, delta = delta, lambda = lambda)
