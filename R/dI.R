@@ -34,7 +34,7 @@ dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
         Kcomb <- combn(ix, length(ix) - d_seq[it]) 
       }
       #Create complementry set: combinations + all not in ix
-      
+      m <- dim(pvalues)[1]
       R <- which(!(c(1:m) %in% ix))
       print("2")
       lambda_kc <- sapply(c(1:ncomb), function(x) {
