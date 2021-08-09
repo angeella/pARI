@@ -34,7 +34,7 @@ lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step
       if(all(no_rej_new %in% no_rej)){
         convergence <- TRUE
       }else{
-        no_rej_new <- no_rej
+        no_rej <- no_rej_new
       }
     }
   }

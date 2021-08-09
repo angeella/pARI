@@ -2,6 +2,7 @@
 #include <math.h>
 #include <cmath> /* pow */
 #include <algorithm>
+#include <Rcpp.h>
 using namespace Rcpp;
 
 // [[Rcpp::depends(RcppArmadillo)]]
