@@ -5,11 +5,11 @@ kSingleStep <- function(pvalues, family, alpha, delta, ix, iterative = FALSE, ap
   lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta)
   cv <- criticalVector(pvalues=pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
   discoveries <- c()
-  discoveries[1] <- dI(ix,cv,pvalues, iterative = FALSE)
+  discoveries[1] <- dI(ix =  ix, cv = cv, pvalues = pvalues, iterative = FALSE)
   M <- nrow(pvalues)
   it <- 1
   dist <- Inf
-  while(dist != 0){
+  while(dist <= 0){
     it <- it + 1
     if(it ==2){
       k <- discoveries[it-1]
@@ -30,11 +30,11 @@ kSingleStep <- function(pvalues, family, alpha, delta, ix, iterative = FALSE, ap
                matrix(P[,2:ncol(pvalues)][c(best_p_idx)], ncol = ncol(pvalues)-1, nrow = M-k))
     lambda <- lambdaOpt(pvalues = P, family = family, alpha = alpha, delta = delta)
     cv <- criticalVector(pvalues=pvalues, family= family, alpha = alpha, delta = delta, lambda = lambda)
-    discoveries[it] <- dI(ix,cv,pvalues, iterative = FALSE) 
+    discoveries[it] <- dI(ix=ix,cv = cv,pvalues = pvalues, iterative = FALSE) 
     dist <- discoveries[it] - discoveries[it-1]
-    print(discoveries[it])
   }
   
+  print(discoveries)
   
   
   discoveries = discoveries[it]
