@@ -6,18 +6,19 @@
 #' @param alpha alpha
 #' @param lambda lambda
 #' @param delta delta
+#' @param m number of hypothesis
 #' @author Angela Andreella
 #' @return critical value curve
 #' @export
 #' @importFrom stats qbeta
 
 
-criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL){
+criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL, m = NULL){
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
   #w <- dim(pvalues)[1]
-  m <- dim(pvalues)[1]
+  if(is.null(m)){m <- dim(pvalues)[1]}
   if(is.null(delta) ){delta = 0}
   if(family=="simes"){
     

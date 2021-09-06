@@ -5,8 +5,8 @@ colSortC <- function(X) {
     .Call(`_pARI_colSortC`, X)
 }
 
-lambdaCalibrate <- function(X, alpha, delta, family) {
-    .Call(`_pARI_lambdaCalibrate`, X, alpha, delta, family)
+lambdaCalibrate <- function(X, alpha, delta, family, m) {
+    .Call(`_pARI_lambdaCalibrate`, X, alpha, delta, family, m)
 }
 
 permDiscoveries <- function(ix, cv, praw) {

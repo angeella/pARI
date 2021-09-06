@@ -10,7 +10,7 @@
 #ct= vector of cutoffs
 #family = Beta or Simes
 
-lambdaOptR <- function(pvalues, family, alpha, delta){
+lambdaOptR <- function(pvalues, family, alpha, delta, m = NULL){
   #pvalues matrix with dimensions variables times permutations
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   #sourceCpp("src/rowSortC.cpp")
@@ -21,12 +21,12 @@ lambdaOptR <- function(pvalues, family, alpha, delta){
   
   l <- c()
   w <- dim(pvalues)[1]
-  m <- dim(pvalues)[2]
+  if(is.null(m)){m <- dim(pvalues)[1]}
   if(is.null(delta) ){delta = 0}
   for(j in 1:w){
     if(family =="simes"){
       
-      lambda <- ((m-delta)*(pvalues[j,1:m]))/((c(1:m)-delta)*alpha)
+      lambda <- ((m-delta)*(pvalues[j,1:m]))/((c(1:m)-delta))
     }
     if(family == "beta"){
       lambda <- pbeta(q =pvalues[j,c(1:m)],shape1 = c(1:m),shape2 =m+1-c(1:m))
@@ -58,41 +58,12 @@ lambdaOptR <- function(pvalues, family, alpha, delta){
     
   }
   
-  lambdaE <- sort(l)[floor(alpha*w)+1]
+  lambdaE <- stats::quantile(l, alpha, type = 1)
   
-  #nRej_Perm <- rejPerm(pvalues,min(ct))
-  #quantRej_min <- sort(nRej_Perm)[ceiling((1-alpha)*w)]
-  #if(quantRej_min>0){
-  #lambdaE <- min(lambdaE, (min(ct) + shift)*m/(quantRej_min*alpha))}
-  
-  
+
   
   return(lambdaE)
 }
 
 
-#lambdaOptAprox <- function(pvalues, family, ct = tS, alpha, shift = delta,cb, Kc){
-#  l <- c()
-#  w <- dim(pvalues)[1]
-#  m <- dim(pvalues)[2]
-#  quant <- (pvalues+shift)*m/(alpha)
-#  lambdaA <- c()
-#  for(j in 1:w){
-#    1 <- sum(pvalues[j,Kc[,cb]] <=min(ct)) + 1
-#    m <- sum(pvalues[j,Kc[,cb]] <=max(ct))
-#    
-#    if(is.null(shift)){shift = 0}
-#    lambdaA[j] <- min(sapply(c(1:m), function(x) quant[j, Kc[   sort.list(pvalues[j,Kc[,cb]])[x] ,cb   ] ]/x  ))
-#    #lamb <- min(lamb,  betaquantsS[, combs2[   sort.list(pvmatr.uns[j,combs2[,c]]),c]][j,a]/a  )
 
-
-#  }
-
-
-# nRej_Perm <- rejPerm(pvalues,min(ct))
-# quantRej_min <- sort(nRej_Perm)[ceiling((1-alpha)*w)]
-# if(quantRej_min>0){
-#   lambdaE <- min(lambdaE, (min(ct) + shift)*m/(quantRej_min*alpha))}
-
-#  return(lambdaA)
-#}

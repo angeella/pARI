@@ -12,28 +12,29 @@
 #' @export
 #' @importFrom stats pbeta
 
-lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10){
+lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10, m = NULL){
   #pvalues matrix with dimensions variables times permutations
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)
-  lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family)
+  if(is.null(m)){m <- dim(pvalues)[1]}
+  lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family, m = m)
   #lambdaE <- lambdaOpt1(pvalues= t(pvalues), alpha = alpha, delta = delta, family = family)
   
   if(step.down){
     convergence <- FALSE
     cv0 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
-    no_rej <- which(pvalues[,1] > min(cv0))
+    no_rej <- which(pvalues[,1] >= min(cv0))
     it <- 1
     lambda <- c()
     while(!convergence && it < max.step){
-      lambda[it] <- lambdaCalibrate(X = pvalues[no_rej,], alpha = alpha, delta = delta, family = family)
-      cv1 <- criticalVector(pvalues = pvalues[no_rej,], family = family, alpha = alpha, lambda = lambda[it], delta = delta)
-      no_rej_new <- which(pvalues[,1] > min(cv1))
+      lambda[it] <- lambdaCalibrate(X = pvalues[no_rej,], alpha = alpha, delta = delta, family = family, m = dim(pvalues)[1])
+      cv1 <- criticalVector(pvalues = pvalues[no_rej,], family = family, alpha = alpha, lambda = lambda[it], delta = delta, m = dim(pvalues)[1])
+      no_rej_new <- which(pvalues[,1] >= min(cv1))
       
       if(all(no_rej_new %in% no_rej)){
         convergence <- TRUE
-        lambdaE <- max(lambdaE,lambda[it])
+        lambdaE <- lambda[it]
       }else{
         no_rej <- no_rej_new
       }

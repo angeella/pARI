@@ -23,8 +23,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // lambdaCalibrate
-NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::string family);
-RcppExport SEXP _pARI_lambdaCalibrate(SEXP XSEXP, SEXP alphaSEXP, SEXP deltaSEXP, SEXP familySEXP) {
+NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::string family, double m);
+RcppExport SEXP _pARI_lambdaCalibrate(SEXP XSEXP, SEXP alphaSEXP, SEXP deltaSEXP, SEXP familySEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -32,7 +32,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< double >::type delta(deltaSEXP);
     Rcpp::traits::input_parameter< std::string >::type family(familySEXP);
-    rcpp_result_gen = Rcpp::wrap(lambdaCalibrate(X, alpha, delta, family));
+    Rcpp::traits::input_parameter< double >::type m(mSEXP);
+    rcpp_result_gen = Rcpp::wrap(lambdaCalibrate(X, alpha, delta, family, m));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -88,7 +89,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_pARI_colSortC", (DL_FUNC) &_pARI_colSortC, 1},
-    {"_pARI_lambdaCalibrate", (DL_FUNC) &_pARI_lambdaCalibrate, 4},
+    {"_pARI_lambdaCalibrate", (DL_FUNC) &_pARI_lambdaCalibrate, 5},
     {"_pARI_permDiscoveries", (DL_FUNC) &_pARI_permDiscoveries, 3},
     {"_pARI_permT", (DL_FUNC) &_pARI_permT, 3},
     {"_pARI_rowSortC", (DL_FUNC) &_pARI_rowSortC, 1},

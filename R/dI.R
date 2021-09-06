@@ -38,11 +38,11 @@ dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
         }else{Kc <- Kcomb[x]}
         Kc <- unique(c(Kc, R))
         P_Kc <- matrix(pvalues[Kc,], nrow= length(Kc), ncol = dim(pvalues)[2])
-        lambdaCalibrate(X = P_Kc, family = family, alpha = alpha, delta = delta)
+        lambdaCalibrate(X = P_Kc, family = family, alpha = alpha, delta = delta, m = dim(pvalues)[1])
       })
-      lambda <- max(lambda_kc)
+      lambda <- min(lambda_kc)
       cv <- criticalVector(pvalues= pvalues, family= family, 
-                           alpha = alpha, delta = delta, lambda = lambda)
+                           alpha = alpha, delta = delta, lambda = lambda, m = dim(pvalues)[1])
       
       d_seq[it +1] <- permDiscoveries(ix = ix,cv = cv, praw = pvalues[,1])
       

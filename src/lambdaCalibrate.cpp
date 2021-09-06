@@ -10,21 +10,21 @@ using namespace Rcpp;
 // [[Rcpp::export]] 
 
 
-NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::string family) {
-  double m = X.n_rows;
+NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::string family, double m) {
   int B = X.n_cols;
+  int mm = X.n_rows;
   NumericVector T(B);
-  NumericVector lambda(m-delta);
+  NumericVector lambda(mm-delta);
   NumericVector idx(1);
-  arma::vec idV(m-delta);
+  arma::vec idV(mm-delta);
   std::iota(idV.begin(), idV.end(), 1 + delta);
-  arma::vec deltaV(m-delta);
+  arma::vec deltaV(mm-delta);
   deltaV.fill(delta);
-  arma::vec mV(m-delta);
+  arma::vec mV(mm-delta);
   mV.fill(m);
   
   //sort columns ascending order
-  arma::mat Y(m, B, arma::fill::zeros);
+  arma::mat Y(mm, B, arma::fill::zeros);
   for (int rr=0; rr<B; rr++) {
     arma::colvec x = X.col(rr); 
     std::sort(x.begin(), x.end());
@@ -38,12 +38,12 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
     if(family == "simes"){
  //    int minc = delta;
   //   int maxc = m;
-     lambda = (mV-deltaV)%(Y.rows(delta, m-1).col(bb))/((idV-deltaV)*alpha);
+     lambda = (mV-deltaV)%(Y.rows(delta, mm-1).col(bb))/((idV-deltaV)*alpha);
 
     }
     if(family == "aorc"){
 
-     lambda = ((mV - 1)%Y.rows(delta, m-1).col(bb))/((1-Y.rows(delta, m-1).col(bb))%((idV-deltaV)*alpha));
+     lambda = ((mV - 1)%Y.rows(delta, mm-1).col(bb))/((1-Y.rows(delta, mm-1).col(bb))%((idV-deltaV)*alpha));
     }
     if(family == "higher.criticism"){
 
@@ -52,7 +52,7 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
     }
     if(family == "beta"){
 
-      for (int i=0; i<m; i++) {
+      for (int i=0; i<mm; i++) {
       long double q = arma::conv_to<double>::from(Y.col(bb).row(i));
       double shape1 = i+1;
       double shape2 = m-i;
@@ -65,7 +65,7 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
     
   }
   std::sort(T.begin(), T.end());
-  idx = floor(alpha*B);
+  idx = floor(alpha*B) + 2;
 //  lambdaE = T(floor(alpha*B)+1);
   return (T[idx]);
 }
