@@ -47,7 +47,7 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
     }
     if(family == "higher.criticism"){
 
-     lambda = (sqrt(m)*((idV/m) - Y.col(bb)))/(sqrt(Y.col(bb)%(1-Y.col(bb))));
+     lambda = (sqrt(mm)*((idV/mm) - Y.col(bb)))/(sqrt(Y.col(bb)%(1-Y.col(bb))));
       
     }
     if(family == "beta"){
@@ -65,9 +65,11 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
     
   }
   std::sort(T.begin(), T.end());
-  idx = floor(alpha*B) + 2;
+  idx = floor(alpha*B)+1;
 //  lambdaE = T(floor(alpha*B)+1);
+  
   return (T[idx]);
+//  return(quantile(T, alpha, 1));
 }
 
 
