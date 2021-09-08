@@ -26,6 +26,7 @@ criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL, m = NUL
   }
   if(family=="beta"){
     cv <- qbeta(lambda, c(1:m),m+1-c(1:m))
+    cv <- unlist(sapply(c(1:length(cv)), function(x) if(is.na(cv[x])){qbeta(0, x,m+1-x)}else{cv[x]}))
   }
   if(family=="aorc"){
     
@@ -35,8 +36,8 @@ criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL, m = NUL
 
   if(family=="higher.criticism"){
     #cv <- sapply(c(1:m), function(x) (2*x + lambda^2 - sqrt((2*x + lambda^2)^2 - 4*x^2 * (m + lambda^2)/m))/(2*(m + lambda^2))) 
-    cv <- sapply(c(1:m), function(x) (2*x + lambda^2 - sqrt((2*x + lambda^2)^2 - 4*x^2 * (m + lambda^2)/m))/(2*(m + lambda^2))) 
-    
+    #cv <- sapply(c(1:m), function(x) (2*x + lambda^2 - sqrt((2*x + lambda^2)^2 - 4*x^2 * (m + lambda^2)/m))/(2*(m + lambda^2))) 
+    cv <- sapply(c(1:m), function(x) (2*x + lambda^2 + (lambda*sqrt(lambda^2*m + 4*m*x - 4*x^2)/sqrt(m)))/(2*(lambda^2 +m)))
   }
   
   return(cv)
