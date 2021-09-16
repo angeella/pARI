@@ -1,3 +1,7 @@
+
+#' @importFrom Rmpfr mpfr  
+#' @importFrom Rmpfr .mpfr_erange_set
+#' @importFrom Rmpfr .mpfr_erange
 ###########################Lambda Optimal############################
 
 #For every permutation, I compute the best possible lambda. Then I take the alpha w +1quantile due to discreteness.
@@ -29,8 +33,12 @@ lambdaOptR <- function(pvalues, family, alpha, delta, m = NULL){
       lambda <- ((m-delta)*(pvalues[j,1:m]))/((c(1:m)-delta))
     }
     if(family == "beta"){
-      lambda <- pbeta(q =pvalues[j,c(1:m)],shape1 = c(1:m),shape2 =m+1-c(1:m))
-      
+     # lambda <- pbeta(q =pvalues[j,c(1:m)],shape1 = c(1:m),shape2 =m+1-c(1:m))
+      md <- c(1:m)/(m+1)
+      sdd <- sqrt((c(1:m)*(m+1-c(1:m)))/((m+1)^2 * (m+2)))
+      .mpfr_erange_set(value = (1-2^-52)*.mpfr_erange(c("min.emin","max.emax")))
+      lambda <- pnorm(q = mpfr(pvalues[j, c(1:m)], 128), mean = md, 
+                              sd = sdd)
     }
     
     if(family == "finner"){
@@ -58,7 +66,7 @@ lambdaOptR <- function(pvalues, family, alpha, delta, m = NULL){
     
   }
   
-  lambdaE <- stats::quantile(l, alpha, type = 1)
+  lambdaE <- stats::quantile(, alpha, type = 1)
   
 
   

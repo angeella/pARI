@@ -24,7 +24,7 @@ dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
     dist <- Inf
     while(dist !=0) {
       if(approx == TRUE){
-        Kcomb <- replicate(ncomb, sample(ix,size =length(ix) - d_seq[it], replace=FALSE), 
+        Kcomb <- replicate(ncomb, sample(ix,size = length(ix) - d_seq[it], replace=FALSE), 
                            simplify="matrix")
       }else{
         Kcomb <- combn(ix, length(ix) - d_seq[it]) 
@@ -40,7 +40,7 @@ dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
         P_Kc <- matrix(pvalues[Kc,], nrow= length(Kc), ncol = dim(pvalues)[2])
         lambdaCalibrate(X = P_Kc, family = family, alpha = alpha, delta = delta, m = dim(pvalues)[1])
       })
-      lambda <- min(lambda_kc)
+      lambda <- max(lambda_kc)
       cv <- criticalVector(pvalues= pvalues, family= family, 
                            alpha = alpha, delta = delta, lambda = lambda, m = dim(pvalues)[1])
       

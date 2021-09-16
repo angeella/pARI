@@ -18,7 +18,13 @@ lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step
   
   family <- match.arg(tolower(family), family_set)
   if(is.null(m)){m <- dim(pvalues)[1]}
+  # if(family == "beta"){
+  #   lambdaE <- lambdaOptR(pvalues = t(pvalues), family = family, alpha = alpha, delta = delta, m = m)
+  # }else{
+  #   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family, m = m)
+  # } #TODO implementation step-down for beta
   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family, m = m)
+  
   #lambdaE <- lambdaOpt1(pvalues= t(pvalues), alpha = alpha, delta = delta, family = family)
   
   if(step.down){

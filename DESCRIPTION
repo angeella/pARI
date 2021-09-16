@@ -23,7 +23,8 @@ Imports:
     ggplot2,
     tools,
     mvtnorm,
-    ARIbrain
+    ARIbrain,
+    Rmpfr
 LinkingTo: 
     Rcpp, RcppArmadillo
 Suggests: 
