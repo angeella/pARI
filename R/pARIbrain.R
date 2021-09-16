@@ -128,6 +128,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
 #  praw <- pvalues_ord[1,]
 
   lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step) 
+  if(lambda == 0){lambda <- 0.05}
   #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
   #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
   #cv <- sapply(c(1:length(praw)), function(x) (((x-8) * alpha * lambda)/length(praw)))
