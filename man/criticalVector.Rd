@@ -4,7 +4,7 @@
 \alias{criticalVector}
 \title{Critical value}
 \usage{
-criticalVector(pvalues, family, alpha, lambda, delta = NULL)
+criticalVector(pvalues, family, alpha, lambda, delta = NULL, m = NULL)
 }
 \arguments{
 \item{pvalues}{pvalues matrix with dimensiona variables times permutations}
@@ -16,6 +16,8 @@ criticalVector(pvalues, family, alpha, lambda, delta = NULL)
 \item{lambda}{lambda}
 
 \item{delta}{delta}
+
+\item{m}{number of hypothesis}
 }
 \value{
 critical value curve

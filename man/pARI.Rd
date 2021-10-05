@@ -4,7 +4,9 @@
 \alias{pARI}
 \title{Permutation-based All-Resolutions Inference}
 \usage{
-pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
+pARI(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, 
+test.type = "one_sample", complete = FALSE, clusters = FALSE, iterative = FALSE, 
+approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 }
 \arguments{
 \item{X}{data matrix where rows represent variables, and columns the observations.}

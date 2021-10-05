@@ -1,6 +1,8 @@
 #' @title Permutation-based All-Resolutions Inference
 #' @description The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations. 
-#' @usage pARI(X,ix, alpha, family, delta, B, pvalues, test.type, complete, ...)
+#' @usage pARI(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, 
+#' test.type = "one_sample", complete = FALSE, clusters = FALSE, iterative = FALSE, 
+#' approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 #' @param X data matrix where rows represent variables, and columns the observations.
 #' @param ix set of hypotheses of interest. It can be a vector having the same length as the variables indicating the respective cluster or the indices of the variables of interest if only one set/cluster is considered.
 #' @param alpha alpha level, default 0.05.

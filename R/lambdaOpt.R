@@ -1,12 +1,13 @@
 #' @title Lambda calibration
 #' @description \code{lambdaOpt} provides the optimal lambda calibration parameter used in the critical vector.
-#' @usage lambdaOpt(pvalues,family,alpha, delta, step.down, max.step)
+#' @usage lambdaOpt(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10, m = NULL)
 #' @param pvalues pvalues matrix with dimensions equal to the number of variables times the number of permutations.
 #' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"AORC"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param alpha alpha level.
 #' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
 #' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.
 #' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach
+#' @param m number of hypothesis
 #' @author Angela Andreella
 #' @return lambda parameter
 #' @export

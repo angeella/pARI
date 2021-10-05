@@ -93,7 +93,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 if (!requireNamespace("dynamicTreeCut", quietly = TRUE))
     install.packages("dynamicTreeCut")
 
-BiocManager::install(c("Biobase","genefilter"))
+#BiocManager::install(c("Biobase","genefilter"))
 
 library(Biobase)
 library(genefilter)

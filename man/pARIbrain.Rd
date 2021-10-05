@@ -4,9 +4,10 @@
 \alias{pARIbrain}
 \title{Permutation-based All-Resolutions Inference for brain imaging}
 \usage{
-pARIbrain(copes, thr, mask, alpha, clusters, 
-alternative, summary_stat, silent, family, delta, B, rand,
-step.down, max.step)
+pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
+alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
+silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
+iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10)
 }
 \arguments{
 \item{copes}{The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}

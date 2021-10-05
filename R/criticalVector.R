@@ -1,6 +1,6 @@
 #' @title Critical value
 #' @description compute critical values curve 
-#' @usage criticalVector(pvalues, family, alpha, lambda, delta = NULL)
+#' @usage criticalVector(pvalues, family, alpha, lambda, delta = NULL, m = NULL)
 #' @param pvalues pvalues matrix with dimensiona variables times permutations
 #' @param family Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
 #' @param alpha alpha

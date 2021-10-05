@@ -1,8 +1,9 @@
 #' @title Permutation-based All-Resolutions Inference for brain imaging
 #' @description The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations for fMRI cluster analysis. 
-#' @usage pARIbrain(copes, thr, mask, alpha, clusters, 
-#' alternative, summary_stat, silent, family, delta, B, rand,
-#' step.down, max.step)
+#' @usage pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
+#' alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
+#' silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
+#' iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10)
 #' @param copes The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
 #' @param thr threshold used to construct the cluster map.
 #' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 

@@ -13,7 +13,8 @@
 #' @export
 #' @author Angela Andreella
 #' @return Returns the lower confidence bound
-
+#' @importFrom utils combn
+#' 
 dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){
 
   d <- permDiscoveries(ix = ix, cv = cv, praw = pvalues[,1])
