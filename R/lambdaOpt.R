@@ -1,15 +1,15 @@
 #' @title Lambda calibration
-#' @description \code{lambdaOpt} provides the optimal lambda calibration parameter used in the critical vector.
+#' @description \code{lambdaOpt} computes the optimal lambda calibration parameter used in the critical vector.
 #' @usage lambdaOpt(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10, m = NULL)
 #' @param pvalues pvalues matrix with dimensions equal to the number of variables times the number of permutations.
-#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"AORC"}, \code{"beta"} and \code{"higher.criticism"}.
-#' @param alpha alpha level.
-#' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
-#' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.
-#' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach
-#' @param m number of hypothesis
+#' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
+#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.
+#' @param delta delta value. Do you want to consider sets with at least delta size? By default \code{delta = 0}. 
+#' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put \code{TRUE}.
+#' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach.
+#' @param m number of hypothesis, default is \code{NULL}.
 #' @author Angela Andreella
-#' @return lambda parameter
+#' @return lambda parameter estimate
 #' @export
 #' @importFrom stats pbeta
 
@@ -19,15 +19,11 @@ lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step
   
   family <- match.arg(tolower(family), family_set)
   if(is.null(m)){m <- dim(pvalues)[1]}
-  # if(family == "beta"){
-  #   lambdaE <- lambdaOptR(pvalues = t(pvalues), family = family, alpha = alpha, delta = delta, m = m)
-  # }else{
-  #   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family, m = m)
-  # } #TODO implementation step-down for beta
+
+   ##TODO implementation step-down for beta
   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family, m = m)
   
-  #lambdaE <- lambdaOpt1(pvalues= t(pvalues), alpha = alpha, delta = delta, family = family)
-  
+
   if(step.down){
     convergence <- FALSE
     cv0 <- criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda = lambdaE, delta = delta)
@@ -47,92 +43,9 @@ lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step
       }
     }
   }
-  
- # if(is.unsorted(pvalues[,1])){pvalues = rowSortC(pvalues)}
-  #implement set of threshold
-  
-  
-  
-#  l <- c()
-#  w <- dim(pvalues)[1]
-#  m <- dim(pvalues)[2]
-#  if(is.null(delta) ){delta = 0}
-#  for(j in 1:w){
-#    minc <- sum(pvalues[j,] <=min(ct)) + 1
-#    maxc <- sum(pvalues[j,] <=max(ct))
-#    if(family =="simes"){
-      
-#      minc = minc + delta
- #     lambda <- ((m-delta)*(pvalues[j,minc:maxc]))/((c(minc:maxc)-delta)*alpha)
-      #lambda <- (m*(pvalues[j,minc:maxc] + shift))/(c(minc:maxc))
-#    }
-#    if(family == "beta"){
-#      lambda <- pbeta(q =pvalues[j,c(minc:maxc)],shape1 = c(minc:maxc),shape2 =m+1-c(minc:maxc))
-      
-#    }
-    
-#    if(family == "finner"){
-#      minc = minc + delta
-      #lambda <- (pvalues[j,c(minc:maxc)]*(m - c(minc:maxc) + delta) )/ (alpha * (c(minc:maxc) - delta - (pvalues[j,c(minc:maxc)]* (c(minc:maxc) - 1))))
- #     lambda <- (pvalues[j,c(minc:maxc)]*(m - 1) )/ (alpha * (c(minc:maxc) - delta) * (1 - pvalues[j,c(minc:maxc)]))
-      
- #   }
-    
-    
- #   if(family =="higher.criticism"){
-      
- #     lambda <- (sqrt(m)*((c(minc:maxc)/m) - pvalues[j,c(minc:maxc)]))/(sqrt(pvalues[j,c(minc:maxc)]*(1-pvalues[j,c(minc:maxc)])))
-      
-      #HigherCriticism <- function(lambda,pvalue){
-        
-      # m <- length(pvalue)
-      #  i <- c(1:m)
-      #  (2*i + lambda^2 - sqrt((2*i + lambda^2)^2 - 4*i^2 * (m + lambda^2)/m))/(2*(m+ lambda^2)) - pvalue
-        
-      #}
-      #lambda <- sapply(c(minc:maxc), function(x) rootSolve::uniroot.all(HigherCriticism,pvalue = pvalues[j,x],lower=0, upper=1000))
-      #lambda <- unlist(lambda)
-#}
-#    l[j] <- min(lambda)
-    
-    
-#  }
-  
-#  lambdaE <- sort(l)[floor(alpha*w)+1]
 
-  #nRej_Perm <- rejPerm(pvalues,min(ct))
-  #quantRej_min <- sort(nRej_Perm)[ceiling((1-alpha)*w)]
-  #if(quantRej_min>0){
-  #lambdaE <- min(lambdaE, (min(ct) + shift)*m/(quantRej_min*alpha))}
-  
-  
   
   return(lambdaE)
 }
 
 
-#lambdaOptAprox <- function(pvalues, family, ct = tS, alpha, shift = delta,cb, Kc){
-#  l <- c()
-#  w <- dim(pvalues)[1]
-#  m <- dim(pvalues)[2]
-#  quant <- (pvalues+shift)*m/(alpha)
-#  lambdaA <- c()
-#  for(j in 1:w){
-#    minc <- sum(pvalues[j,Kc[,cb]] <=min(ct)) + 1
-#    maxc <- sum(pvalues[j,Kc[,cb]] <=max(ct))
-#    
-#    if(is.null(shift)){shift = 0}
-#    lambdaA[j] <- min(sapply(c(minc:maxc), function(x) quant[j, Kc[   sort.list(pvalues[j,Kc[,cb]])[x] ,cb   ] ]/x  ))
-#    #lamb <- min(lamb,  betaquantsS[, combs2[   sort.list(pvmatr.uns[j,combs2[,c]]),c]][j,a]/a  )
-    
-    
-#  }
-  
-  
-  # nRej_Perm <- rejPerm(pvalues,min(ct))
-  # quantRej_min <- sort(nRej_Perm)[ceiling((1-alpha)*w)]
-  # if(quantRej_min>0){
-  #   lambdaE <- min(lambdaE, (min(ct) + shift)*m/(quantRej_min*alpha))}
-  
-#  return(lambdaA)
-#}

@@ -1,11 +1,11 @@
 #' @title simulate normal distributed data
 #' @description Simulate normal distributed data
-#' @usage simulateData(pi0,m,n,rho, set.seed = NULL, power, alpha)
+#' @usage simulateData(pi0,m,n,rho, seed = NULL, power, alpha)
 #' @param pi0 proportion of true null hypothesis
 #' @param m number of variables, i.e., hypothesis
 #' @param n number of observations
 #' @param rho Level of equi-correlation between pairs of variables
-#' @param set.seed specify seed 
+#' @param seed specify seed 
 #' @param power power
 #' @param alpha alpha value for power analysis
 #' @author Angela Andreella
@@ -14,8 +14,8 @@
 #' @importFrom stats rnorm
 #' @importFrom stats power.t.test
 
-simulateData <- function(pi0,m,n, rho, set.seed = NULL, power = NULL, alpha = 0.05){
-  #if(is.null(set.seed)){set.seed(sample.int(1e5, 1))}
+simulateData <- function(pi0,m,n, rho, seed = NULL, power = NULL, alpha = 0.05){
+  if(is.null(seed)){set.seed(sample.int(1e5, 1))}
   if(is.null(n) & !is.null(power)){stop("Please insert sample size n")}
   m0 = round(m*pi0)
   m1 = round(m -m0)

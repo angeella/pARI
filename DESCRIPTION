@@ -5,7 +5,7 @@ Version: 1.0
 Date: 2020-02-10
 Author: Angela Andreella
 Maintainer: Angela Andreella <angela.andreella@phd.unipd.it>
-Description: pARI is the package developed to compute the All-Resolution Inference (ARI) method in the permutation framework. 
+Description: It computes the All-Resolution Inference (ARI) method in the permutation framework, i.e., simultaneous lower confidence bounds for the number of true discoveries.
 Depends: R (>= 3.5.0)
 License: GPL (>= 2)
 Imports: 
@@ -46,3 +46,4 @@ Encoding: UTF-8
 LazyData: true
 env: _R_CHECK_SYSTEM_CLOCK_=0
 Config/testthat/edition: 3
+BugReports: https://github.com/angeella/pARI/issues

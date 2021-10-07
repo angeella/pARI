@@ -1,11 +1,11 @@
-#' @title discoveriesPerm
-#' @description compute discoveriesPerm
+#' @title Lower bound for the number of true discoveries
+#' @description Internal function.
 #' @usage discoveriesPerm(out, ix) 
-#' @param out out
+#' @param out output from pARI
 #' @param ix ix
 #' @author Angela Andreella
 #' @return discoveriesPerm
-#' @export
+
 
 discoveriesPerm <- function(out, ix){
   praw <- out[[3]]

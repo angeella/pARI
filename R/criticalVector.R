@@ -1,14 +1,15 @@
-#' @title Critical value
-#' @description compute critical values curve 
+#' @title Critical vector
+#' @description compute critical vector curve 
 #' @usage criticalVector(pvalues, family, alpha, lambda, delta = NULL, m = NULL)
-#' @param pvalues pvalues matrix with dimensiona variables times permutations
-#' @param family Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
-#' @param alpha alpha
-#' @param lambda lambda
-#' @param delta delta
-#' @param m number of hypothesis
+#' @param pvalues pvalues matrix with dimensions variables times permutations
+#' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
+#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param alpha alpha level.
+#' @param lambda lambda value computed by \code{\link{lambdaOpt}}.
+#' @param delta delta value. Do you want to consider sets with at least delta size? By default \code{delta = 0}. 
+#' @param m number of hypothesis, default is \code{NULL}.
 #' @author Angela Andreella
-#' @return critical value curve
+#' @return critical vector curve
 #' @export
 #' @importFrom stats qbeta
 
@@ -36,7 +37,6 @@ criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL, m = NUL
 
   if(family=="higher.criticism"){
     cv <- sapply(c(1:m), function(x) (2*x + lambda^2 - sqrt((2*x + lambda^2)^2 - 4*x^2 * (m + lambda^2)/m))/(2*(m + lambda^2))) 
-    #cv <- sapply(c(1:m), function(x) (2*x + lambda^2 + (lambda*sqrt(lambda^2*m + 4*m*x - 4*x^2)/sqrt(m)))/(2*(lambda^2 +m)))
   }
   
   return(cv)

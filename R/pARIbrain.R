@@ -147,7 +147,6 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
   clstr_id <- clstr_id[clstr_id!=0]
   #apply summaries to each cluster (and all the rest in an extra cluster)
     out=laply(clstr_id,function(i){
-      print(i)
       ix=clusters==i
       ix[-mask]=FALSE
       

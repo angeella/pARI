@@ -1,19 +1,26 @@
-#' @title Sign-Flipping Test
-#' @description Performs sign-flipping, i.e. permutation, one-sample t-tests
+#' @title Permutatation-based one sample t-test
+#' @description Performs sign-flipped one-sample t-tests.
 #' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F)
-#' @param X data where rows represents the variables and columns the observations
-#' @param B by default \code{B = 1000}. Number of permutations.
-#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
-#' @param seed by default \code{seed=1234}. Integer value specifying the seed.
-#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
-#' @param rand by default \code{rand = FALSE}. 
+#' @param X data matrix where rows represent the \code{m} variables and columns the \code{n} observations.
+#' @param B numeric value, number of permutations to be performed, including the identity. Default is 1000.
+#' @param alternative character string referring to the alternative hypothesis (\code{greater}, \code{lower}, \code{two.sided}). 
+#' @param seed numeric value, specify seed. Default is 1234.
+#' @param mask 3D array of logicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
+#' @param rand logical value, \code{TRUE} to compute p-values by permutation distribution.
 #' @author Angela Andreella
-#' @return Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0.
+#' @return Returns a list with the following objects:
+#' \describe{ 
+#'   \item{Test}{Vector of \eqn{m} observed one-sample t-tests}
+#'   \item{Test_H0}{Matrix with dimensions \eqn{m \times B} of permuted one-sample t-tests}
+#'   \item{pv}{Vector of \eqn{m} observed p-values} 
+#'   \item{pv_H0}{Matrix with dimensions \eqn{m \times B} of permuted p-values}}
 #' @export
 #' @importFrom stats pnorm
 #' @importFrom RNifti readNifti
 #' @importFrom matrixStats rowRanks
-
+#' @examples 
+#' X <- matrix(rnorm(100*20), ncol=20)
+#' out <- oneSample(X = X, alternative = "two.sided")
 
 signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
   
