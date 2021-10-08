@@ -39,12 +39,8 @@ arma::mat permT(arma::mat X, double B, arma::vec label) {
     Tb02 = (pow(X2, 2) * I2)/n2; //E(x^2)
     Tb22 = pow(M2,2); //E(X)^2
     Tb2 =  (Tb02-Tb22)*(n2/(n2-1)); //sample var
-    //   pV =  ((n1 - 1)* Tb1 + (n2 - 1)* Tb2)/ (n1 + n2 - 2);
     pV = Tb1/n1 + Tb2/n2;
     T.col(bb) = (M1 - M2)/sqrt(pV * (1/n1 + 1/n2));
-   // T.col(bb) = (M1 - M2)/sqrt(pV);
-   // T.col(bb) = (M1 - M2);
-   // T.col(bb) = pV * (1/n1 + 1/n2);
   }
   return (T);
 }

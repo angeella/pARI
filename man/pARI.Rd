@@ -9,35 +9,37 @@ test.type = "one_sample", complete = FALSE, clusters = FALSE, iterative = FALSE,
 approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 }
 \arguments{
-\item{X}{data matrix where rows represent variables, and columns the observations.}
+\item{X}{data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.}
 
-\item{ix}{set of hypotheses of interest. It can be a vector having the same length as the variables indicating the respective cluster or the indices of the variables of interest if only one set/cluster is considered.}
+\item{ix}{numeric vector which expresses the set of hypotheses of interest. It can be a vector with length equals \eqn{m} indicating the corresponding cluster for each variable,
+(in this case, you must put \code{clusters = TRUE}), or a vector containing the position indices of the variables of interest if only one set/cluster of hypotheses is considered.}
 
-\item{alpha}{alpha level, default 0.05.}
+\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.}
 
-\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"finner"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.}
 
-\item{delta}{by default \code{delta = 0}. Do you want to consider sets with at least delta size?}
+\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
 
-\item{B}{by default \code{B = 1000}. Number of permutations.}
+\item{B}{numeric value. Number of permutations, default to 1000.}
 
-\item{pvalues}{by default \code{pvalues = NULL}.  Matrix of pvalues used instead of the data matrix having dimensions equal to the number of hypotheses times the number of permutations.}
+\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
 
-\item{test.type}{by default \code{test.type = "one_sample"}. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests.}
+\item{test.type}{character string. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests. Default \code{"one_sample"}.}
 
-\item{complete}{by default \code{complete = FALSE}. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned.}
+\item{complete}{Boolean value. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned. Default @FALSE.}
 
-\item{clusters}{if \code{ix} indicates the clusters/sets must be \code{TRUE}}
+\item{clusters}{Boolean value. If \code{ix} indicates many clusters/sets must be \code{TRUE}. Default @FALSE.}
 
-\item{iterative}{if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.}
+\item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.}
 
-\item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+\item{approx}{Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
 
-\item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
+\item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.}
 
-\item{step.down}{by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.}
+\item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.}
 
-\item{max.step}{by default \code{max.step = 10}. Maximum number of steps for the step down approach}
+\item{max.step}{Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.}
 
 \item{...}{Futher parameters.}
 }
@@ -45,10 +47,12 @@ approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 by default returns a list with the following objects: \code{discoveries}: lower bound for the number of true discoveries in the set selected, \code{ix}: selected variables. If \code{complete = TRUE} the raw \code{pvalues} and \code{cv} critical vector are returned.
 }
 \description{
-The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations.
+The main function for All-Resolutions Inference (ARI) method based on critical vectors constructed 
+using the p-values permutation distribution. The function computes simultaneous lower bounds for the number of true discoveries 
+for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
 }
 \examples{
-datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0,set.seed = 123)
+datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0,seed = 123)
 out <- pARI(X = datas, ix = c(1:200),test.type = "one_sample")
 out
 }

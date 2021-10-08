@@ -2,9 +2,11 @@
 #' @description Performs parametric one-sample t-tests.
 #' @usage oneSample(X,alternative= "two.sided")
 #' @param X data matrix where rows represent the \code{m} variables and columns the \code{n} observations.
-#' @param alternative character string referring to the alternative hypothesis (\code{greater}, \code{lower}, \code{two.sided}). 
+#' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
 #' @author Angela Andreella
-#' @return Returns a list with the following objects: Test test statistic, and pv corresponding raw pvalues.
+#' @return Returns a list with the following objects: 
+#' - \code{Test}: vector with length equals \eqn{m}. Observed two-sample t-tests, one for each \eqn{m} variable, 
+#' - \code{pv}: vector with length equals \eqn{m}. observed p-values, one for each \eqn{m} variable,
 #' @export
 
 

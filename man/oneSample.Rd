@@ -7,15 +7,17 @@
 oneSample(X,alternative= "two.sided")
 }
 \arguments{
-\item{X}{data matrix where rows represents the variables and columns the observations.}
+\item{X}{data matrix where rows represent the \code{m} variables and columns the \code{n} observations.}
 
-\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 }
 \value{
-Returns a list with the following objects: Test test statistic, and pv corresponding raw pvalues.
+Returns a list with the following objects: 
+- \code{Test}: vector with length equals \eqn{m}. Observed two-sample t-tests, one for each \eqn{m} variable, 
+- \code{pv}: vector with length equals \eqn{m}. observed p-values, one for each \eqn{m} variable,
 }
 \description{
-performs the One-Sample t-test for each feature.
+Performs parametric one-sample t-tests.
 }
 \author{
 Angela Andreella

@@ -4,26 +4,28 @@
 \alias{Statmap}
 \title{Create Statistical Parametric Mapping (SPM)}
 \usage{
-Statmap(copes,alternative,path,name, Pmap, mask)
+Statmap(copes, alternative = "two.sided", path = getwd(), 
+name = "map", Pmap = FALSE, mask = NULL)
 }
 \arguments{
-\item{copes}{The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
+\item{copes}{list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
 
-\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{path}{path used to save the NIfTI file, the path does not must end with \code{/}.}
+\item{path}{character string. Path to save the NIfTI file. The path does not must end with \code{/}.}
 
-\item{name}{choose the name of your NIfTI file}
+\item{name}{character string. The name of the map NIfTI file that will be used.}
 
-\item{Pmap}{by default \code{Pmap=FALSE}. If \code{TRUE} the SPM of the pvalues is returned.}
+\item{Pmap}{Boolean value. If \code{TRUE} the SPM of the pvalues is returned. Default @FALSE.}
 
-\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
+\item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 }
 \value{
-the statistical parametric mapping in NIfTI format is saved in the path specified, if \code{path = NULL} the current working directory of the \code{R} process is used.
+Save the Statistical Parametric Mapping Nifti file in \code{path} with name specified in \code{name}.
 }
 \description{
-\code{Statmap} is used to create the statistical parametric mapping in NIfTI format.
+It creates the statistical parametric mapping in NIfTI format.
 }
 \examples{
 \dontrun{

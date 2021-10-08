@@ -4,28 +4,28 @@
 \alias{simulateData}
 \title{simulate normal distributed data}
 \usage{
-simulateData(pi0,m,n,rho, set.seed = NULL, power, alpha)
+simulateData(pi0,m,n, rho, seed = NULL, power = 0.8, alpha = 0.05)
 }
 \arguments{
-\item{pi0}{proportion of true null hypothesis}
+\item{pi0}{numeric value in `[0,1]`. Proportion of true null hypothesis.}
 
-\item{m}{number of variables, i.e., hypothesis}
+\item{m}{numeric value. Number of variables.}
 
-\item{n}{number of observations}
+\item{n}{numeric value. Number of observations.}
 
-\item{rho}{Level of equi-correlation between pairs of variables}
+\item{rho}{numeric value in `[0,1]`. Level of equi-correlation between pairs of variables.}
 
-\item{set.seed}{specify seed}
+\item{seed}{integer value. If you want to specify the seed. Default to @NULL}
 
-\item{power}{power}
+\item{power}{numeric value in `[0,1]`. Level of power. Default 0.8.}
 
-\item{alpha}{alpha value for power analysis}
+\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.}
 }
 \value{
-Returns the simulated data matrix.
+Returns a matrix with dimensions \eqn{m \times n}.
 }
 \description{
-Simulate normal distributed data
+Simulate normal distributed data.
 }
 \author{
 Angela Andreella

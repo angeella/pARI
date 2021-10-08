@@ -2,7 +2,7 @@
 % Please edit documentation in R/pARIbrain.R
 \name{pARIbrain}
 \alias{pARIbrain}
-\title{Permutation-based All-Resolutions Inference for brain imaging}
+\title{Permutation-based All-Resolutions Inference for brain imaging.}
 \usage{
 pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
 alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
@@ -10,49 +10,54 @@ silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE,
 iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10)
 }
 \arguments{
-\item{copes}{The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
+\item{copes}{list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
 
-\item{thr}{threshold used to construct the cluster map.}
+\item{thr}{numeric value. Threshold used to construct the cluster map. Default @NULL.}
 
-\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+\item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
 Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 
-\item{alpha}{alpha level}
+\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.}
 
-\item{clusters}{3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) nifti file name. 
-If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals 3.2.}
+\item{clusters}{NIfTI file or character string. 3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) NIfTI file name. 
+If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals \code{thr}.}
 
-\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{summary_stat}{Choose among \code{=c("max", "center-of-mass")}.}
+\item{summary_stat}{character string. Choose among \code{=c("max", "center-of-mass")}.}
 
-\item{silent}{\code{FALSE} by default.}
+\item{silent}{Boolean value. Default @FALSE. If @TRUE the function prints the results.}
 
-\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.}
 
-\item{delta}{by default \code{delta = 0}. Do you want to consider sets with at least delta size?}
+\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
 
-\item{B}{by default \code{B = 1000}. Number of permutations.}
+\item{B}{numeric value. Number of permutations, default to 1000.}
 
-\item{rand}{by default \code{rand = FALSE}. 
-A logical value, if \code{rand = TRUE}, the pvalues are computed by \code{\link{rowRanks}}.}
+\item{rand}{Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.}
 
-\item{iterative}{if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.}
+\item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.}
 
-\item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+\item{approx}{Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
 
-\item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
+\item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.}
 
-\item{step.down}{by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.}
+\item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.}
 
-\item{max.step}{by default \code{max.step = 10}. Maximum number of steps for the step down approach}
+\item{max.step}{Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.}
 }
 \value{
-Returns a matrix with the following objects: 
-Size, FalseNull, TrueNull, ActiveProp and other statistics for each cluster.
+A list with elements
+- out: data.frame containing the size, the number of false null hypotheses, 
+the number of true null hypotheses, the lower bound for the true discovery proportion, and other
+statistics for each cluster.
+- clusters: matrix describing the clusters analyzed.
 }
 \description{
-The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations for fMRI cluster analysis.
+The main function for brain imaging All-Resolutions Inference (ARI) method based on critical vectors constructed 
+using the p-values permutation distribution. The function computes simultaneous lower bounds for the number of true discoveries 
+for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
 }
 \examples{
 \dontrun{
@@ -74,7 +79,6 @@ Goeman, Jelle J., and Aldo Solari. "Multiple testing for exploratory research." 
 For All-Resolutions Inference for functional Magnetic Resonance Imaging data see: 
 
 Rosenblatt, Jonathan D., et al. "All-resolutions inference for brain imaging." Neuroimage 181 (2018): 786-796.
-
 
 For permutation-based All-Resolutions Inference see:
 

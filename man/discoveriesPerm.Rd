@@ -2,20 +2,20 @@
 % Please edit documentation in R/discoveriesPerm.R
 \name{discoveriesPerm}
 \alias{discoveriesPerm}
-\title{discoveriesPerm}
+\title{Lower bound for the number of true discoveries}
 \usage{
 discoveriesPerm(out, ix)
 }
 \arguments{
-\item{out}{out}
+\item{out}{output from the \code{\link{pARI}} function.}
 
-\item{ix}{ix}
+\item{ix}{numeric vector. It refers to the set-wise hypotheses considered.}
 }
 \value{
 discoveriesPerm
 }
 \description{
-compute discoveriesPerm
+Internal function.
 }
 \author{
 Angela Andreella

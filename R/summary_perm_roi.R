@@ -1,4 +1,4 @@
-# @description computes alpha-level estimate of significant variables
+# @description Internal function.
 # @pvalues = pvalues matrix
 
 summary_perm_roi <- function(cv,ix,pvalues, iterative, approx, ncomb, family, delta, alpha){

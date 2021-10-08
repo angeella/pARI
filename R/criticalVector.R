@@ -1,15 +1,15 @@
 #' @title Critical vector
-#' @description compute critical vector curve 
+#' @description Compute critical vector curve. 
 #' @usage criticalVector(pvalues, family, alpha, lambda, delta = NULL, m = NULL)
-#' @param pvalues pvalues matrix with dimensions variables times permutations
-#' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
+#' @param pvalues matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
+#' @param family string character. Choose a family of confidence envelopes to compute the critical vector. 
 #' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
-#' @param alpha alpha level.
-#' @param lambda lambda value computed by \code{\link{lambdaOpt}}.
-#' @param delta delta value. Do you want to consider sets with at least delta size? By default \code{delta = 0}. 
-#' @param m number of hypothesis, default is \code{NULL}.
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.
+#' @param lambda numeric value. \eqn{\lambda} value computed by \code{\link{lambdaOpt}}.
+#' @param delta numeric value. It expresses the delta value, please see the references. Default to 0. 
+#' @param m numeric value. Number of hypothesis. Default @NULL.
 #' @author Angela Andreella
-#' @return critical vector curve
+#' @return numeric vector. Critical vector curve with length \eqn{m}.
 #' @export
 #' @importFrom stats qbeta
 

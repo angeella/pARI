@@ -1,19 +1,19 @@
 #' @title Lower bound for the number of true discoveries
 #' @description Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses.
 #' @usage dI(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta)
-#' @param ix vector of set-wise hypotheses considered 
-#' @param cv vector of critical values computed by \code{\link{criticalVector}}
-#' @param pvalues pvalues matrix with dimensions variables times permutations.
-#' @param iterative if \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. 
-#' @param approx if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
-#' @param ncomb if \code{approx = TRUE}, you must decide how many random subcollection (level of approximation) considered.
-#' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
+#' @param ix numeric vector. It refers to the set-wise hypotheses considered. 
+#' @param cv numeric vector. It refers to the critical vector computed by \code{\link{criticalVector}}.
+#' @param pvalues matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
+#' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.
+#' @param approx Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
+#' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.
+#' @param family string character. Choose a family of confidence envelopes to compute the critical vector. 
 #' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
-#' @param alpha alpha level.
-#' @param delta delta value. Do you want to consider sets with at least delta size? By default \code{delta = 0}. 
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.
+#' @param delta numeric value. It expresses the delta value, please see the references. Default to 0. 
 #' @export
 #' @author Angela Andreella
-#' @return Returns the lower confidence bound
+#' @return numeric value: the lower confidence bound for the number of true discoveries concerning the cluster \code{ix} specified.
 #' @importFrom utils combn
 #' 
 dI <- function(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta){

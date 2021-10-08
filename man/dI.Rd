@@ -2,34 +2,35 @@
 % Please edit documentation in R/dI.R
 \name{dI}
 \alias{dI}
-\title{Lower bound true discoveries}
+\title{Lower bound for the number of true discoveries}
 \usage{
 dI(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta)
 }
 \arguments{
-\item{ix}{set-wise of hypotheses considered}
+\item{ix}{numeric vector. It refers to the set-wise hypotheses considered.}
 
-\item{cv}{vector of critical values}
+\item{cv}{numeric vector. It refers to the critical vector computed by \code{\link{criticalVector}}.}
 
-\item{pvalues}{pvalues matrix with dimensions variables times permutations}
+\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
 
-\item{iterative}{if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied.}
+\item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.}
 
-\item{approx}{if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+\item{approx}{Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
 
-\item{ncomb}{if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.}
+\item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.}
 
-\item{family}{if \code{iterative = TRUE} specify the family of confidence envelopes.}
+\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector. 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
 
-\item{alpha}{if \code{iterative = TRUE} specify the alpha level.}
+\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.}
 
-\item{delta}{if \code{iterative = TRUE} specify the delta level.}
+\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
 }
 \value{
-Returns the lower confidence bound
+numeric value: the lower confidence bound for the number of true discoveries concerning the cluster \code{ix} specified.
 }
 \description{
-Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses
+Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses.
 }
 \author{
 Angela Andreella

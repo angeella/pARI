@@ -1,20 +1,20 @@
 #' @title simulate normal distributed data
-#' @description Simulate normal distributed data
-#' @usage simulateData(pi0,m,n,rho, seed = NULL, power, alpha)
-#' @param pi0 proportion of true null hypothesis
-#' @param m number of variables, i.e., hypothesis
-#' @param n number of observations
-#' @param rho Level of equi-correlation between pairs of variables
-#' @param seed specify seed 
-#' @param power power
-#' @param alpha alpha value for power analysis
+#' @description Simulate normal distributed data.
+#' @usage simulateData(pi0,m,n, rho, seed = NULL, power = 0.8, alpha = 0.05)
+#' @param pi0 numeric value in `[0,1]`. Proportion of true null hypothesis.
+#' @param m numeric value. Number of variables. 
+#' @param n numeric value. Number of observations. 
+#' @param rho numeric value in `[0,1]`. Level of equi-correlation between pairs of variables.
+#' @param seed integer value. If you want to specify the seed. Default to @NULL
+#' @param power numeric value in `[0,1]`. Level of power. Default 0.8.
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.
 #' @author Angela Andreella
-#' @return Returns the simulated data matrix.
+#' @return Returns a matrix with dimensions \eqn{m \times n}.
 #' @export
 #' @importFrom stats rnorm
 #' @importFrom stats power.t.test
 
-simulateData <- function(pi0,m,n, rho, seed = NULL, power = NULL, alpha = 0.05){
+simulateData <- function(pi0,m,n, rho, seed = NULL, power = 0.8, alpha = 0.05){
   if(is.null(seed)){set.seed(sample.int(1e5, 1))}
   if(is.null(n) & !is.null(power)){stop("Please insert sample size n")}
   m0 = round(m*pi0)

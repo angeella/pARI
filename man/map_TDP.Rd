@@ -7,20 +7,20 @@
 map_TDP(ARIout,path,name,mask)
 }
 \arguments{
-\item{ARIout}{output object by \code{pARIbrain}.}
+\item{ARIout}{output object by \code{\link{pARIbrain}}.}
 
-\item{path}{path used to save the NIfTI file, the path does not must end with \code{/}.}
+\item{path}{character string. Path to save the NIfTI file. The path does not must end with \code{/}.}
 
-\item{name}{choose the name of the NIfTI file.}
+\item{name}{character string. The name of the map NIfTI file that will be used.}
 
-\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+\item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
 Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 }
 \value{
-Returns a TDP map
+The function wrote directly in the \code{path} specified the true discovery proportion NIfTI map with name specified in \code{name}.
 }
 \description{
-Performs True Discovery Proportion brain map.
+Performs the True Discovery Proportion brain map.
 }
 \author{
 Angela Andreella

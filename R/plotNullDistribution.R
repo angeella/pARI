@@ -1,19 +1,23 @@
-#' @title Plot Permutation Pvalues
-#' @description create plot permutation pvalues with corresponding critical vectors
-#' @usage plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, rand, B)
-#' @param P permutation matrix pvalues where rows correspond to the variables, default NULL
-#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
-#' @param alpha alpha level
-#' @param path path used to save the NIfTI file, the path does not must end with \code{/}.
-#' @param name choose the name of the NIfTI file
-#' @param delta for the family critical values, default 0. Vectors accepted
-#' @param copes image copes instead of pvalues, default NULL
-#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+#' @title Plot permutation p-values distribution
+#' @description Create a plot of permutation pvalues with corresponding specified critical vectors.
+#' @usage plotNullDistribution(P=NULL,family="simes",alpha = 0.1, 
+#' path = getwd(), name = "plot", delta = 0,
+#' copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000)
+#' @param P matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
+#' @param family string character. Choose a family of confidence envelopes to compute the critical vector. 
+#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}. If more than one critical vector are considered, it must be a vector. Default \code{"simes"}.
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.1.
+#' @param path character string. Path to save the plot. The path does not must end with \code{/}. Default to \code{getwd()}.
+#' @param name character string. The name of file that will be used to save the plot. Default to name.
+#' @param delta numeric value. It expresses the delta value, please see the references. 
+#' Default to 0. If more than one critical vector are considered, \code{delta} must be a vector having length equals to the length of critical vectors specified in \code{family}.
+#' @param copes list of NIfTI file if \code{P = NULL}. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
+#' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
 #' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
-#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
-#' @param rand by default \code{rand = FALSE}. 
-#' @param B by default \code{B = 1000}. Number of permutations.
-#' @return Returns plot null distribution with critical value curve and observed pvalues in red
+#' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param rand Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.
+#' @param B numeric value. Number of permutations, default to 1000. 
+#' @return Save a plot in \code{path} with name specified in \code{name} describing the p-values null distribution with critical value curve and observed pvalues in red.
 #' @export
 #' @importFrom grDevices png
 #' @importFrom grDevices dev.off

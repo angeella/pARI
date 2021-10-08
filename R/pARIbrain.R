@@ -1,32 +1,38 @@
-#' @title Permutation-based All-Resolutions Inference for brain imaging
-#' @description The main function for single step All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations for fMRI cluster analysis. 
+#' @title Permutation-based All-Resolutions Inference for brain imaging.
+#' @description The main function for brain imaging All-Resolutions Inference (ARI) method based on critical vectors constructed 
+#' using the p-values permutation distribution. The function computes simultaneous lower bounds for the number of true discoveries 
+#' for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
 #' @usage pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
 #' alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
 #' silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
 #' iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10)
-#' @param copes The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
-#' @param thr threshold used to construct the cluster map.
-#' @param mask 3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+#' @param copes list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
+#' @param thr numeric value. Threshold used to construct the cluster map. Default @NULL.
+#' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
 #' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
-#' @param alpha alpha level
-#' @param clusters 3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) nifti file name. 
-#' If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals 3.2.
-#' @param alternative a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
-#' @param summary_stat Choose among \code{=c("max", "center-of-mass")}. 
-#' @param silent \code{FALSE} by default.
-#' @param family by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
-#' @param delta by default \code{delta = 0}. Do you want to consider sets with at least delta size?
-#' @param B by default \code{B = 1000}. Number of permutations.
-#' @param rand by default \code{rand = FALSE}. 
-#' A logical value, if \code{rand = TRUE}, the pvalues are computed by \code{\link{rowRanks}}.
-#' @param iterative if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.
-#' @param approx if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
-#' @param ncomb if \code{approx = TRUE}, you must decide how many large random subcollection (level of approximation) considered.
-#' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.
-#' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.
+#' @param clusters NIfTI file or character string. 3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) NIfTI file name. 
+#' If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals \code{thr}.
+#' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param summary_stat character string. Choose among \code{=c("max", "center-of-mass")}. 
+#' @param silent Boolean value. Default @FALSE. If @TRUE the function prints the results.
+#' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
+#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.
+#' @param delta numeric value. It expresses the delta value, please see the references. Default to 0. 
+#' @param B numeric value. Number of permutations, default to 1000. 
+#' @param rand Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.
+#' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.
+#' @param approx Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
+#' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.
+#' @param step.down Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.
+#' @param max.step Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.
 #' @author Angela Andreella
-#' @return Returns a matrix with the following objects: 
-#' Size, FalseNull, TrueNull, ActiveProp and other statistics for each cluster.
+#' @return A list with elements
+#' - out: data.frame containing the size, the number of false null hypotheses, 
+#' the number of true null hypotheses, the lower bound for the true discovery proportion, and other
+#' statistics for each cluster.
+#' - clusters: matrix describing the clusters analyzed.
+#' 
 #' @export
 #' @importFrom RNifti readNifti
 #' @importFrom plyr laply
@@ -39,7 +45,6 @@
 #' 
 #' Rosenblatt, Jonathan D., et al. "All-resolutions inference for brain imaging." Neuroimage 181 (2018): 786-796.
 #' 
-#'
 #' For permutation-based All-Resolutions Inference see:
 #' 
 #' Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).

@@ -1,3 +1,5 @@
+# @description Internal function.
+
 summary_cluster <- function(coord_and_values,summary_stat=c("max", "center-of-mass")){
   # compute max and/or centre of gravity, see below
   #no_Inf = which(as.vector(coord_and_values[,4]) != Inf)

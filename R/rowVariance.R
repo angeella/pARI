@@ -1,10 +1,10 @@
 #' @title Rows Variance
 #' @description performs the variance for each row in a matrix.
 #' @usage rowVariance(X,na.rm = TRUE) 
-#' @param X data matrix where rows represents the variables and columns the observations.
-#' @param na.rm by default \code{na.rm=TRUE}. 
+#' @param X data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.
+#' @param na.rm Boolean value. Default @TRUE. 
 #' @author Angela Andreella
-#' @return rows variance
+#' @return vector with length equals \eqn{m} rows variance.
 #' @export
 
 rowVariance <- function (X,na.rm = TRUE) 

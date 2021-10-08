@@ -1,8 +1,8 @@
 #' @title Lower bound for the number of true discoveries
 #' @description Internal function.
 #' @usage discoveriesPerm(out, ix) 
-#' @param out output from pARI
-#' @param ix ix
+#' @param out output from the \code{\link{pARI}} function.
+#' @param ix numeric vector. It refers to the set-wise hypotheses considered. 
 #' @author Angela Andreella
 #' @return discoveriesPerm
 
@@ -17,7 +17,3 @@ discoveriesPerm <- function(out, ix){
   
 }
 
-#a<-SingleStepCT(pvalues=pvalues,ct=c(0.001,0.01), ix = c(1:4000), alpha = 0.1, shift = 0, family='Simes', lambda =1)
-#a[[1]]
-#discoveries(hommel(p = pvalues[1,],simes = TRUE),alpha=0.1,ix = c(1:4000))
-#I have two discoveries more.

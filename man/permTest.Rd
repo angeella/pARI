@@ -4,28 +4,34 @@
 \alias{permTest}
 \title{Permutation Test}
 \usage{
-permTest(X, B, alternative, seed, mask, rand, label)
+permTest(X, B = 1000, alternative = "two.sided", seed = NULL, 
+mask = NULL, rand = F, label = NULL)
 }
 \arguments{
-\item{X}{data where rows represents the variables and columns the observations, the columns's name define the categories}
+\item{X}{data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.}
 
-\item{B}{by default \code{B = 1000}. Number of permutations.}
+\item{B}{numeric value. Number of permutations, default to 1000.}
 
-\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{seed}{by default \code{seed=1234}. Integer value specifying the seed.}
+\item{seed}{integer value. If you want to specify the seed. Default to @NULL}
 
-\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
+\item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 
-\item{rand}{by default \code{rand = FALSE}.}
+\item{rand}{Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.}
 
-\item{label}{by default \code{label = NULL}. Labels of the observations, if \code{NULL} the columns's name are considered.}
+\item{label}{numeric/character vector. Labels of the observations, if \code{NULL} the columns's name are considered. Default @NULL.}
 }
 \value{
-Returns a list with the following objects: \code{Test} observed one sample t-test, \code{Test_H0} Test statistics under H0, \code{pv} observed p-values, \code{pv_H0} p-values under H0
+Returns a list with the following objects: 
+- \code{Test}: vector with length equals \eqn{m}. Observed two-samples t-tests, one for each \eqn{m} variable, 
+- \code{Test_H0}: matrix with dimensions \eqn{m \times B-1}. Test statistics under H0,
+- \code{pv}: vector with length equals \eqn{m}. observed p-values, one for each \eqn{m} variable,
+- \code{pv_H0} matrix with dimensions \eqn{m \times B-1}. P-values under H0.
 }
 \description{
-Performs permutation tests, i.e. permutation, two-sample t-tests
+Performs permutation-based two-sample t-tests.
 }
 \author{
 Angela Andreella

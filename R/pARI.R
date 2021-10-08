@@ -1,24 +1,27 @@
 #' @title Permutation-based All-Resolutions Inference
-#' @description The main function for All-Resolutions Inference (ARI) method based on critical vectors constructed by permutations. 
+#' @description The main function for All-Resolutions Inference (ARI) method based on critical vectors constructed 
+#' using the p-values permutation distribution. The function computes simultaneous lower bounds for the number of true discoveries 
+#' for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
 #' @usage pARI(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 1000, pvalues = NULL, 
 #' test.type = "one_sample", complete = FALSE, clusters = FALSE, iterative = FALSE, 
 #' approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
-#' @param X data matrix where rows represent the \code{m} variables and columns the \code{n} observations.
-#' @param ix set of hypotheses of interest. It can be a vector having the same length as the variables indicating the respective cluster, in this case you must put \code{clusters = TRUE}, or the indices of the variables of interest if only one set/cluster is considered.
-#' @param alpha alpha level.
+#' @param X data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.
+#' @param ix numeric vector which expresses the set of hypotheses of interest. It can be a vector with length equals \eqn{m} indicating the corresponding cluster for each variable,
+#' (in this case, you must put \code{clusters = TRUE}), or a vector containing the position indices of the variables of interest if only one set/cluster of hypotheses is considered.
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.
 #' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
 #' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.
-#' @param delta delta value. Do you want to consider sets with at least delta size? By default \code{delta = 0}. 
-#' @param B Number of permutations, by default \code{B = 1000}. 
-#' @param pvalues by default \code{pvalues = NULL}.  Matrix of pvalues used instead of the data matrix having dimensions equal to the number of hypotheses times the number of permutations.
-#' @param test.type by default \code{test.type = "one_sample"}. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests.
-#' @param complete by default \code{complete = FALSE}. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned.
-#' @param clusters if \code{ix} indicates the clusters/sets must be \code{TRUE}
-#' @param iterative if \code{iterative = TRUE}, the iterative iterative method for improvement of confidence envelopes is applied. Default is \code{FALSE}.
-#' @param approx if \code{iterative = TRUE} and you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
-#' @param ncomb if \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.
-#' @param step.down by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.
-#' @param max.step by default \code{max.step = 10}. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.
+#' @param delta numeric value. It expresses the delta value, please see the references. Default to 0. 
+#' @param B numeric value. Number of permutations, default to 1000. 
+#' @param pvalues matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
+#' @param test.type character string. Choose a type of tests among \code{"one_sample"}, i.e., one-sample t-test, or \code{"two_samples"}, i.e., two-samples t-tests. Default \code{"one_sample"}.
+#' @param complete Boolean value. If \code{TRUE} the sets of critical vectors and the raw pvalues are returned. Default @FALSE. 
+#' @param clusters Boolean value. If \code{ix} indicates many clusters/sets must be \code{TRUE}. Default @FALSE.
+#' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.
+#' @param approx Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
+#' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.
+#' @param step.down Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.
+#' @param max.step Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.
 #' @param ... Futher parameters.
 #' @seealso The type of tests implemented: \code{\link{signTest}} \code{\link{permTest}}.
 #' @author Angela Andreella
@@ -33,7 +36,7 @@
 #' Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
 #' 
 #' @examples
-#' datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0,set.seed = 123)
+#' datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0,seed = 123)
 #' out <- pARI(X = datas, ix = c(1:200),test.type = "one_sample")
 #' out
 

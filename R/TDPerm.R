@@ -1,4 +1,4 @@
-# @description computes the lower bound for the number of true discoveries inside the set of variables selected.
+# @description Internal function.
 # @p = raw p-values
 
 TDPerm <- function(ix,cv,p){

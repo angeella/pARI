@@ -2,13 +2,12 @@
 #' @description Performs the True Discovery Proportion brain map. 
 #' @usage map_TDP(ARIout,path,name,mask)
 #' @param ARIout output object by \code{\link{pARIbrain}}.
-#' @param path character string, path to save the NIfTI file. The path does not must end with \code{/}.
-#' @param name character string, the name of the map NIfTI file that will be used.
-#' @param mask 3D array of logicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
-#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, 
-#' it is assumed that none of the voxels have to be excluded.
+#' @param path character string. Path to save the NIfTI file. The path does not must end with \code{/}.
+#' @param name character string. The name of the map NIfTI file that will be used.
+#' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
 #' @author Angela Andreella
-#' @return Returns the True Discovery Proportion NIfTI map.
+#' @return The function wrote directly in the \code{path} specified the true discovery proportion NIfTI map with name specified in \code{name}.
 #' @export
 #' @importFrom RNifti writeNifti
 #' @importFrom RNifti readNifti

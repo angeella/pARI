@@ -3,7 +3,6 @@
 export(Statmap)
 export(criticalVector)
 export(dI)
-export(discoveriesPerm)
 export(lambdaOpt)
 export(map_TDP)
 export(oneSample)

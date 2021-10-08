@@ -1,19 +1,19 @@
-#' @title Permutatation-based one sample t-test
+#' @title Permutatation-based one-sample t-tests
 #' @description Performs sign-flipped one-sample t-tests.
 #' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F)
-#' @param X data matrix where rows represent the \code{m} variables and columns the \code{n} observations.
-#' @param B numeric value, number of permutations to be performed, including the identity. Default is 1000.
-#' @param alternative character string referring to the alternative hypothesis (\code{greater}, \code{lower}, \code{two.sided}). 
-#' @param seed numeric value, specify seed. Default is 1234.
-#' @param mask 3D array of logicals (i.e. \code{TRUE/FALSE} in/out of the brain). Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
-#' @param rand logical value, \code{TRUE} to compute p-values by permutation distribution.
+#' @param X data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.
+#' @param B numeric value. Number of permutations, default to 1000. 
+#' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param seed integer value. If you want to specify the seed. Default to @NULL
+#' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
+#' @param rand Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.
 #' @author Angela Andreella
-#' @return Returns a list with the following objects:
-#' \describe{ 
-#'   \item{Test}{Vector of \eqn{m} observed one-sample t-tests}
-#'   \item{Test_H0}{Matrix with dimensions \eqn{m \times B} of permuted one-sample t-tests}
-#'   \item{pv}{Vector of \eqn{m} observed p-values} 
-#'   \item{pv_H0}{Matrix with dimensions \eqn{m \times B} of permuted p-values}}
+#' @return Returns a list with the following objects: 
+#' - \code{Test}: vector with length equals \eqn{m}. Observed one-sample t-tests, one for each \eqn{m} variable, 
+#' - \code{Test_H0}: matrix with dimensions \eqn{m \times B-1}. Test statistics under H0,
+#' - \code{pv}: vector with length equals \eqn{m}. observed p-values, one for each \eqn{m} variable,
+#' - \code{pv_H0} matrix with dimensions \eqn{m \times B-1}. P-values under H0.
 #' @export
 #' @importFrom stats pnorm
 #' @importFrom RNifti readNifti

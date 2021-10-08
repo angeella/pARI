@@ -2,37 +2,41 @@
 % Please edit documentation in R/plotNullDistribution.R
 \name{plotNullDistribution}
 \alias{plotNullDistribution}
-\title{Plot Permutation Pvalues}
+\title{Plot permutation p-values distribution}
 \usage{
-plotNullDistribution(P,family,alpha, path, name, delta,copes,mask, alternative, rand, B)
+plotNullDistribution(P=NULL,family="simes",alpha = 0.1, 
+path = getwd(), name = "plot", delta = 0,
+copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000)
 }
 \arguments{
-\item{P}{permutation matrix pvalues where rows correspond to the variables, default NULL}
+\item{P}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
 
-\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector. 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}. If more than one critical vector are considered, it must be a vector. Default \code{"simes"}.}
 
-\item{alpha}{alpha level}
+\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.1.}
 
-\item{path}{path used to save the NIfTI file, the path does not must end with \code{/}.}
+\item{path}{character string. Path to save the plot. The path does not must end with \code{/}. Default to \code{getwd()}.}
 
-\item{name}{choose the name of the NIfTI file}
+\item{name}{character string. The name of file that will be used to save the plot. Default to name.}
 
-\item{delta}{for the family critical values, default 0. Vectors accepted}
+\item{delta}{numeric value. It expresses the delta value, please see the references. 
+Default to 0. If more than one critical vector are considered, \code{delta} must be a vector having length equals to the length of critical vectors specified in \code{family}.}
 
-\item{copes}{image copes instead of pvalues, default NULL}
+\item{copes}{list of NIfTI file if \code{P = NULL}. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
 
-\item{mask}{3D array of locicals (i.e. \code{TRUE/FALSE} in/out of the brain). 
+\item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
 Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
 
-\item{alternative}{a character string referring to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{rand}{by default \code{rand = FALSE}.}
+\item{rand}{Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.}
 
-\item{B}{by default \code{B = 1000}. Number of permutations.}
+\item{B}{numeric value. Number of permutations, default to 1000.}
 }
 \value{
-Returns plot null distribution with critical value curve and observed pvalues in red
+Save a plot in \code{path} with name specified in \code{name} describing the p-values null distribution with critical value curve and observed pvalues in red.
 }
 \description{
-create plot permutation pvalues with corresponding critical vectors
+Create a plot of permutation pvalues with corresponding specified critical vectors.
 }

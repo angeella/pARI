@@ -7,12 +7,12 @@
 rowVariance(X,na.rm = TRUE)
 }
 \arguments{
-\item{X}{data matrix where rows represents the variables and columns the observations.}
+\item{X}{data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.}
 
-\item{na.rm}{by default \code{na.rm=TRUE}.}
+\item{na.rm}{Boolean value. Default @TRUE.}
 }
 \value{
-rows variance
+vector with length equals \eqn{m} rows variance.
 }
 \description{
 performs the variance for each row in a matrix.

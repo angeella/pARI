@@ -7,25 +7,26 @@
 lambdaOpt(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10, m = NULL)
 }
 \arguments{
-\item{pvalues}{pvalues matrix with dimensions equal to the number of variables times the number of permutations.}
+\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
 
-\item{family}{by default \code{family="simes"}. Choose a family of confidence envelopes to compute the critical vector from \code{"simes"}, \code{"AORC"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.}
 
-\item{alpha}{alpha level.}
+\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.}
 
-\item{delta}{by default \code{delta = 0}. Do you want to consider sets with at least delta size?}
+\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
 
-\item{step.down}{by default \code{step.down = FALSE}. If you want to compute the lambda calibration parameter using the step down approach put TRUE.}
+\item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.}
 
-\item{max.step}{by default \code{max.step = 10}. Maximum number of steps for the step down approach}
+\item{max.step}{Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.}
 
-\item{m}{number of hypothesis}
+\item{m}{numeric value. Number of hypothesis. Default @NULL.}
 }
 \value{
-lambda parameter
+numeric value. It expresses the lambda parameter estimate, plese see package references.
 }
 \description{
-\code{lambdaOpt} provides the optimal lambda calibration parameter used in the critical vector.
+\code{lambdaOpt} computes the optimal lambda calibration parameter used in the critical vector.
 }
 \author{
 Angela Andreella
