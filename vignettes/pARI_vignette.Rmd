@@ -10,7 +10,7 @@ vignette: >
 
 
 
-```{r, include = FALSE}
+```{r, include = FALSE, echo = FALSE,message = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -87,7 +87,7 @@ specifying in the `pARI` function `cluster = TRUE`. Then, `pARI` returns the low
 
 Let consider a simple example using Bottomly et al. (2011) data, i.e., a comparative RNA-seq analysis of different mouse strains. The data comprises $1046$ genes and $21$ samples, where $10$ are C57BL/6J strain and $11$ DBA/2J strain. After pre-processing steps, we perform a two-sample t-test for each gene, and we define the sets of interest the ones computed by the `hclust` function.
 
-```{r}
+```{r, eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
@@ -102,7 +102,7 @@ library(dynamicTreeCut)
 ```
 
 
-```{r}
+```{r, eval = FALSE}
 load(file=url("http://bowtie-bio.sourceforge.net/recount/ExpressionSets/bottomly_eset.RData"))
 
 pdata<- pData(bottomly.eset)
@@ -121,7 +121,7 @@ my.clusters <- unname(cutreeDynamic(my.tree, distM=as.matrix(my.dist),
 
 Having the data `edata` with labels referring to the type of strain, we use `pARI` considering as `ix` the hierarchical cluster analysis output.
 
-```{r}
+```{r, eval = FALSE}
 out <-pARI(X = edata,alpha = 0.05, test.type = "two_sample", 
            label = as.factor(pdata$strain), ix = my.clusters,
            family = "higher.criticism", complete = TRUE, clusters = TRUE)
@@ -138,8 +138,8 @@ We analyzed the Auditory data collected by Pernet et al. (2015), i.e., people li
 
 First, let download the data from the `fMRIdata` package:
 
-```{r}
-#devtools::install_github(angeella/fMRIdata)
+```{r, eval = FALSE}
+remotes::install_github(angeella/fMRIdata)
 library(fMRIdata)
 data(Auditory_clusterTH3_2)
 data(Auditory_copes)
@@ -162,10 +162,9 @@ where $\mu_i = \sum_{j = 1}^{J} copes_{ji}/J$, where $J$ is the total number of 
 
 Finally, `pARIbrain` can be used. 
 
-```{r}
-#not run
-#auditory_out <- pARIbrain(copes = Auditory_copes, cluster = Auditory_clusterTH3_2, mask = Auditory_mask, alpha = 0.05, silent = TRUE)
-#auditory_out$out
+```{r, eval = FALSE}
+auditory_out <- pARIbrain(copes = Auditory_copes, cluster = Auditory_clusterTH3_2, mask = Auditory_mask, alpha = 0.05, silent = TRUE)
+auditory_out$out
 ```
 
 For each cluster, `pARIbrain` returns the lower bounds of the proportion of active voxels, the cluster's size, the coordinates, and the maximum statistical test value inside the cluster.

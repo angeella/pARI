@@ -40,7 +40,7 @@ arma::mat permT(arma::mat X, double B, arma::vec label) {
     Tb22 = pow(M2,2); //E(X)^2
     Tb2 =  (Tb02-Tb22)*(n2/(n2-1)); //sample var
     pV = Tb1/n1 + Tb2/n2;
-    T.col(bb) = (M1 - M2)/sqrt(pV * (1/n1 + 1/n2));
+    T.col(bb) = (M1 - M2)/sqrt(pV);
   }
   return (T);
 }

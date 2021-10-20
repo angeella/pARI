@@ -1,49 +1,33 @@
 Package: pARI
 Type: Package
-Title: Permutation-based ARI (All-Resolutions Inference) method
+Title: Permutation-Based ARI (All-Resolutions Inference) Method
 Version: 1.0.0
-Date: 2021-08-10
+Date: 2021-10-25
 Authors@R: c(person(given="Angela", family="Andreella", comment=c("Main author", ORCID  = "0000-0002-1141-3041"), email="angela.andreella@unipd.it", role=c("aut", "cre")))
-Description: It computes the All-Resolution Inference (ARI) method in the permutation framework, i.e., simultaneous lower confidence bounds for the number of true discoveries. See also Andreella et al. (2020) <arXiv:2012.00368> and Rosenblatt et al. (2018) <doi:10.1016/j.neuroimage.2018.07.060>.
+Description: It computes the All-Resolution Inference (ARI) method in the permutation framework, i.e., simultaneous lower confidence bounds for the number of true discoveries. 
 Depends: R (>= 3.5.0)
 License: GPL (>= 2)
 Imports: 
     Rcpp (>= 1.0.3), 
     matrixStats, 
-    Matrix,
     RNifti,
     fastcluster,
     stats,
-    datasets,
     grDevices,
     graphics,
     plyr,
-    hommel, 
     ggplot2,
     tools,
-    mvtnorm,
     ARIbrain,
-    BiocManager,
-    Biobase,
-    dynamicTreeCut,
-    fMRIdata,
-    genefilter,
     utils
 LinkingTo: 
     Rcpp, RcppArmadillo
 Suggests: 
     knitr,
     rmarkdown,
-    cherry,
-    gridExtra,
-    testthat (>= 3.0.0)
-Remotes:
-    github::angeella/fMRIdata
+    gridExtra
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
-LazyData: true
-env: _R_CHECK_SYSTEM_CLOCK_=0
-Config/testthat/edition: 3
 BugReports: https://github.com/angeella/pARI/issues
 URL: https://github.com/angeella/pARI

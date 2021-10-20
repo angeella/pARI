@@ -51,6 +51,8 @@
 #' 
 #' @examples
 #' \dontrun{
+#' library(remotes)
+#' install_github("angeella/fMRIdata")
 #' library(fMRIdata)
 #' data(Auditory_clusterTH3_2)
 #' data(Auditory_copes)
