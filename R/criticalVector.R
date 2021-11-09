@@ -1,10 +1,10 @@
 #' @title Critical vector
 #' @description Compute critical vector curve. 
-#' @usage criticalVector(pvalues, family, alpha, lambda, delta = NULL, m = NULL)
+#' @usage criticalVector(pvalues, family, alpha = 0.05, lambda, delta = 0, m = NULL)
 #' @param pvalues matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
 #' @param family string character. Choose a family of confidence envelopes to compute the critical vector. 
 #' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
-#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.
 #' @param lambda numeric value. \eqn{\lambda} value computed by \code{\link{lambdaOpt}}.
 #' @param delta numeric value. It expresses the delta value, please see the references. Default to 0. 
 #' @param m numeric value. Number of hypothesis. Default @NULL.
@@ -12,9 +12,15 @@
 #' @return numeric vector. Critical vector curve with length \eqn{m}.
 #' @export
 #' @importFrom stats qbeta
+#' @examples 
+#'db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
+#'out <- signTest(X = db)
+#'pv <- cbind(out$pv, out$pv_H0)
+#'cv <- criticalVector(pvalues = pv, family = "simes", lambda = 0.05)
+#'plot(sort(pv[,1]), type = "l")
+#'lines(cv)
 
-
-criticalVector <- function(pvalues, family, alpha, lambda, delta = NULL, m = NULL){
+criticalVector <- function(pvalues, family, alpha = 0.05, lambda, delta = 0, m = NULL){
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   
   family <- match.arg(tolower(family), family_set)

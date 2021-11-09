@@ -1,6 +1,6 @@
 #' @title Plot permutation p-values distribution
 #' @description Create a plot of permutation pvalues with corresponding specified critical vectors.
-#' @usage plotNullDistribution(P=NULL,family="simes",alpha = 0.1, 
+#' @usage plotNullDistribution(P=NULL,family="simes",alpha = 0.05, 
 #' path = getwd(), name = "plot", delta = 0,
 #' copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000)
 #' @param P matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
@@ -26,7 +26,7 @@
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
 
-plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.1, path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
+plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05, path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000){
   
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}

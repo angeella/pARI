@@ -4,15 +4,16 @@
 \alias{lambdaOpt}
 \title{Lambda calibration}
 \usage{
-lambdaOpt(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10, m = NULL)
+lambdaOpt(pvalues, family, alpha = 0.05, delta = 0, step.down = FALSE,
+ max.step = 10, m = NULL)
 }
 \arguments{
 \item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
 
 \item{family}{string character. Choose a family of confidence envelopes to compute the critical vector 
-from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.}
+from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
 
-\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.}
+\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.}
 
 \item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
 

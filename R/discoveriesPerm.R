@@ -10,7 +10,7 @@
 discoveriesPerm <- function(out, ix){
   praw <- out[[3]]
   cv <- out[[4]]
-  discoveries <- dI(ix,cv,praw)
+  discoveries <- dI(ix = ix,cv = cv,praw = praw)
   TDP <- discoveries/length(ix)
   
   return(list(discoveries = discoveries, TDP = TDP, praw = praw))

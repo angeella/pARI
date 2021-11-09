@@ -4,7 +4,7 @@
 \alias{plotNullDistribution}
 \title{Plot permutation p-values distribution}
 \usage{
-plotNullDistribution(P=NULL,family="simes",alpha = 0.1, 
+plotNullDistribution(P=NULL,family="simes",alpha = 0.05, 
 path = getwd(), name = "plot", delta = 0,
 copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000)
 }

@@ -5,7 +5,7 @@
 #' @usage pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
 #' alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
 #' silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
-#' iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10)
+#' iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 #' @param copes list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
 #' @param thr numeric value. Threshold used to construct the cluster map. Default @NULL.
 #' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
@@ -26,6 +26,7 @@
 #' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.
 #' @param step.down Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.
 #' @param max.step Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.
+#' @param ... further arguments. See \code{signTest}.
 #' @author Angela Andreella
 #' @return A list with elements
 #' - out: data.frame containing the size, the number of false null hypotheses, 
@@ -67,7 +68,7 @@
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
                       alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
                       silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
-                      iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10){
+                      iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...){
   
   "%ni%" <- Negate("%in%")
   #check alpha
@@ -92,10 +93,10 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
   
   scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
   scores[!mask,] = NA
-  resO <-oneSample(X=scores,alternative = alternative)
+  resO <-oneSamplePar(X=scores,alternative = alternative)
   
   scores <- scores[which(mask==1),]
-  res <- signTest(X=scores, B = B,alternative = alternative, rand = rand) #variables times number of permutation
+  res <- signTest(X=scores, B = B,alternative = alternative, rand = rand, ...) #variables times number of permutation
   
   pvalues <- cbind(res$pv,res$pv_H0)
 #  pvalues = t(pvalues)
@@ -127,19 +128,10 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
   mask=which(mask!=0) #vector of n voxels
   
   #As first, we compute the optimal lambda
-  #pv_id <- Pmap[mask]
-  #pvalues <- pvalues[,mask]
-  #pvalues <- rbind(pv_id,pvalues)
-  #pvalues_ord <- t(apply(pvalues, 1, sort))
-    
-#  pvalues_ord <- rowSortC(pvalues)
-#  praw <- pvalues_ord[1,]
 
   lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step) 
   if(lambda == 0){lambda <- 0.05}
-  #cvh <- cvhPerm(praw = praw, alpha = alpha, shift = shift, family = family, lambda = lambda)
-  #cv <- sapply(c(1:length(praw)), function(x) ((x * alpha * lambda)/length(praw))- shift)
-  #cv <- sapply(c(1:length(praw)), function(x) (((x-8) * alpha * lambda)/length(praw)))
+  #and critical vector
   cvOpt = criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda= lambda, delta = delta)
  
   # define number of clusters

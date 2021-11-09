@@ -32,7 +32,7 @@ Performs sign-flipped one-sample t-tests.
 }
 \examples{
 X <- matrix(rnorm(100*20), ncol=20)
-out <- oneSample(X = X, alternative = "two.sided")
+out <- signTest(X = X, alternative = "two.sided")
 }
 \author{
 Angela Andreella

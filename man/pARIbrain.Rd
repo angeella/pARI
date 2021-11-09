@@ -7,7 +7,7 @@
 pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
 alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
 silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
-iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10)
+iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 }
 \arguments{
 \item{copes}{list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
@@ -46,6 +46,8 @@ from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
 \item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.}
 
 \item{max.step}{Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.}
+
+\item{...}{further arguments. See \code{signTest}.}
 }
 \value{
 A list with elements

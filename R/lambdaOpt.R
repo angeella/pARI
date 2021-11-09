@@ -1,10 +1,11 @@
 #' @title Lambda calibration
 #' @description \code{lambdaOpt} computes the optimal lambda calibration parameter used in the critical vector.
-#' @usage lambdaOpt(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10, m = NULL)
+#' @usage lambdaOpt(pvalues, family, alpha = 0.05, delta = 0, step.down = FALSE,
+#'  max.step = 10, m = NULL)
 #' @param pvalues matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
 #' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
-#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.
-#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.
+#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.
 #' @param delta numeric value. It expresses the delta value, please see the references. Default to 0. 
 #' @param step.down Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.
 #' @param max.step Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.
@@ -14,7 +15,7 @@
 #' @export
 #' @importFrom stats pbeta
 
-lambdaOpt <- function(pvalues, family, alpha, delta, step.down = FALSE, max.step = 10, m = NULL){
+lambdaOpt <- function(pvalues, family, alpha = 0.05, delta = 0, step.down = FALSE, max.step = 10, m = NULL){
   #pvalues matrix with dimensions variables times permutations
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   

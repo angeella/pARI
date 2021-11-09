@@ -4,33 +4,35 @@
 \alias{dI}
 \title{Lower bound for the number of true discoveries}
 \usage{
-dI(ix, cv, pvalues, iterative, approx, ncomb, family, alpha, delta)
+dI(ix, cv, pvalues, iterative, approx, ncomb, ...)
 }
 \arguments{
 \item{ix}{numeric vector. It refers to the set-wise hypotheses considered.}
 
 \item{cv}{numeric vector. It refers to the critical vector computed by \code{\link{criticalVector}}.}
 
-\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
+\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B}.}
 
 \item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.}
 
-\item{approx}{Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+\item{approx}{Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time. Default @TRUE}
 
-\item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.}
+\item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered. Default 100.}
 
-\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector. 
-from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
-
-\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate.}
-
-\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
+\item{...}{further arguments for the iterative approach, i.e., \code{iterative = TRUE}.}
 }
 \value{
 numeric value: the lower confidence bound for the number of true discoveries concerning the cluster \code{ix} specified.
 }
 \description{
 Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses.
+}
+\examples{
+db <- simulateData(pi0 = 0.7, m = 100, n = 20, rho = 0)
+out <- signTest(X = db)
+pv <- cbind(out$pv, out$pv_H0)
+cv <- criticalVector(pvalues = pv, family = "simes", lambda = 0.1, alpha = 0.1)
+dI(ix = c(1:100), cv = cv, pvalues = pv)
 }
 \author{
 Angela Andreella

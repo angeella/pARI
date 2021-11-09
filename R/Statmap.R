@@ -38,7 +38,7 @@ Statmap <- function(copes, alternative = "two.sided", path = getwd(), name = "ma
   
   scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
   scores[!mask,] = NA
-  resO <-oneSample(X=scores,alternative = alternative)
+  resO <-oneSamplePar(X=scores,alternative = alternative)
   if(Pmap){
     pv = array(data = resO$p, dim = c(91,109,91))
     writeNifti(pv,file = paste0(path, "/P", name,".nii.gz"),template = mask)

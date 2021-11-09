@@ -20,7 +20,7 @@
 #' @importFrom matrixStats rowRanks
 #' @examples 
 #' X <- matrix(rnorm(100*20), ncol=20)
-#' out <- oneSample(X = X, alternative = "two.sided")
+#' out <- signTest(X = X, alternative = "two.sided")
 
 signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
   

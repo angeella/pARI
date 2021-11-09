@@ -15,7 +15,7 @@ rowVariance(X,na.rm = TRUE)
 vector with length equals \eqn{m} rows variance.
 }
 \description{
-performs the variance for each row in a matrix.
+performs the variance for each row in a matrix. Internal function.
 }
 \author{
 Angela Andreella

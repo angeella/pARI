@@ -58,7 +58,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
 
   p <- P[,1]
 
-  lambda <- lambdaOpt(P, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step)
+  lambda <- lambdaOpt(pvalues = P, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step)
   cv <- criticalVector(pvalues=P, family= family, alpha = alpha, delta = delta, lambda = lambda)
   
   if(length(ix) == nrow(P) & clusters == TRUE){
@@ -68,7 +68,9 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
   TDP <- c()
     for(i in 1:length(levels_ix)){
       ixX[[i]] <- which(ix == levels_ix[i])
-      discoveries[i] <- dI(ixX[[i]],cv,P, iterative, approx, ncomb, family, alpha, delta)
+      discoveries[i] <- dI(ix = ixX[[i]],cv = cv,pvalues = P, 
+                           iterative = iterative, approx = approx, ncomb = ncomb, 
+                           family = family, alpha = alpha, delta = delta)
       TDP[i] <- discoveries[i]/length(ixX[[i]])
       if(!is.null(rownames(X))){
       ixX[[i]] <- rownames(X)[ixX[[i]]]
@@ -76,7 +78,9 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
     }
 
   }else{
-    discoveries <- dI(ix = ix,cv = cv,pvalues = P, iterative, approx, ncomb, family, alpha, delta)
+    discoveries <- dI(ix = ix,cv = cv,pvalues = P, 
+                      iterative = iterative, approx = approx, ncomb = ncomb, 
+                      family = family, alpha = alpha, delta = delta)
     TDP <- discoveries/length(ix)
     if(!is.null(rownames(X))){
       ixX <- rownames(X)[ix]
