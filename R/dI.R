@@ -24,7 +24,7 @@ dI <- function(ix, cv, pvalues, iterative = FALSE, approx = TRUE, ncomb = 100, .
   if(!iterative){
     family <- delta <- alpha <- NULL
   }
-  if(iterative & (exists("family")| exists("delta") | exists("alpha"))){
+  if(iterative & !(exists("family") & exists("delta") & exists("alpha"))){
     stop("Please specify the family of confidence bounds, delta and alpha levels if you want to use the iterative approach")
   }
   
