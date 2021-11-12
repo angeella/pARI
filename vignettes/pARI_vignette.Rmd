@@ -60,11 +60,11 @@ datas <- simulateData(pi0 = 0.8, m = 1000, n = 30, power = 0.9, rho = 0.5,seed =
 `pARI` then computes the lower bound for the number of true discoveries inside the set containing the first $200$ features. The user must specify the cluster in the `ix` set, i.e., from $1$ to $200$ in this case. We apply the one-sample t-test for each feature.
 
 ```{r}
-out <- pARI(X = datas, ix = c(1:200),test.type = "one_sample")
+out <- pARI(X = datas, ix = c(1:200), test.type = "one_sample", seed = 123)
 out$TDP
 ```
 
-Therefore, we can say that at least $36\%$ of features are truly significant inside the `ix` cluster.
+Therefore, we can say that at least `r (out$TDP*100)` of features are truly significant inside the `ix` cluster.
 
 However, the `pARI` function can analyzed directly the matrix of permuted p-values. We can compute it by `signTest` function:
 
@@ -78,10 +78,11 @@ The set of features can also be expressed as a vector with length equals the num
 
 ```{r}
 ix <- sample(c(1:4), size = 1000, replace = T)
-pARI(pvalues = P, ix = ix,test.type = "one_sample", clusters = TRUE)$TDP
+out <- pARI(pvalues = P, ix = ix,test.type = "one_sample", clusters = TRUE)$TDP
+out
 ```
 
-specifying in the `pARI` function `cluster = TRUE`. Then, `pARI` returns the lower bound for the true discovery proportion for each set of features. We can say that we have at least $4.48\%$ of truly active features in the first cluster.
+specifying in the `pARI` function `cluster = TRUE`. Then, `pARI` returns the lower bound for the true discovery proportion for each set of features. We can say that we have at least `r (out[1]*100)` of truly active features in the first cluster.
 
 ### Gene cluster analysis
 
@@ -124,7 +125,7 @@ Having the data `edata` with labels referring to the type of strain, we use `pAR
 ```{r, eval = FALSE}
 out <-pARI(X = edata,alpha = 0.05, test.type = "two_sample", 
            label = as.factor(pdata$strain), ix = my.clusters,
-           family = "higher.criticism", complete = TRUE, clusters = TRUE)
+           family = "AORC", clusters = TRUE)
 out$TDP
 ```
 
