@@ -62,18 +62,16 @@ using the p-values permutation distribution. The function computes simultaneous 
 for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
 }
 \examples{
-\donttest{
-library(remotes)
-install_github("angeella/fMRIdata")
-library(fMRIdata)
-data(Auditory_clusterTH3_2)
-data(Auditory_copes)
-data(Auditory_mask)
-auditory_out <- pARIbrain(copes = Auditory_copes, 
-cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
-alpha = 0.05, silent = TRUE)
-auditory_out$out
-}
+#library(remotes)
+#install_github("angeella/fMRIdata")
+#library(fMRIdata)
+#data(Auditory_clusterTH3_2)
+#data(Auditory_copes)
+#data(Auditory_mask)
+#auditory_out <- pARIbrain(copes = Auditory_copes, 
+#cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
+#alpha = 0.05, silent = TRUE)
+#auditory_out$out
 }
 \references{
 For the general framework of All-Resolutions Inference see:

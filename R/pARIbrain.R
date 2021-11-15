@@ -51,18 +51,17 @@
 #' Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
 #' 
 #' @examples
-#' \donttest{
-#' library(remotes)
-#' install_github("angeella/fMRIdata")
-#' library(fMRIdata)
-#' data(Auditory_clusterTH3_2)
-#' data(Auditory_copes)
-#' data(Auditory_mask)
-#' auditory_out <- pARIbrain(copes = Auditory_copes, 
-#' cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
-#' alpha = 0.05, silent = TRUE)
-#' auditory_out$out
-#' }
+#' #library(remotes)
+#' #install_github("angeella/fMRIdata")
+#' #library(fMRIdata)
+#' #data(Auditory_clusterTH3_2)
+#' #data(Auditory_copes)
+#' #data(Auditory_mask)
+#' #auditory_out <- pARIbrain(copes = Auditory_copes, 
+#' #cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
+#' #alpha = 0.05, silent = TRUE)
+#' #auditory_out$out
+
 
 
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
