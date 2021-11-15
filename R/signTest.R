@@ -1,6 +1,6 @@
 #' @title Permutatation-based one-sample t-tests
 #' @description Performs sign-flipped one-sample t-tests.
-#' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F)
+#' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = FALSE)
 #' @param X data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.
 #' @param B numeric value. Number of permutations, default to 1000. 
 #' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
@@ -22,7 +22,7 @@
 #' X <- matrix(rnorm(100*20), ncol=20)
 #' out <- signTest(X = X, alternative = "two.sided")
 
-signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F){
+signTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = FALSE){
   
   alternative_set <- c("two.sided", "greater", "lower")
   

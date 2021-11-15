@@ -4,7 +4,7 @@
 #' for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
 #' @usage pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
 #' alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
-#' silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
+#' silent=FALSE, family = "simes", delta = 0, B = 1000, rand = FALSE, 
 #' iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 #' @param copes list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
 #' @param thr numeric value. Threshold used to construct the cluster map. Default @NULL.
@@ -24,7 +24,7 @@
 #' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.
 #' @param approx Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.
 #' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.
-#' @param step.down Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.
+#' @param step.down Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put @TRUE.
 #' @param max.step Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.
 #' @param ... further arguments. See \code{signTest}.
 #' @author Angela Andreella
@@ -51,7 +51,7 @@
 #' Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(remotes)
 #' install_github("angeella/fMRIdata")
 #' library(fMRIdata)
@@ -67,7 +67,7 @@
 
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
                       alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
-                      silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
+                      silent=FALSE, family = "simes", delta = 0, B = 1000, rand = FALSE, 
                       iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...){
   
   "%ni%" <- Negate("%in%")

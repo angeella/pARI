@@ -6,7 +6,7 @@
 \usage{
 pARIbrain(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
 alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
-silent=F, family = "simes", delta = 0, B = 1000, rand = FALSE, 
+silent=FALSE, family = "simes", delta = 0, B = 1000, rand = FALSE, 
 iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 }
 \arguments{
@@ -43,7 +43,7 @@ from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
 
 \item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.}
 
-\item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.}
+\item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put @TRUE.}
 
 \item{max.step}{Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.}
 
@@ -62,7 +62,7 @@ using the p-values permutation distribution. The function computes simultaneous 
 for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
 }
 \examples{
-\dontrun{
+\donttest{
 library(remotes)
 install_github("angeella/fMRIdata")
 library(fMRIdata)

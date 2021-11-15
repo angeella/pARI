@@ -1,7 +1,7 @@
 #' @title Permutation Test
 #' @description Performs permutation-based two-sample t-tests.
 #' @usage permTest(X, B = 1000, alternative = "two.sided", seed = NULL, 
-#' mask = NULL, rand = F, label = NULL)
+#' mask = NULL, rand = FALSE, label = NULL)
 #' @param X data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.
 #' @param B numeric value. Number of permutations, default to 1000. 
 #' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
@@ -23,7 +23,7 @@
 #' @importFrom stats pt
 
 
-permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F, label = NULL){
+permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = FALSE, label = NULL){
   
   alternative_set <- c("two.sided", "greater", "lower")
   if(!is.null(seed)){set.seed(seed)}else{set.seed(1234)}

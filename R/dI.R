@@ -34,7 +34,7 @@ dI <- function(ix, cv, pvalues, iterative = FALSE, approx = TRUE, ncomb = 100, .
     d_seq[1] <- d
     it <- 1
     dist <- Inf
-    while(dist !=0) {
+    while(dist !=0 & (d_seq[it] != length(ix))) {
       if(approx == TRUE){
         Kcomb <- replicate(ncomb, sample(ix,size = length(ix) - d_seq[it], replace=FALSE), 
                            simplify="matrix")

@@ -1,23 +1,20 @@
 Package: pARI
 Type: Package
-Title: Permutation-Based ARI (All-Resolutions Inference) Method
+Title: Permutation-Based All-Resolutions Inference Method
 Version: 1.0.0
-Date: 2021-10-25
+Date: 2021-11-12
 Authors@R: c(person(given="Angela", family="Andreella", comment=c("Main author", ORCID  = "0000-0002-1141-3041"), email="angela.andreella@unipd.it", role=c("aut", "cre")))
-Description: It computes the All-Resolution Inference (ARI) method in the permutation framework, i.e., simultaneous lower confidence bounds for the number of true discoveries. 
+Description: It computes the All-Resolution Inference method in the permutation framework, i.e., simultaneous lower confidence bounds for the number of true discoveries. 
 Depends: R (>= 3.5.0)
 License: GPL (>= 2)
 Imports: 
     Rcpp (>= 1.0.3), 
     matrixStats, 
     RNifti,
-    fastcluster,
     stats,
     grDevices,
     graphics,
     plyr,
-    ggplot2,
-    tools,
     ARIbrain,
     utils
 LinkingTo: 
@@ -29,5 +26,7 @@ Suggests:
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+Language: en-US
 BugReports: https://github.com/angeella/pARI/issues
 URL: https://github.com/angeella/pARI
+

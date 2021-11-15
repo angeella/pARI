@@ -4,7 +4,7 @@
 \alias{signTest}
 \title{Permutatation-based one-sample t-tests}
 \usage{
-signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = F)
+signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = FALSE)
 }
 \arguments{
 \item{X}{data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.}

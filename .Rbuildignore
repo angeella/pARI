@@ -6,3 +6,5 @@
 ^sticker.png$
 ^README.Rmd$
 
+^CRAN-RELEASE$
+^cran-comments\.md$

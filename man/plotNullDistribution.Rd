@@ -6,7 +6,7 @@
 \usage{
 plotNullDistribution(P=NULL,family="simes",alpha = 0.05, 
 path = getwd(), name = "plot", delta = 0,
-copes=NULL,mask=NULL, alternative = "two.sided", rand = F, B = 1000)
+copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000)
 }
 \arguments{
 \item{P}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
