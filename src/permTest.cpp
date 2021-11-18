@@ -11,7 +11,6 @@ arma::mat permT(arma::mat X, double B, arma::vec label) {
 
   double n1, n2;
   arma::vec permLabel, M1, M2, Tb01, Tb02, Tb1, Tb2, Tb21, Tb22, pV, I1, I2;
-  std::vector<int>::iterator id;
 
   n1 = std::count(label.begin(), label.end(), 1);
   n2 = std::count(label.begin(), label.end(), 2);

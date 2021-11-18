@@ -21,7 +21,10 @@
 #' @importFrom RNifti readNifti
 #' @importFrom matrixStats rowRanks
 #' @importFrom stats pt
-
+#' @examples 
+#' X <- matrix(rnorm(100*20), ncol=20)
+#' X[,1:10] <- X[,1:10] + rnorm(100*10, mean = 5)
+#' out <- permTest(X = X, alternative = "two.sided", label = c(rep(1,10),rep(0,10)))
 
 permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = FALSE, label = NULL){
   
@@ -35,10 +38,13 @@ permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   
   alternative <- match.arg(tolower(alternative), alternative_set)
   
-  if(is.null(label)){label <- colnames(X)}
+  if(is.null(label)){label <- colnames(X)}else{
+    if(length(label)!=ncol(X)){stop("Please insert labels having a length equal to the number of observations, i.e., columns of the data matrix X.")}
+  }
   
   #id <- unique(label)
   label <- factor(label)
+  if(length(levels(label))!=2){stop("permTest performs two-sample t-tests, the number of levels of the label vector must be equal to 2.")}
   levels(label) <- c(0,1)
   ## number of obeservation
   n <- ncol(X)

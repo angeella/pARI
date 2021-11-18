@@ -57,7 +57,7 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
       double shape1 = i+1;
       double shape2 = m-i;
      // long double beta = 1-exp(R::pbeta(q=q,shape1,shape2,1,1));
-      lambda[i] = R::pbeta(q = q, shape1, shape2, 1, 0);
+      lambda[i] = R::pbeta(q, shape1, shape2, 1, 0);
       }
     }
 //take minimum over hypotheses for each permutations
