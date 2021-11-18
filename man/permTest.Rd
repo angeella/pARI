@@ -33,6 +33,11 @@ Returns a list with the following objects:
 \description{
 Performs permutation-based two-sample t-tests.
 }
+\examples{
+X <- matrix(rnorm(100*20), ncol=20)
+X[,1:10] <- X[,1:10] + rnorm(100*10, mean = 5)
+out <- permTest(X = X, alternative = "two.sided", label = c(rep(1,10),rep(0,10)))
+}
 \author{
 Angela Andreella
 }
