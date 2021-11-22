@@ -24,7 +24,7 @@ dI <- function(ix, cv, pvalues, iterative = FALSE, approx = TRUE, ncomb = 100, .
   if(!iterative){
     family <- delta <- alpha <- NULL
   }
-  if(iterative & !(exists("family") & exists("delta") & exists("alpha"))){
+  if(iterative & !(exists("family", mode = "character") & exists("delta") & exists("alpha"))){
     stop("Please specify the family of confidence bounds, delta and alpha levels if you want to use the iterative approach")
   }
   
@@ -40,6 +40,7 @@ dI <- function(ix, cv, pvalues, iterative = FALSE, approx = TRUE, ncomb = 100, .
                            simplify="matrix")
       }else{
         Kcomb <- combn(ix, length(ix) - d_seq[it]) 
+        ncomb <- ncol(Kcomb)
       }
       #Create complementry set: combinations + all not in ix
       m <- dim(pvalues)[1]
