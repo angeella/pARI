@@ -17,6 +17,7 @@
 #' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
 #' @param rand Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.
 #' @param B numeric value. Number of permutations, default to 1000. 
+#' @author Angela Andreella
 #' @return Save a plot in \code{path} with name specified in \code{name} describing the p-values null distribution with critical value curve and observed pvalues in red.
 #' @export
 #' @importFrom grDevices png
@@ -25,6 +26,11 @@
 #' @importFrom graphics lines
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
+#' @examples 
+#'db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
+#'out <- signTest(X = db)
+#'pv <- cbind(out$pv, out$pv_H0)
+#'plotNullDistribution(P = pv)
 
 plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05, path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000){
   

@@ -11,9 +11,15 @@
 #' @param max.step Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.
 #' @param m numeric value. Number of hypothesis. Default @NULL.
 #' @author Angela Andreella
-#' @return numeric value. It expresses the lambda parameter estimate, plese see package references.
+#' @return numeric value. It expresses the lambda parameter estimate, please see package references.
 #' @export
 #' @importFrom stats pbeta
+#' @examples 
+#'db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
+#'out <- signTest(X = db)
+#'pv <- cbind(out$pv, out$pv_H0)
+#'cv <- lambdaOpt(pvalues = pv, family = "simes", alpha = 0.05)
+
 
 lambdaOpt <- function(pvalues, family, alpha = 0.05, delta = 0, step.down = FALSE, max.step = 10, m = NULL){
   #pvalues matrix with dimensions variables times permutations
