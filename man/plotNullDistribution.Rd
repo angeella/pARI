@@ -40,3 +40,12 @@ Save a plot in \code{path} with name specified in \code{name} describing the p-v
 \description{
 Create a plot of permutation pvalues with corresponding specified critical vectors.
 }
+\examples{
+db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
+out <- signTest(X = db)
+pv <- cbind(out$pv, out$pv_H0)
+plotNullDistribution(P = pv)
+}
+\author{
+Angela Andreella
+}
