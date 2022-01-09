@@ -70,7 +70,7 @@ data(Auditory_clusterTH3_2)
 data(Auditory_copes)
 data(Auditory_mask)
 auditory_out <- pARIbrain(copes = Auditory_copes, 
-cluster = Auditory_clusterTH3_2, mask = Auditory_mask, 
+clusters = Auditory_clusterTH3_2, mask = Auditory_mask, 
 alpha = 0.05, silent = TRUE)
 auditory_out$out
 }

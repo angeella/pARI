@@ -7,3 +7,7 @@
 * Fix warnings observed by CRAN
 * Put example in permTest function
 * Checks in permTest function
+
+## version 1.1.1 [2022-01-09]
+
+* Update documentation

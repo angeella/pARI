@@ -1,9 +1,9 @@
 Dear CRAN Team,
-this is a resubmission of package 'pARI'. I have added the following changes:
+this is a resubmission of package 'pARI'. I have added the following changes: update documentation.
 Please upload to CRAN.
 Best, Angela
 
-# Package pARI 1.1.0
+# Package pARI 1.1.1
 
 Reporting is done by packager version 1.13.0
 
