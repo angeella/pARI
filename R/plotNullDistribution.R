@@ -27,11 +27,13 @@
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
 #' @examples 
+#' \dontrun{
 #'db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
 #'out <- signTest(X = db)
 #'pv <- cbind(out$pv, out$pv_H0)
 #'plotNullDistribution(P = pv)
-
+#' }
+#' 
 plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05, path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000){
   
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
