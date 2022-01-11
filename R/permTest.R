@@ -67,7 +67,7 @@ permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
 
   Test_H0 <- permT(as.matrix(X),B-1,label)
   Test_H0 <- ifelse(is.na(Test_H0), 0 , Test_H0)
-  
+  Test_H0 <- ifelse(is.nan(Test_H0), 0 , Test_H0)
   if(!rand){
     
     gdl <- ((rowV1/n1 + rowV2/n2)^2)/((((rowV1/n1)^2)/(n1-1))+(((rowV2/n2)^2)/(n2-1)))

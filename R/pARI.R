@@ -55,7 +55,7 @@ pARI <- function(X= NULL, ix, alpha = 0.05, family = "simes", delta = 0, B = 100
   }else{
     P <- pvalues
   }
-
+  P <- ifelse(is.na(P),1, P)
   p <- P[,1]
 
   lambda <- lambdaOpt(pvalues = P, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step)
