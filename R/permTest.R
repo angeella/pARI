@@ -62,8 +62,7 @@ permTest <- function(X, B = 1000, alternative = "two.sided", seed = NULL, mask =
   #pooled.var <- ((n1 - 1)* rowV1 + (n2 - 1)* rowV2)/ (n1 + n2 - 2)
   pooled.var <- (rowV1/n1 + rowV2/n2)
   #Test <- (rowM1 - rowM2)/sqrt(pooled.var)
-  Test <- (rowM1 - rowM2)/sqrt(pooled.var)
-  Test <- ifelse(is.na(Test), 0 , Test)
+  Test <- ifelse(pooled.var == 0, 0 , (rowM1 - rowM2)/sqrt(pooled.var))
   ## Test statistics under H0
 
   Test_H0 <- permT(as.matrix(X),B-1,label)
