@@ -10,7 +10,7 @@ vignette: >
 
 
 
-```{r, include = FALSE, echo = FALSE,message = FALSE}
+```{r, include = FALSE, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -86,7 +86,7 @@ specifying in the `pARI` function `cluster = TRUE`. Then, `pARI` returns the low
 
 ### Gene cluster analysis
 
-Let consider a simple example using Bottomly et al. (2011) data, i.e., a comparative RNA-seq analysis of different mouse strains. The data comprises $1046$ genes and $21$ samples, where $10$ are C57BL/6J strain and $11$ DBA/2J strain. After pre-processing steps, we perform a two-sample t-test for each gene, and we define the sets of interest the ones computed by the `hclust` function.
+Let consider a simple example using Montgomery et al. (2010) and Pickrell et. al (2010) data, i.e., an expression set that combines two studies transcriptome genetics using second generation sequencing HapMap. The data comprises $52580$ genes and $129$ samples (i.e., $60$ unrelated Caucasian individuals of European descent and $69$ unrelated Nigerian individuals). After pre-processing steps, we perform a two-sample t-test for each gene, and we define the sets of interest the ones computed by the `hclust` function.
 
 ```{r, eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE)){
@@ -108,11 +108,11 @@ library(dynamicTreeCut)
 
 
 ```{r, eval = FALSE}
-load(file=url("http://bowtie-bio.sourceforge.net/recount/ExpressionSets/bottomly_eset.RData"))
+load(file=url("http://bowtie-bio.sourceforge.net/recount/ExpressionSets/montpick_eset.RData"))
 
-pdata<- pData(bottomly.eset)
-edata <- as.matrix(exprs(bottomly.eset))
-fdata <- fData(bottomly.eset)
+pdata<- pData(montpick.eset)
+edata <- as.matrix(exprs(montpick.eset))
+fdata <- fData(montpick.eset)
 
 edata <- log2(as.matrix(edata) + 1)
 edata <- edata[rowMeans(edata) > 10, ]
@@ -120,20 +120,20 @@ edata <- edata[rowMeans(edata) > 10, ]
 my.dist <- dist(edata)
 my.tree <- hclust(my.dist, method="ward.D2")
 
-my.clusters <- unname(cutreeDynamic(my.tree, distM=as.matrix(my.dist),
-                                    minClusterSize=10, verbose=0))
+my.clusters <- unname(cutreeDynamic(my.tree, distM=as.matrix(my.dist),minClusterSize=10))
 ```
 
-Having the data `edata` with labels referring to the type of strain, we use `pARI` considering as `ix` the hierarchical cluster analysis output.
+Having the data `edata` with labels referring to the type of population, we use `pARI` considering as `ix` the hierarchical cluster analysis output.
 
 ```{r, eval = FALSE}
-out <-pARI(X = edata,alpha = 0.05, test.type = "two_sample", 
-           label = as.factor(pdata$strain), ix = my.clusters,
-           family = "AORC", clusters = TRUE)
+out <-pARI(X = edata,alpha = 0.05, test.type = "two_samples",
+           label = as.factor(pdata$population),
+           ix = my.clusters, family = "simes", clusters = TRUE)
 out$TDP
 ```
 
 For each cluster computed by `hclust`, `pARI` returns the lower bound for the true discoveries proportion.
+
 
 ### fMRI cluster analysis
 
