@@ -134,6 +134,32 @@ out$TDP
 
 For each cluster computed by `hclust`, `pARI` returns the lower bound for the true discoveries proportion.
 
+Alternatively, you can use as clusters the pathways of genes from the `getGenesets` function:
+
+```{r, eval = FALSE}
+pathways <- EnrichmentBrowser::getGenesets(org = "hsa", db = "kegg", gene.id.type = "ENSEMBL")
+
+out <- c()
+for(i in seq(pathways)){
+  
+  ix <- which(rownames(edata) %in% pathways[[i]])
+  
+  out[i] <-pARI(X = edata,alpha = 0.05, test.type = "two_samples",
+           label = as.factor(pdata$population),
+           ix = ix, family = "simes", clusters = TRUE)$TDP
+}
+
+db <- data.frame(TDP = out, size = sapply(seq(pathways), function(x) length(which(rownames(edata) %in% pathways[[x]]))), name = names(pathways))
+
+```
+
+So, we represent the lower confidence bounds for the proportion of differentially expressed genes (TDP) inside each pathway in the following plot:
+
+```{r, eval = FALSE}
+db %>% dplyr::filter(!is.na(TDP) | TDP!=0) %>% dplyr::filter(size >10) %>% ggplot(aes(x = TDP, y = name, col = size, size = size)) + geom_point()
+```
+
+In this case, we filter out the pathways having less than $10$ genes to simply the plot.
 
 ### fMRI cluster analysis
 
