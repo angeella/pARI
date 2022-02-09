@@ -11,7 +11,7 @@ dI(ix, cv, pvalues, iterative, approx, ncomb, ...)
 
 \item{cv}{numeric vector. It refers to the critical vector computed by \code{\link{criticalVector}}.}
 
-\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B}.}
+\item{pvalues}{If \code{iterative = TRUE} matrix of pvalues with dimensions \eqn{m \times B}. If \code{iterative = FALSE} vector of \eqn{m} observed pvalues.}
 
 \item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.}
 

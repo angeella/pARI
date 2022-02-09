@@ -3,7 +3,7 @@
 #' @usage dI(ix, cv, pvalues, iterative, approx, ncomb, ...)
 #' @param ix numeric vector. It refers to the set-wise hypotheses considered. 
 #' @param cv numeric vector. It refers to the critical vector computed by \code{\link{criticalVector}}.
-#' @param pvalues matrix of pvalues with dimensions \eqn{m \times B}.
+#' @param pvalues If \code{iterative = TRUE} matrix of pvalues with dimensions \eqn{m \times B}. If \code{iterative = FALSE} vector of \eqn{m} observed pvalues.
 #' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.
 #' @param approx Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time. Default @TRUE
 #' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered. Default 100.
@@ -32,8 +32,12 @@ dI <- function(ix, cv, pvalues, iterative = FALSE, approx = TRUE, ncomb = 100, .
   if(iterative & !(exists("family", mode = "character") & exists("delta") & exists("alpha"))){
     stop("Please specify the family of confidence bounds, delta and alpha levels if you want to use the iterative approach")
   }
+  if(!iterative){
+    d <- permDiscoveries(ix = ix, cv = cv, praw = pvalues)
+  }else{
+    d <- permDiscoveries(ix = ix, cv = cv, praw = pvalues[,1])
+  }
   
-  d <- permDiscoveries(ix = ix, cv = cv, praw = pvalues[,1])
   if(iterative){
     d_seq <- c()
     d_seq[1] <- d
