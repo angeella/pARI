@@ -37,6 +37,4 @@ Statmap(copes = Auditory_copes, mask = Auditory_mask)
 }
 \author{
 Angela Andreella
-
-Angela Andreella
 }

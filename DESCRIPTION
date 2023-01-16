@@ -24,7 +24,7 @@ Suggests:
     rmarkdown,
     gridExtra
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 Language: en-US
 BugReports: https://github.com/angeella/pARI/issues

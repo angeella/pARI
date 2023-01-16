@@ -38,7 +38,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // permDiscoveries
-int permDiscoveries(NumericVector ix, NumericVector cv, NumericVector praw);
+arma::vec permDiscoveries(NumericVector ix, NumericVector cv, NumericVector praw);
 RcppExport SEXP _pARI_permDiscoveries(SEXP ixSEXP, SEXP cvSEXP, SEXP prawSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
