@@ -34,7 +34,9 @@
 #'plotNullDistribution(P = pv)
 #' }
 #' 
-plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05, path = getwd(), name = "plot", delta = 0,copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000){
+plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05, 
+                                 path = getwd(), name = "plot", delta = 0,
+                                 copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000){
   
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}
@@ -45,11 +47,21 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05, path = getw
   
   if(!is.null(copes)){
     
-    if(is.null(mask)){stop('please insert the mask as character path or Nifti image')}
-    if(is.character(mask)){mask = readNifti(mask)}
+    #check copes
     if(!is.list(copes)){stop("Please insert the list of copes as list class object")}
     
-    img_dims <- c(91,  109 , 91)
+    img_dims <- dim(copes[[1]])
+    
+    #check mask
+    if(!is.null(mask)){
+      if(!is.character(mask) && !is.array(mask)){stop("mask must be an array or a path")}
+      if(is.character(mask)){mask = readNifti(mask)}
+      if(!all(dim(mask) == img_dims)){stop("incompatible dimensions of mask and copes")}
+    }else{
+      mask <- array(1, img_dims)
+    }
+    
+    #create scores matrix
     img <- array(NA, c(img_dims, length(copes)))
     
     for (sid in 1:length(copes)) {  
@@ -57,7 +69,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05, path = getw
       
     }
     
-    scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
+    scores <- matrix(img,nrow=(img_dims[1]*img_dims[2]*img_dims[3]),ncol=length(copes))
     scores <- scores[which(mask==1),]
     res <- signTest(X=scores, B = B,alternative = alternative, rand = rand) #variables times number of permutation
     

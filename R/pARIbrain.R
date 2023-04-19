@@ -68,30 +68,48 @@
 pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL, 
                       alternative = "two.sided", summary_stat=c("max", "center-of-mass"),
                       silent=FALSE, family = "simes", delta = 0, B = 1000, rand = FALSE, 
-                      iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...){
+                      iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, 
+                      max.step = 10, ...){
   
   "%ni%" <- Negate("%in%")
+  
   #check alpha
   val_alpha = sapply(c(1:B), function(x) (B-x)/B)
   if(!(alpha %in% val_alpha)){stop('please insert valid values for alpha and B')}
+  
+  #check copes
+  if(!is.list(copes)){stop("Please insert the list of copes as list class object")}
+  n <- length(copes)
+  if(n <= 1){stop("Please insert the list of copes as list class object")}
+  
+  #img_dims <- c(91,  109 , 91)
+  img_dims <- dim(copes[[1]])
+  
+  #check mask
+  if(!is.null(mask)){
+    if(!is.character(mask) && !is.array(mask)){stop("mask must be an array or a path")}
+    if(is.character(mask)){mask =readNifti(mask)}
+    if(!all(dim(mask) == img_dims)){stop("incompatible dimensions of mask and copes")}
+  }else{
+    mask <- array(1, img_dims)
+  }
   
   family_set <- c("simes", "aorc", "beta", "higher.criticism")
   alternative_set <- c("two.sided", "greater", "lower")
   family <- match.arg(tolower(family), family_set)
   alternative <- match.arg(tolower(alternative), alternative_set)
   
-  if(is.character(mask)){mask = readNifti(mask)}
-  if(!is.list(copes)){stop("Please insert the list of copes as list class object")}
 
-  img_dims <- c(91,  109 , 91)
-  img <- array(NA, c(img_dims, length(copes)))
+  #create matrix of scores
+  img <- array(NA, c(img_dims, n))
   
-  for (sid in 1:length(copes)) {  
+  for (sid in seq(n)) {  
+    if(!(all(dim(copes[[sid]]) == img_dims))){stop("incompatible copes dimensions")}
     img[,,,sid] <- copes[[sid]]
     
   }
   
-  scores <- matrix(img,nrow=(91*109*91),ncol=length(copes))
+  scores <- matrix(img,nrow=(img_dims[1]*img_dims[2]*img_dims[3]),ncol=length(copes))
   scores[!mask,] = NA
   resO <-oneSamplePar(X=scores,alternative = alternative)
   
@@ -100,7 +118,7 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
   
   pvalues <- cbind(res$pv,res$pv_H0)
 #  pvalues = t(pvalues)
-  Statmap = array(data = resO$Test, dim = c(91,109,91))
+  Statmap = array(data = resO$Test, dim = img_dims)
   Statmap[!mask]=0
   rm(res)
   rm(scores)
@@ -129,10 +147,12 @@ pARIbrain <- function(copes, thr=NULL, mask=NULL, alpha=.05, clusters = NULL,
   
   #As first, we compute the optimal lambda
 
-  lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, delta = delta, step.down = step.down, max.step = max.step) 
+  lambda <- lambdaOpt(pvalues = pvalues, family = family, alpha = alpha, 
+                      delta = delta, step.down = step.down, max.step = max.step) 
   if(lambda == 0){lambda <- 0.05}
   #and critical vector
-  cvOpt = criticalVector(pvalues = pvalues, family = family, alpha = alpha, lambda= lambda, delta = delta)
+  cvOpt = criticalVector(pvalues = pvalues, family = family, alpha = alpha, 
+                         lambda= lambda, delta = delta)
  
   # define number of clusters
   clstr_id=sort(unique(as.vector(clusters[mask])),decreasing = TRUE)

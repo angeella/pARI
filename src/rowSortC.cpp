@@ -23,8 +23,5 @@ arma::mat rowSortC(arma::mat X) {
   return Y;
 }
 
-/*** R
-#A <- matrix(rnorm(15), 5, 3);
-#B <- rowSortC(A);
-*/
+
 
