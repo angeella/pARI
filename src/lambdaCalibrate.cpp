@@ -60,6 +60,9 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
       lambda[i] = R::pbeta(q, shape1, shape2, 1, 0);
       }
     }
+    if(family == "power"){
+      lambda = log(Y.col(bb))/log(idV/mV)*alpha;
+    }
 //take minimum over hypotheses for each permutations
     T[bb] = min(lambda);
     

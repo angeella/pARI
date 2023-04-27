@@ -2,8 +2,8 @@
 #' @description Compute critical vector curve. 
 #' @usage criticalVector(pvalues, family, alpha = 0.05, lambda, delta = 0, m = NULL)
 #' @param pvalues matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
-#' @param family string character. Choose a family of confidence envelopes to compute the critical vector. 
-#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.
+#' @param family string character. Choose a family of confidence envelopes to compute the critical vector 
+#' from \code{"simes"}, \code{"aorc"}, \code{"beta"}, \code{"higher.criticism"}, and \code{"power"}.
 #' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.
 #' @param lambda numeric value. \eqn{\lambda} value computed by \code{\link{lambdaOpt}}.
 #' @param delta numeric value. It expresses the delta value, please see the references. Default to 0. 
@@ -21,7 +21,7 @@
 #'lines(cv)
 
 criticalVector <- function(pvalues, family, alpha = 0.05, lambda, delta = 0, m = NULL){
-  family_set <- c("simes", "aorc", "beta", "higher.criticism")
+  family_set <- c("simes", "aorc", "beta", "higher.criticism", "power")
   
   family <- match.arg(tolower(family), family_set)
   #w <- dim(pvalues)[1]
@@ -43,6 +43,9 @@ criticalVector <- function(pvalues, family, alpha = 0.05, lambda, delta = 0, m =
 
   if(family=="higher.criticism"){
     cv <- sapply(c(1:m), function(x) (2*x + lambda^2 - sqrt((2*x + lambda^2)^2 - 4*x^2 * (m + lambda^2)/m))/(2*(m + lambda^2))) 
+  }
+  if(family == "power"){
+    cv <- sapply(c(1:m), function(x) (x/m)^(lambda*alpha))
   }
   
   return(cv)
