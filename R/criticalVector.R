@@ -45,7 +45,7 @@ criticalVector <- function(pvalues, family, alpha = 0.05, lambda, delta = 0, m =
     cv <- sapply(c(1:m), function(x) (2*x + lambda^2 - sqrt((2*x + lambda^2)^2 - 4*x^2 * (m + lambda^2)/m))/(2*(m + lambda^2))) 
   }
   if(family == "power"){
-    cv <- sapply(c(1:m), function(x) (x/m)^(lambda*alpha))
+    cv <- sapply(c(1:m), function(x) (x/(m + sqrt(m)))^(-lambda))
   }
   
   return(cv)

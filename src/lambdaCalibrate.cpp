@@ -61,8 +61,7 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
       }
     }
     if(family == "power"){
-      double eps = std::numeric_limits<float>::min();
-      lambda = log(Y.col(bb))/((log(idV) -log(mV) + eps)*alpha);
+      lambda = - log(Y.rows(delta, mm-1).col(bb)) / (log(idV) - log(mV + sqrt(m)));
     }
 //take minimum over hypotheses for each permutations
     T[bb] = min(lambda);
