@@ -8,27 +8,29 @@ permTest(X, B = 1000, alternative = "two.sided", seed = NULL,
 mask = NULL, rand = FALSE, label = NULL)
 }
 \arguments{
-\item{X}{data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.}
+\item{X}{Data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.}
 
-\item{B}{numeric value. Number of permutations, default to 1000.}
+\item{B}{Numeric value. Number of permutations, default to 1000.}
 
-\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{seed}{integer value. If you want to specify the seed. Default to @NULL}
+\item{seed}{Integer value. If you want to specify the seed. Default to to \code{NULL}}
 
 \item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
-Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.}
 
-\item{rand}{Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.}
+\item{rand}{Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}.}
 
-\item{label}{numeric/character vector. Labels of the observations, if \code{NULL} the columns's name are considered. Default @NULL.}
+\item{label}{Numeric/character vector. Labels of the observations, if \code{NULL} the columns's name are considered. Default to \code{NULL}.}
 }
 \value{
 Returns a list with the following objects: 
-- \code{Test}: vector with length equals \eqn{m}. Observed two-samples t-tests, one for each \eqn{m} variable, 
-- \code{Test_H0}: matrix with dimensions \eqn{m \times B-1}. Test statistics under H0,
-- \code{pv}: vector with length equals \eqn{m}. observed p-values, one for each \eqn{m} variable,
-- \code{pv_H0} matrix with dimensions \eqn{m \times B-1}. P-values under H0.
+\describe{
+   \item{Test}{Vector with length equals \eqn{m}. Observed two-samples t-tests, one for each \eqn{m} variable} 
+   \item{Test_H0}{Matrix with dimensions \eqn{m \times B-1}. Test statistics under the null hypothesis}
+   \item{pv}{Vector with length equals \eqn{m}. Observed \eqn{p}-values, one for each \eqn{m} variable}
+   \item{pv_H0}{Matrix with dimensions \eqn{m \times B-1}. \eqn{p}-values under the null hypothesis}
+}
 }
 \description{
 Performs permutation-based two-sample t-tests.

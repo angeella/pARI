@@ -1,13 +1,13 @@
 #' @title simulate normal distributed data
 #' @description Simulate normal distributed data.
 #' @usage simulateData(pi0,m,n, rho, seed = NULL, power = 0.8, alpha = 0.05)
-#' @param pi0 numeric value in `[0,1]`. Proportion of true null hypothesis.
-#' @param m numeric value. Number of variables. 
-#' @param n numeric value. Number of observations. 
-#' @param rho numeric value in `[0,1]`. Level of equi-correlation between pairs of variables.
-#' @param seed integer value. If you want to specify the seed. Default to @NULL
-#' @param power numeric value in `[0,1]`. Level of power. Default 0.8.
-#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.
+#' @param pi0 Numeric value in `[0,1]`. Proportion of true null hypothesis.
+#' @param m Numeric value. Number of variables. 
+#' @param n Numeric value. Number of observations. 
+#' @param rho Numeric value in `[0,1]`. Level of equi-correlation between pairs of variables.
+#' @param seed Integer value. If you want to specify the seed. Default to to \code{NULL}
+#' @param power Numeric value in `[0,1]`. Level of power. Default to 0.8.
+#' @param alpha Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.
 #' @author Angela Andreella
 #' @return Returns a matrix with dimensions \eqn{m \times n}.
 #' @export

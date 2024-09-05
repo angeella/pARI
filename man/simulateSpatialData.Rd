@@ -7,19 +7,19 @@
 simulateData(pi0,m,n, theta, seed = NULL, power = 0.8, alpha = 0.05)
 }
 \arguments{
-\item{pi0}{numeric value in `[0,1]`. Proportion of true null hypothesis.}
+\item{pi0}{Numeric value in `[0,1]`. Proportion of true null hypothesis.}
 
-\item{m}{numeric value. Number of variables.}
+\item{m}{Numeric value. Number of variables.}
 
-\item{n}{numeric value. Number of observations.}
+\item{n}{Numeric value. Number of observations.}
 
-\item{theta}{numeric value in `[0,1]`. Level of correlation between pairs of variables. See details}
+\item{theta}{Numeric value in `[0,1]`. Level of correlation between pairs of variables. See details}
 
-\item{seed}{integer value. If you want to specify the seed. Default to @NULL}
+\item{seed}{Integer value. If you want to specify the seed. Default to to \code{NULL}}
 
-\item{power}{numeric value in `[0,1]`. Level of power. Default 0.8.}
+\item{power}{Numeric value in `[0,1]`. Level of power. Default to 0.8.}
 
-\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.}
+\item{alpha}{Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.}
 }
 \value{
 Returns a matrix with dimensions \eqn{m \times n}.
@@ -27,11 +27,11 @@ Returns a matrix with dimensions \eqn{m \times n}.
 \description{
 Simulate normal distributed data with spatial correlation structure
 
-`theta` ($\theta$) describes how rapidly the correlation declines with respect to the distance between two voxels.
+\code{theta} (\eqn{\theta}) describes how rapidly the correlation declines with respect to the distance between two voxels.
 The three-dimensional coordinates of the voxels are defined as all combinations
-of vector $c = {1, \dots, m1/3}$, then $\Sigma_\theta = \exp(-\theta K)$ where $K$ is the matrix containing the
+of vector \eqn{c = (1, \dots, m1/3)}, then \eqn{\Sigma_\theta = \exp(-\theta K)} where \eqn{K} is the matrix containing the
 euclidean distances between the three-dimensional coordinates' voxels.
-So, $m^{1/3}$ must be an integer value.
+So, \eqn{m^{1/3}} must be an integer value.
 }
 \author{
 Angela Andreella

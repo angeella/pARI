@@ -1,20 +1,20 @@
 #' @title simulate normal distributed data 
 #' @description Simulate normal distributed data with spatial correlation structure
 #' @usage simulateData(pi0,m,n, theta, seed = NULL, power = 0.8, alpha = 0.05)
-#' @param pi0 numeric value in `[0,1]`. Proportion of true null hypothesis.
-#' @param m numeric value. Number of variables. 
-#' @param n numeric value. Number of observations. 
-#' @param theta numeric value in `[0,1]`. Level of correlation between pairs of variables. See details
-#' @param seed integer value. If you want to specify the seed. Default to @NULL
-#' @param power numeric value in `[0,1]`. Level of power. Default 0.8.
-#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.
+#' @param pi0 Numeric value in `[0,1]`. Proportion of true null hypothesis.
+#' @param m Numeric value. Number of variables. 
+#' @param n Numeric value. Number of observations. 
+#' @param theta Numeric value in `[0,1]`. Level of correlation between pairs of variables. See details
+#' @param seed Integer value. If you want to specify the seed. Default to to \code{NULL}
+#' @param power Numeric value in `[0,1]`. Level of power. Default to 0.8.
+#' @param alpha Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.
 #' @author Angela Andreella
 #' @return Returns a matrix with dimensions \eqn{m \times n}.
-#' @description `theta` ($\theta$) describes how rapidly the correlation declines with respect to the distance between two voxels.
+#' @description \code{theta} (\eqn{\theta}) describes how rapidly the correlation declines with respect to the distance between two voxels.
 #' The three-dimensional coordinates of the voxels are defined as all combinations
-#' of vector $c = {1, \dots, m1/3}$, then $\Sigma_\theta = \exp(-\theta K)$ where $K$ is the matrix containing the
+#' of vector \eqn{c = (1, \dots, m1/3)}, then \eqn{\Sigma_\theta = \exp(-\theta K)} where \eqn{K} is the matrix containing the
 #' euclidean distances between the three-dimensional coordinates' voxels.
-#' So, $m^{1/3}$ must be an integer value. 
+#' So, \eqn{m^{1/3}} must be an integer value. 
 #' @export
 #' @importFrom stats rnorm
 #' @importFrom stats power.t.test

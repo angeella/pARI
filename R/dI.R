@@ -1,17 +1,20 @@
 #' @title Lower bound for the number of true discoveries
-#' @description Calculates (1-alpha) lower confidence bounds for the set-wise of false null hypotheses.
+#' @description Calculates 1-\eqn{\alpha} lower confidence bound for the set-wise of false null hypotheses.
 #' @usage dI(ix, cv, pvalues, iterative, approx, ncomb, ...)
-#' @param ix numeric vector. It refers to the set-wise hypotheses considered. 
-#' @param cv numeric vector. It refers to the critical vector computed by \code{\link{criticalVector}}.
-#' @param pvalues If \code{iterative = TRUE} matrix of pvalues with dimensions \eqn{m \times B}. If \code{iterative = FALSE} vector of \eqn{m} observed pvalues.
-#' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.
-#' @param approx Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time. Default @TRUE
-#' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered. Default 100.
-#' @param ... further arguments for the iterative approach, i.e., \code{iterative = TRUE}.
+#' @param ix Numeric vector: set-wise hypotheses considered. 
+#' @param cv Numeric vector: critical vector computed by \code{\link{criticalVector}}.
+#' @param pvalues If \code{iterative = TRUE} you must put here the matrix of \eqn{p}-values with 
+#' dimensions \eqn{m \times B} where \eqn{m} is the number of variables and \eqn{B} the number of permutations. 
+#' Instead, if \code{iterative = FALSE}, you can put directly the vector of \eqn{m} observed \eqn{p}-values.
+#' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method is applied (computationally demanding). Default to \code{FALSE}. Please see the reference below.
+#' @param approx Boolean value. Default to \code{TRUE}. If you are analyzing high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time. Please see the reference below.
+#' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random sub collections (level of approximation) considered. Default to 100.
+#' @param ... Further arguments for the iterative approach, i.e., \code{iterative = TRUE}.
 #' @export
 #' @author Angela Andreella
-#' @return numeric value: the lower confidence bound for the number of true discoveries concerning the cluster \code{ix} specified.
+#' @return Numeric value: the lower confidence bound for the number of true discoveries concerning the cluster \code{ix} specified.
 #' @importFrom utils combn
+#' @references Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine, 42(14), 2311-2340.
 #' @examples
 #'db <- simulateData(pi0 = 0.7, m = 100, n = 20, rho = 0)
 #'out <- signTest(X = db)

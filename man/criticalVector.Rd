@@ -7,21 +7,23 @@
 criticalVector(pvalues, family, alpha = 0.05, lambda, delta = 0, m = NULL)
 }
 \arguments{
-\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
+\item{pvalues}{Matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
 
-\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector. 
-from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{String character. Name of the family confidence envelope to compute the critical vector 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"}, \code{"higher.criticism"}, and \code{"power"}.
+Default to "simes".}
 
-\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.}
+\item{alpha}{Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.}
 
-\item{lambda}{numeric value. \eqn{\lambda} value computed by \code{\link{lambdaOpt}}.}
+\item{lambda}{Numeric value. \eqn{\lambda} value computed by \code{\link{lambdaOpt}}.
+Default to 1.}
 
-\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
+\item{delta}{Numeric value. \eqn{\delta} value. Please see the reference below. Default to 0.}
 
-\item{m}{numeric value. Number of hypothesis. Default @NULL.}
+\item{m}{Numeric value. Number of hypothesis. Default to \code{NULL}.}
 }
 \value{
-numeric vector. Critical vector curve with length \eqn{m}.
+Numeric vector. Critical vector curve with length \eqn{m}.
 }
 \description{
 Compute critical vector curve.
@@ -33,6 +35,12 @@ pv <- cbind(out$pv, out$pv_H0)
 cv <- criticalVector(pvalues = pv, family = "simes", lambda = 0.05)
 plot(sort(pv[,1]), type = "l")
 lines(cv)
+}
+\references{
+Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine, 42(14), 2311-2340.
+}
+\seealso{
+\code{\link{lambdaOpt}}
 }
 \author{
 Angela Andreella

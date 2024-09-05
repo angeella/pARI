@@ -1,20 +1,21 @@
 #' @title Permutatation-based one-sample t-tests
 #' @description Performs sign-flipped one-sample t-tests.
 #' @usage signTest(X, B = 1000, alternative = "two.sided", seed = NULL, mask = NULL, rand = FALSE)
-#' @param X data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.
-#' @param B numeric value. Number of permutations, default to 1000. 
-#' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
-#' @param seed integer value. If you want to specify the seed. Default to @NULL
+#' @param X Data matrix where rows represent the \eqn{m} variables and columns the \eqn{n} observations.
+#' @param B Numeric value. Number of permutations, default to 1000. 
+#' @param alternative Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param seed Integer value. If you want to specify the seed. Default to to \code{NULL}
 #' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
-#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
-#' @param rand Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
+#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}.
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: 
-#' - \code{Test}: vector with length equals \eqn{m}. Observed one-sample t-tests, one for each \eqn{m} variable, 
-#' - \code{Test_H0}: matrix with dimensions \eqn{m \times B-1}. Test statistics under H0,
-#' - \code{pv}: vector with length equals \eqn{m}. observed p-values, one for each \eqn{m} variable,
-#' - \code{pv_H0} matrix with dimensions \eqn{m \times B-1}. P-values under H0.
-#' @export
+#' \describe{
+#'    \item{Test}{Vector with length equals \eqn{m}. Observed two-samples t-tests, one for each \eqn{m} variable} 
+#'    \item{Test_H0}{Matrix with dimensions \eqn{m \times B-1}. Test statistics under the null hypothesis}
+#'    \item{pv}{Vector with length equals \eqn{m}. Observed \eqn{p}-values, one for each \eqn{m} variable}
+#'    \item{pv_H0}{Matrix with dimensions \eqn{m \times B-1}. \eqn{p}-values under the null hypothesis}
+#' }#' @export
 #' @importFrom stats pnorm
 #' @importFrom RNifti readNifti
 #' @importFrom matrixStats rowRanks

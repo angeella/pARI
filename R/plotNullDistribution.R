@@ -1,24 +1,26 @@
-#' @title Plot permutation p-values distribution
-#' @description Create a plot of permutation pvalues with corresponding specified critical vectors.
+#' @title Plot permutation \eqn{p}-values distribution
+#' @description Create a plot of permutation-based \eqn{p}-values with corresponding specified critical vectors.
 #' @usage plotNullDistribution(P=NULL,family="simes",alpha = 0.05, 
 #' path = getwd(), name = "plot", delta = 0,
 #' copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000)
-#' @param P matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.
-#' @param family string character. Choose a family of confidence envelopes to compute the critical vector. 
-#' from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}. If more than one critical vector are considered, it must be a vector. Default \code{"simes"}.
-#' @param alpha numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.1.
-#' @param path character string. Path to save the plot. The path does not must end with \code{/}. Default to \code{getwd()}.
-#' @param name character string. The name of file that will be used to save the plot. Default to name.
-#' @param delta numeric value. It expresses the delta value, please see the references. 
-#' Default to 0. If more than one critical vector are considered, \code{delta} must be a vector having length equals to the length of critical vectors specified in \code{family}.
-#' @param copes list of NIfTI file if \code{P = NULL}. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
+#' @param P Matrix of \eqn{p}-values with dimensions \eqn{m \times B} where \eqn{m} is the number of variables 
+#' and \eqn{B} the number of permutations used instead of the data matrix \code{X}. Default to \code{NULL}.
+#' @param family String character. Name of the family confidence envelope to compute the critical vector 
+#' from \code{"simes"}, \code{"aorc"}, \code{"beta"}, \code{"higher.criticism"}, and \code{"power"}.
+#' Default to "simes". If more than one critical vector are considered, it must be a vector. 
+#' @param alpha Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.
+#' @param path Character string. Path to save the plot. The path does not must end with \code{/}. Default to \code{getwd()}.
+#' @param name Character string. The name of file that will be used to save the plot. Default to "plot".
+#' @param delta Numeric value. \eqn{\delta} value. Please see the reference below. Default to 0. 
+#' If more than one critical vector are considered, \code{delta} must be a vector having length equals to the length of the vector specified in \code{family}.
+#' @param copes List of NIfTI file. The list of copes, i.e., contrasts maps, one for each subject used to compute the statistical tests.
 #' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
-#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
-#' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
-#' @param rand Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.
-#' @param B numeric value. Number of permutations, default to 1000. 
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
+#' @param alternative Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}.
+#' @param B Numeric value. Number of permutations, default to 1000. 
 #' @author Angela Andreella
-#' @return Save a plot in \code{path} with name specified in \code{name} describing the p-values null distribution with critical value curve and observed pvalues in red.
+#' @return Save a plot in \code{path} with name specified in \code{name} describing the \eqn{p}-values null distribution with critical value curve and observed \eqn{p}-values in red.
 #' @export
 #' @importFrom grDevices png
 #' @importFrom grDevices dev.off
@@ -26,6 +28,7 @@
 #' @importFrom graphics lines
 #' @importFrom grDevices rainbow
 #' @importFrom graphics legend
+#' @references Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine, 42(14), 2311-2340.
 #' @examples 
 #' \dontrun{
 #'db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
@@ -38,7 +41,7 @@ plotNullDistribution <- function(P=NULL,family="simes",alpha = 0.05,
                                  path = getwd(), name = "plot", delta = 0,
                                  copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000){
   
-  family_set <- c("simes", "aorc", "beta", "higher.criticism")
+  family_set <- c("simes", "aorc", "beta", "higher.criticism", "power")
   fam_match <- function(x) {match.arg(tolower(x), family_set)}
   alternative_set <- c("two.sided", "greater", "lower")
   alternative <- match.arg(tolower(alternative), alternative_set)

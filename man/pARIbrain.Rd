@@ -10,56 +10,57 @@ silent=FALSE, family = "simes", delta = 0, B = 1000, rand = FALSE,
 iterative = FALSE, approx = TRUE, ncomb = 100, step.down = FALSE, max.step = 10, ...)
 }
 \arguments{
-\item{copes}{list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
+\item{copes}{List of NIfTI file. The list of copes, i.e., contrasts maps, one for each subject used to compute the statistical tests.}
 
-\item{thr}{numeric value. Threshold used to construct the cluster map. Default @NULL.}
+\item{thr}{Numeric value. Threshold used to construct the cluster map. Default to \code{NULL}.}
 
 \item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
-Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.}
 
-\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.}
+\item{alpha}{Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.}
 
 \item{clusters}{NIfTI file or character string. 3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) NIfTI file name. 
 If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals \code{thr}.}
 
-\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{summary_stat}{character string. Choose among \code{=c("max", "center-of-mass")}.}
+\item{summary_stat}{Character string. Choose among \code{=c("max", "center-of-mass")}.}
 
-\item{silent}{Boolean value. Default @FALSE. If @TRUE the function prints the results.}
+\item{silent}{Boolean value. Default to \code{FALSE}. If \code{TRUE} the function prints the results.}
 
-\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector 
-from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.#' @param alpha alpha level.}
+\item{family}{String character. Name of the family confidence envelope to compute the critical vector 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"}, \code{"higher.criticism"}, and \code{"power"}.
+Default to "simes".}
 
-\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
+\item{delta}{Numeric value. \eqn{\delta} value. Please see the reference below. Default to 0.}
 
-\item{B}{numeric value. Number of permutations, default to 1000.}
+\item{B}{Numeric value. Number of permutations, default to 1000.}
 
-\item{rand}{Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.}
+\item{rand}{Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}. Please see \code{\link{signTest}}}
 
-\item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method for improvement of confidence envelopes is applied. Default @FALSE.}
+\item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method is applied (computationally demanding). Default to \code{FALSE}. Please see the reference below.}
 
-\item{approx}{Boolean value. Default @TRUE. If you are treating high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time.}
+\item{approx}{Boolean value. Default to \code{TRUE}. If you are analyzing high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time. Please see the reference below.}
 
-\item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random subcollections (level of approximation) considered.}
+\item{ncomb}{Numeric value. If \code{approx = TRUE}, you must decide how many random sub collections (level of approximation) considered. Default to 100.}
 
-\item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put @TRUE.}
+\item{step.down}{Boolean value. Default to \code{FALSE} If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}. Please see the reference below.}
 
 \item{max.step}{Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.}
 
 \item{...}{further arguments. See \code{signTest}.}
 }
 \value{
-A list with elements
-- out: data.frame containing the size, the number of false null hypotheses, 
-the number of true null hypotheses, the lower bound for the true discovery proportion, and other
-statistics for each cluster.
-- clusters: matrix describing the clusters analyzed.
+A list with elements:
+\describe{
+ \item{out}{Data.frame containing the size, the number of false null hypotheses, the number of true null hypotheses, the lower bound for the true discovery proportion, and other statistics for each cluster.}
+ \item{clusters}{Matrix describing the clusters analyzed.}
+}
 }
 \description{
-The main function for brain imaging All-Resolutions Inference (ARI) method based on critical vectors constructed 
-using the p-values permutation distribution. The function computes simultaneous lower bounds for the number of true discoveries 
-for each set of hypotheses specified in \code{ix} controlling family-wise error rate.
+The main function for All-Resolutions Inference (ARI) method based on the critical vector constructed 
+using the \eqn{p}-values permutation distribution. The function computes simultaneous lower bounds for the number of true discoveries 
+for each set of hypotheses specified in \code{ix} controlling family-wise error rate at level \code{alpha}.
 }
 \examples{
 \dontrun{
@@ -86,7 +87,10 @@ Rosenblatt, Jonathan D., et al. "All-resolutions inference for brain imaging." N
 
 For permutation-based All-Resolutions Inference see:
 
-Andreella, Angela, et al. "Permutation-based true discovery proportions for fMRI cluster analysis." arXiv preprint arXiv:2012.00368 (2020).
+Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine, 42(14), 2311-2340.
+}
+\seealso{
+\code{\link{signTest}}, \code{\link{lambdaOpt}},  \code{\link{criticalVector}}
 }
 \author{
 Angela Andreella

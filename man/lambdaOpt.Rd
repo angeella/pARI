@@ -8,32 +8,40 @@ lambdaOpt(pvalues, family, alpha = 0.05, delta = 0, step.down = FALSE,
  max.step = 10, m = NULL)
 }
 \arguments{
-\item{pvalues}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
+\item{pvalues}{Matrix of \eqn{p}-values with dimensions \eqn{m \times B} where \eqn{m} is the number of variables 
+and \eqn{B} the number of permutations used instead of the data matrix \code{X}. Default to \code{NULL}.}
 
-\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector 
-from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}.}
+\item{family}{String character. Name of the family confidence envelope to compute the critical vector 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"}, \code{"higher.criticism"}, and \code{"power"}.
+Default to "simes".}
 
-\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.05.}
+\item{alpha}{Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.}
 
-\item{delta}{numeric value. It expresses the delta value, please see the references. Default to 0.}
+\item{delta}{Numeric value. \eqn{\delta} value. Please see the reference below. Default to 0.}
 
-\item{step.down}{Boolean value. Default @FALSE If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}.}
+\item{step.down}{Boolean value. Default to \code{FALSE} If you want to compute the lambda calibration parameter using the step-down approach put \code{TRUE}. Please see the reference below.}
 
 \item{max.step}{Numeric value. Default to 10. Maximum number of steps for the step down approach, so useful when \code{step.down = TRUE}.}
 
-\item{m}{numeric value. Number of hypothesis. Default @NULL.}
+\item{m}{Numeric value. Number of hypotheses. Default to \code{NULL}.}
 }
 \value{
-numeric value. It expresses the lambda parameter estimate, please see package references.
+Numeric value. \eqn{\lambda} parameter estimate.
 }
 \description{
-\code{lambdaOpt} computes the optimal lambda calibration parameter used in the critical vector.
+Computes the optimal lambda calibration parameter used in the critical vector \code{\link{criticalVector}}.
 }
 \examples{
 db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
 out <- signTest(X = db)
 pv <- cbind(out$pv, out$pv_H0)
 cv <- lambdaOpt(pvalues = pv, family = "simes", alpha = 0.05)
+}
+\references{
+Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine, 42(14), 2311-2340.
+}
+\seealso{
+\code{\link{criticalVector}}
 }
 \author{
 Angela Andreella

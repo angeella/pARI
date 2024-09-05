@@ -1,14 +1,14 @@
 #' @title Create Statistical Parametric Mapping (SPM)
-#' @description It creates the statistical parametric mapping in NIfTI format.
+#' @description Creates the statistical parametric mapping in NIfTI format.
 #' @usage Statmap(copes, alternative = "two.sided", path = getwd(), 
 #' name = "map", Pmap = FALSE, mask = NULL)
-#' @param copes list of NIfTI file. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.
-#' @param alternative character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
-#' @param path character string. Path to save the NIfTI file. The path does not must end with \code{/}.
-#' @param name character string. The name of the map NIfTI file that will be used.
-#' @param Pmap Boolean value. If \code{TRUE} the SPM of the pvalues is returned. Default @FALSE.
+#' @param copes List of NIfTI file. The list of copes, i.e., contrasts maps, one for each subject used to compute the statistical tests.
+#' @param alternative Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
+#' @param path Character string. Path to save the plot. The path does not must end with \code{/}. Default to \code{getwd()}.
+#' @param name Character string. The name of file that will be used to save the plot. Default to "map".
+#' @param Pmap Boolean value. If \code{TRUE} the SPM of the \eqn{p}-values is returned. Default to \code{FALSE}.
 #' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
-#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.
+#' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
 #' @author Angela Andreella
 #' @return Save the Statistical Parametric Mapping Nifti file in \code{path} with name specified in \code{name}.
 #' @export

@@ -200,7 +200,7 @@ res_ARI=ARIbrain::ARI(Pmap = Pmap, clusters= clstr, mask=mask, Statmap = Statmap
 ```
 # References
 
-Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation‐based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine.
+Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine.
 
 Rosenblatt, J. D., Finos, L., W., W. D., Solari, A., and Goeman, J. J. (2018). All-resolutions inference for brain imaging. NeuroImage, 181:786-796.
 

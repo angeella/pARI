@@ -2,43 +2,45 @@
 % Please edit documentation in R/plotNullDistribution.R
 \name{plotNullDistribution}
 \alias{plotNullDistribution}
-\title{Plot permutation p-values distribution}
+\title{Plot permutation \eqn{p}-values distribution}
 \usage{
 plotNullDistribution(P=NULL,family="simes",alpha = 0.05, 
 path = getwd(), name = "plot", delta = 0,
 copes=NULL,mask=NULL, alternative = "two.sided", rand = FALSE, B = 1000)
 }
 \arguments{
-\item{P}{matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
+\item{P}{Matrix of \eqn{p}-values with dimensions \eqn{m \times B} where \eqn{m} is the number of variables 
+and \eqn{B} the number of permutations used instead of the data matrix \code{X}. Default to \code{NULL}.}
 
-\item{family}{string character. Choose a family of confidence envelopes to compute the critical vector. 
-from \code{"simes"}, \code{"aorc"}, \code{"beta"} and \code{"higher.criticism"}. If more than one critical vector are considered, it must be a vector. Default \code{"simes"}.}
+\item{family}{String character. Name of the family confidence envelope to compute the critical vector 
+from \code{"simes"}, \code{"aorc"}, \code{"beta"}, \code{"higher.criticism"}, and \code{"power"}.
+Default to "simes". If more than one critical vector are considered, it must be a vector.}
 
-\item{alpha}{numeric value in `[0,1]`. It expresses the alpha level to control the family-wise error rate. Default 0.1.}
+\item{alpha}{Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.}
 
-\item{path}{character string. Path to save the plot. The path does not must end with \code{/}. Default to \code{getwd()}.}
+\item{path}{Character string. Path to save the plot. The path does not must end with \code{/}. Default to \code{getwd()}.}
 
-\item{name}{character string. The name of file that will be used to save the plot. Default to name.}
+\item{name}{Character string. The name of file that will be used to save the plot. Default to "plot".}
 
-\item{delta}{numeric value. It expresses the delta value, please see the references. 
-Default to 0. If more than one critical vector are considered, \code{delta} must be a vector having length equals to the length of critical vectors specified in \code{family}.}
+\item{delta}{Numeric value. \eqn{\delta} value. Please see the reference below. Default to 0. 
+If more than one critical vector are considered, \code{delta} must be a vector having length equals to the length of the vector specified in \code{family}.}
 
-\item{copes}{list of NIfTI file if \code{P = NULL}. The list of copes, i.e., constrasts maps, one for each subject used to compute the statistical tests.}
+\item{copes}{List of NIfTI file. The list of copes, i.e., contrasts maps, one for each subject used to compute the statistical tests.}
 
 \item{mask}{NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
-Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that non of the voxels have to be excluded.}
+Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.}
 
-\item{alternative}{character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
+\item{alternative}{Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{rand}{Boolean value. Default @FALSE. If \code{rand = TRUE}, the p-values are computed by \code{\link{rowRanks}}.}
+\item{rand}{Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}.}
 
-\item{B}{numeric value. Number of permutations, default to 1000.}
+\item{B}{Numeric value. Number of permutations, default to 1000.}
 }
 \value{
-Save a plot in \code{path} with name specified in \code{name} describing the p-values null distribution with critical value curve and observed pvalues in red.
+Save a plot in \code{path} with name specified in \code{name} describing the \eqn{p}-values null distribution with critical value curve and observed \eqn{p}-values in red.
 }
 \description{
-Create a plot of permutation pvalues with corresponding specified critical vectors.
+Create a plot of permutation-based \eqn{p}-values with corresponding specified critical vectors.
 }
 \examples{
 \dontrun{
@@ -48,6 +50,9 @@ pv <- cbind(out$pv, out$pv_H0)
 plotNullDistribution(P = pv)
 }
 
+}
+\references{
+Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine, 42(14), 2311-2340.
 }
 \author{
 Angela Andreella
