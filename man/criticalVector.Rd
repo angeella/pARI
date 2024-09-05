@@ -4,10 +4,10 @@
 \alias{criticalVector}
 \title{Critical vector}
 \usage{
-criticalVector(pvalues, family, alpha = 0.05, lambda, delta = 0, m = NULL)
+criticalVector(pvalues, family = "simes", alpha = 0.05, lambda, delta = 1, m = NULL)
 }
 \arguments{
-\item{pvalues}{Matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to @NULL.}
+\item{pvalues}{Matrix of pvalues with dimensions \eqn{m \times B} used instead of the data matrix \code{X}. Default to \code{NULL}.}
 
 \item{family}{String character. Name of the family confidence envelope to compute the critical vector 
 from \code{"simes"}, \code{"aorc"}, \code{"beta"}, \code{"higher.criticism"}, and \code{"power"}.
@@ -18,7 +18,7 @@ Default to "simes".}
 \item{lambda}{Numeric value. \eqn{\lambda} value computed by \code{\link{lambdaOpt}}.
 Default to 1.}
 
-\item{delta}{Numeric value. \eqn{\delta} value. Please see the reference below. Default to 0.}
+\item{delta}{Numeric value. \eqn{\delta} value. Please see the reference below. Default to 1.}
 
 \item{m}{Numeric value. Number of hypothesis. Default to \code{NULL}.}
 }
@@ -30,9 +30,9 @@ Compute critical vector curve.
 }
 \examples{
 db <- simulateData(pi0 = 0.8, m = 100, n = 20, rho = 0)
-out <- signTest(X = db)
+out <- pARI::signTest(X = db)
 pv <- cbind(out$pv, out$pv_H0)
-cv <- criticalVector(pvalues = pv, family = "simes", lambda = 0.05)
+cv <- criticalVector(pvalues = pv, family = "simes", lambda = 1)
 plot(sort(pv[,1]), type = "l")
 lines(cv)
 }

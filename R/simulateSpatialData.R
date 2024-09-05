@@ -1,6 +1,6 @@
 #' @title simulate normal distributed data 
 #' @description Simulate normal distributed data with spatial correlation structure
-#' @usage simulateData(pi0,m,n, theta, seed = NULL, power = 0.8, alpha = 0.05)
+#' @usage simulateSpatialData(pi0,m,n, theta, seed = NULL, power = 0.8, alpha = 0.05)
 #' @param pi0 Numeric value in `[0,1]`. Proportion of true null hypothesis.
 #' @param m Numeric value. Number of variables. 
 #' @param n Numeric value. Number of observations. 
@@ -18,6 +18,7 @@
 #' @export
 #' @importFrom stats rnorm
 #' @importFrom stats power.t.test
+#' @importFrom stats dist
 
 
 simulateSpatialData <- function(pi0,m,n, theta, seed = NULL, power = 0.8, alpha = 0.05){

@@ -4,7 +4,7 @@
 \alias{simulateSpatialData}
 \title{simulate normal distributed data}
 \usage{
-simulateData(pi0,m,n, theta, seed = NULL, power = 0.8, alpha = 0.05)
+simulateSpatialData(pi0,m,n, theta, seed = NULL, power = 0.8, alpha = 0.05)
 }
 \arguments{
 \item{pi0}{Numeric value in `[0,1]`. Proportion of true null hypothesis.}

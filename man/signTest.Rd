@@ -27,14 +27,14 @@ Returns a list with the following objects:
    \item{Test_H0}{Matrix with dimensions \eqn{m \times B-1}. Test statistics under the null hypothesis}
    \item{pv}{Vector with length equals \eqn{m}. Observed \eqn{p}-values, one for each \eqn{m} variable}
    \item{pv_H0}{Matrix with dimensions \eqn{m \times B-1}. \eqn{p}-values under the null hypothesis}
-}#' @export
+}
 }
 \description{
 Performs sign-flipped one-sample t-tests.
 }
 \examples{
 X <- matrix(rnorm(100*20), ncol=20)
-out <- signTest(X = X, alternative = "two.sided")
+out <- signTest(X = X, alternative = "two.sided") 
 }
 \author{
 Angela Andreella

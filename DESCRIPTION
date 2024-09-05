@@ -23,7 +23,7 @@ Suggests:
     knitr,
     rmarkdown,
     gridExtra
-VignetteBuilder: knitr
+VignetteBuilder: rmarkdown
 RoxygenNote: 7.3.2
 Encoding: UTF-8
 Language: en-US

@@ -1,14 +1,19 @@
 ---
-title: "pARI package"
+title: "intro"
 output: rmarkdown::html_vignette
-date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{pARI package}
+  %\VignetteIndexEntry{intro}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ```{r, include = FALSE, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(

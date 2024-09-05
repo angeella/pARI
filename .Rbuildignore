@@ -1,7 +1,6 @@
 ^.git$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^doc$
 ^Meta$
 ^sticker.png$
 ^README.Rmd$
