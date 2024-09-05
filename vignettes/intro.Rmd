@@ -8,12 +8,6 @@ vignette: >
 ---
 
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
 ```{r, include = FALSE, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
@@ -23,6 +17,8 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 ```
+
+
 
 # Permutation-based All-Resolutions Inference
 

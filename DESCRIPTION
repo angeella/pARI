@@ -1,9 +1,9 @@
 Package: pARI
 Type: Package
 Title: Permutation-Based All-Resolutions Inference
-Version: 1.1.1
-Date: 2022-01-09
-Authors@R: c(person(given="Angela", family="Andreella", comment=c("Main author", ORCID  = "0000-0002-1141-3041"), email="angela.andreella@unipd.it", role=c("aut", "cre")))
+Version: 1.1.2
+Date: 2024-05-09
+Authors@R: c(person(given="Angela", family="Andreella", comment=c("Main author", ORCID  = "0000-0002-1141-3041"), email="angela.andreella@unive.it", role=c("aut", "cre")))
 Description: Computes the All-Resolution Inference method in the permutation framework, i.e., simultaneous lower confidence bounds for the number of true discoveries. <doi.org/10.1002/sim.9725>. 
 Depends: R (>= 3.5.0)
 License: GPL (>= 2)
@@ -21,9 +21,8 @@ LinkingTo:
     Rcpp, RcppArmadillo
 Suggests: 
     knitr,
-    rmarkdown,
-    gridExtra
-VignetteBuilder: rmarkdown
+    rmarkdown
+VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Encoding: UTF-8
 Language: en-US

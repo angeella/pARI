@@ -3,18 +3,13 @@ this is a resubmission of package 'pARI'. I have added the following changes: up
 Please upload to CRAN.
 Best, Angela
 
-# Package pARI 1.1.1
 
-Reporting is done by packager version 1.13.0
+## R CMD check results
 
+0 errors | 0 warnings | 1 note
 
 ## Test environments
-- R version 4.0.3 (2020-10-10)
-   Platform: x86_64-w64-mingw32/x64 (64-bit)
-   Running under: Windows 10 x64 (build 19043)
-   ERROR: No check log found!
-- win-builder (devel)
 
-## Local test results
-
-## Local meta results
+R version 4.4.0 (2024-04-24 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 22631)
