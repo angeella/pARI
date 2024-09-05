@@ -99,7 +99,7 @@ if (!requireNamespace("dynamicTreeCut", quietly = TRUE)){
 }
     
 
-#BiocManager::install(c("Biobase","genefilter"))
+#BiocManager::install(c("Biobase","genefilter", "EnrichmentBrowser"))
 
 library(Biobase)
 library(genefilter)
@@ -143,18 +143,22 @@ out <- c()
 for(i in seq(pathways)){
   
   ix <- which(rownames(edata) %in% pathways[[i]])
-  
+  if(length(ix)!=0){
   out[i] <-pARI(X = edata,alpha = 0.05, test.type = "two_samples",
            label = as.factor(pdata$population),
            ix = ix, family = "simes", clusters = TRUE)$TDP
+  }else{
+  out[i] <- NA
+  }
 }
 
 db <- data.frame(TDP = out, size = sapply(seq(pathways), function(x) length(which(rownames(edata) %in% pathways[[x]]))), name = names(pathways))
 ```
 
-So, we represent the lower confidence bounds for the proportion of differentially expressed genes (TDP) inside each pathway in the following plot:
+So, we represent the lower confidence bounds for the proportion of differential expressed genes (TDP) inside each pathway in the following plot:
 
 ```{r, eval = FALSE}
+library(tidyverse)
 db <- db %>% dplyr::filter(!is.na(TDP) | TDP!=0) %>% dplyr::filter(size >10) 
 
 db$name = factor(db$name, levels=db[order(db$TDP), "name"])
@@ -177,7 +181,7 @@ First, let download the data from the `fMRIdata` package:
 
 ```{r, eval = FALSE}
 if (!requireNamespace("fMRIdata", quietly = TRUE)){
-  remotes::install_github(angeella/fMRIdata)
+  remotes::install_github("angeella/fMRIdata")
 }
 library(fMRIdata)
 data(Auditory_clusterTH3_2)
@@ -214,4 +218,4 @@ Finally, you can also produce the True Discovey Proportion brain map using the `
 
 If you use the `pARI` package, please cite the following paper:
 
-- Andreella, A., Hemerik, J., Weeda, W., Finos, L., and Goeman, J. (2020). Permutation-based true discovery proportions for fMRI cluster analysis, https://arxiv.org/abs/2008.04631
+Andreella, A., Hemerik, J., Finos, L., Weeda, W., & Goeman, J. (2023). Permutation-based true discovery proportions for functional magnetic resonance imaging cluster analysis. Statistics in Medicine, 42(14), 2311-2340.
