@@ -12,7 +12,7 @@
 #' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
 #' @param alpha Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.
 #' @param clusters NIfTI file or character string. 3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) NIfTI file name. 
-#' If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals \code{thr}.
+#' If \code{cluster=NULL} the cluster map is computed by the \code{cluster_threshold} function with threshold equals \code{thr}.
 #' @param alternative Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
 #' @param summary_stat Character string. Choose among \code{=c("max", "center-of-mass")}. 
 #' @param silent Boolean value. Default to \code{FALSE}. If \code{TRUE} the function prints the results.
@@ -21,7 +21,7 @@
 #' Default to "simes".
 #' @param delta Numeric value. \eqn{\delta} value. Please see the reference below. Default to 0. 
 #' @param B Numeric value. Number of permutations, default to 1000. 
-#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}. Please see \code{\link{signTest}}
+#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{rowRanks}. Please see \code{\link{signTest}}
 #' @param iterative Boolean value. If \code{iterative = TRUE}, the iterative method is applied (computationally demanding). Default to \code{FALSE}. Please see the reference below.
 #' @param approx Boolean value. Default to \code{TRUE}. If you are analyzing high dimensional data, we suggest to put \code{approx = TRUE} to speed up the computation time. Please see the reference below.
 #' @param ncomb Numeric value. If \code{approx = TRUE}, you must decide how many random sub collections (level of approximation) considered. Default to 100.

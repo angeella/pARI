@@ -17,7 +17,7 @@
 #' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
 #' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
 #' @param alternative Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.
-#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}.
+#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{rowRanks}.
 #' @param B Numeric value. Number of permutations, default to 1000. 
 #' @author Angela Andreella
 #' @return Save a plot in \code{path} with name specified in \code{name} describing the \eqn{p}-values null distribution with critical value curve and observed \eqn{p}-values in red.

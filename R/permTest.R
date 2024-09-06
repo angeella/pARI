@@ -8,7 +8,7 @@
 #' @param seed Integer value. If you want to specify the seed. Default to to \code{NULL}
 #' @param mask NIfTI file or character string. 3D array of logical values (i.e. \code{TRUE/FALSE} in/out of the brain). 
 #' Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it is assumed that none of the voxels have to be excluded.
-#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}.
+#' @param rand Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{rowRanks}.
 #' @param label Numeric/character vector. Labels of the observations, if \code{NULL} the columns's name are considered. Default to \code{NULL}. 
 #' @author Angela Andreella
 #' @return Returns a list with the following objects: 
