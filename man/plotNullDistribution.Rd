@@ -32,7 +32,7 @@ Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it i
 
 \item{alternative}{Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
-\item{rand}{Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}.}
+\item{rand}{Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{rowRanks}.}
 
 \item{B}{Numeric value. Number of permutations, default to 1000.}
 }

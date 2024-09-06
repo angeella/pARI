@@ -20,7 +20,7 @@ Alternatively it may be a (character) NIfTI file name. If \code{mask=NULL}, it i
 \item{alpha}{Numeric value in `[0,1]`. \eqn{\alpha} level to control the family-wise error rate. Default to 0.05.}
 
 \item{clusters}{NIfTI file or character string. 3D array of cluster ids (0 when voxel does not belong to any cluster) or a (character) NIfTI file name. 
-If \code{cluster=NULL} the cluster map is computed by the \code{\link{cluster_threshold}} function with threshold equals \code{thr}.}
+If \code{cluster=NULL} the cluster map is computed by the \code{cluster_threshold} function with threshold equals \code{thr}.}
 
 \item{alternative}{Character string. It refers to the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"lower"}.}
 
@@ -36,7 +36,7 @@ Default to "simes".}
 
 \item{B}{Numeric value. Number of permutations, default to 1000.}
 
-\item{rand}{Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{\link{rowRanks}}. Please see \code{\link{signTest}}}
+\item{rand}{Boolean value. Default to \code{FALSE}. If \code{rand = TRUE}, the \eqn{p}-values are computed by \code{rowRanks}. Please see \code{\link{signTest}}}
 
 \item{iterative}{Boolean value. If \code{iterative = TRUE}, the iterative method is applied (computationally demanding). Default to \code{FALSE}. Please see the reference below.}
 
