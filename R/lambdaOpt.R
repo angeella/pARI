@@ -38,7 +38,6 @@ lambdaOpt <- function(pvalues, family = "simes", alpha = 0.05, delta = 0, step.d
   }
    ##TODO implementation step-down for beta
   lambdaE <- lambdaCalibrate(X = pvalues, alpha = alpha, delta = delta, family = family, m = m)
-  
 
   if(step.down){
     convergence <- FALSE

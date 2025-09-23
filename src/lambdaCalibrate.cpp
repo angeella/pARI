@@ -6,7 +6,6 @@
 using namespace Rcpp;
 
 // [[Rcpp::depends(RcppArmadillo)]]
-// [[Rcpp::plugins(cpp11)]] 
 // [[Rcpp::export]] 
 
 
@@ -47,17 +46,21 @@ NumericVector lambdaCalibrate(arma::mat X, arma::vec alpha, double delta, std::s
     }
     if(family == "higher.criticism"){
 
-     lambda = (sqrt(mV)%((idV/mV) - Y.col(bb)))/(sqrt(Y.col(bb)%(1-Y.col(bb))));
+    lambda = (sqrt(mV)%((idV/mV) - Y.col(bb)))/(sqrt(Y.col(bb)%(1-Y.col(bb))));
       
+   // lambda = sqrt(-pow(idV - Y.col(bb)%mV,2)/(mV%(pow(Y.col(bb),2)-Y.col(bb))));
+
     }
     if(family == "beta"){
+      const int d = static_cast<int>(delta);
 
-      for (int i=0; i<mm; i++) {
-      long double q = arma::conv_to<double>::from(Y.col(bb).row(i));
-      double shape1 = i+1;
-      double shape2 = m-i;
+      for (int i=d; i<mm; ++i) {
+    //  long double q = arma::conv_to<double>::from(Y.col(bb).row(i));
+    const double q = Y(i, bb);
+    const double shape1 = i+1;
+    const double shape2 = m-i;
      // long double beta = 1-exp(R::pbeta(q=q,shape1,shape2,1,1));
-      lambda[i] = R::pbeta(q, shape1, shape2, 1, 0);
+      lambda[i - d] = R::pbeta(q, shape1, shape2, 1, 0);
       }
     }
     if(family == "power"){
