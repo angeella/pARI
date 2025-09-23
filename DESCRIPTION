@@ -1,8 +1,8 @@
 Package: pARI
 Type: Package
 Title: Permutation-Based All-Resolutions Inference
-Version: 1.1.2
-Date: 2024-09-06
+Version: 1.1.3
+Date: 2025-09-23
 Authors@R: c(person(given="Angela", family="Andreella", comment=c("Main author", ORCID  = "0000-0002-1141-3041"), email="angela.andreella@unive.it", role=c("aut", "cre")))
 Description: Computes the All-Resolution Inference method in the permutation framework, i.e., simultaneous lower confidence bounds for the number of true discoveries. <doi:10.1002/sim.9725>. 
 Depends: R (>= 3.5.0)

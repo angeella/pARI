@@ -1,5 +1,5 @@
 Dear CRAN Team,
-This is a resubmission of the package pARI addressing the deprecation
+This is a re submission of the package pARI addressing the deprecation
 warnings reported after the RcppArmadillo / Armadillo 15 upgrade.
 Best, Angela
 
@@ -8,8 +8,7 @@ Best, Angela
 
 0 errors | 0 warnings | 1 note
 
-??? checking for future file timestamps ... NOTE
-  unable to verify current time
+
 
 ## Test environments
 
